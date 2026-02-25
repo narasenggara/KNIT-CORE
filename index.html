@@ -584,6 +584,11 @@
                 <div class="progress-detail" id="progressDetail"></div>
             </div>
 
+            <!-- Kebutuhan per hari -->
+            <div id="dailyNeedWrap" style="margin-top:16px;padding:16px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--bg);">
+                <div style="font-size:0.8em;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;">Kebutuhan Harian untuk Capai Target</div>
+                <div id="dailyNeedContent" style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;"></div>
+            </div>
 
         </div>
     </div>
@@ -1010,6 +1015,38 @@ function renderOmsetPanel(json) {
         detEl.textContent = 'Set target bulanan untuk melihat progress.';
     }
 
+    // ── Kebutuhan harian untuk capai target ──
+    const needWrap = document.getElementById('dailyNeedContent');
+    needWrap.innerHTML = '';
+    const sisaHari = workDaysTotal - workDaysPassed;
+
+    if (target <= 0) {
+        needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--text-muted);font-style:italic;">Set target bulanan untuk melihat kebutuhan harian.</span>';
+    } else if (realisasi >= target) {
+        needWrap.innerHTML = '<span style="font-size:1em;font-weight:700;color:var(--success);">🎉 Target sudah tercapai!</span>';
+    } else if (sisaHari <= 0) {
+        needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--danger);font-weight:600;">Tidak ada hari kerja tersisa bulan ini.</span>';
+    } else {
+        const sisaTransaksi = target - realisasi;
+        const perHari       = (sisaTransaksi / sisaHari).toFixed(1);
+        const perHariInt    = Math.ceil(sisaTransaksi / sisaHari);
+        const cls           = perHariInt <= 4 ? 'var(--success)' : perHariInt <= 6 ? 'var(--warning)' : 'var(--danger)';
+
+        needWrap.innerHTML = `
+            <div style="display:flex;align-items:baseline;gap:6px;">
+                <span style="font-size:2.2em;font-weight:800;font-family:'DM Mono',monospace;color:${cls};">${perHariInt}</span>
+                <span style="font-size:0.9em;font-weight:600;color:var(--text-muted);">transaksi/hari</span>
+            </div>
+            <div style="width:1px;height:40px;background:var(--border);flex-shrink:0;"></div>
+            <div style="font-size:0.83em;color:var(--text-muted);line-height:1.7;">
+                Sisa <strong style="color:var(--text);">${sisaTransaksi}</strong> transaksi dalam
+                <strong style="color:var(--text);">${sisaHari}</strong> hari kerja<br>
+                Rata-rata persis: <strong style="color:var(--text);">${perHari}/hari</strong>
+                &nbsp;·&nbsp; Sejauh ini: <strong style="color:var(--text);">${avg}/hari</strong>
+            </div>
+        `;
+    }
+
     document.getElementById('omsetContent').style.display = 'block';
 }
 
@@ -1308,7 +1345,7 @@ function renderCalendar() {
             const list=document.createElement('div');list.className='task-list';
             getTasksForDate(currentYear,currentMonth,day).forEach(t=>{
                 const item=document.createElement('div');item.className=`task-item ${t.kind}`;
-                item.innerHTML=`<span class="task-icon">${t.kind==='recurring'?'🔁':t.kind==='permanent-recurring'?'🔧':''}</span>${t.name}`;
+                item.textContent=t.name;
                 list.appendChild(item);
             });
             cell.appendChild(list);
