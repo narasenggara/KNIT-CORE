@@ -549,12 +549,13 @@
 
     <!-- App Navbar -->
     <div class="app-navbar">
-        <button class="app-nav-tab active" id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
-        <button class="app-nav-tab" id="navLinks" onclick="switchPage('links')">🏢 PGI Core</button>
+        <button class="app-nav-tab active" id="navLinks" onclick="switchPage('links')">🏢 PGI Core</button>
+        <button class="app-nav-tab" id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
+        <button class="app-nav-tab" id="navSenku" onclick="switchPage('senku')">🏢 SENKU</button>
     </div>
 
     <!-- PAGE: Kalender -->
-    <div class="page active" id="pageKalender">
+    <div class="page" id="pageKalender">
     <div class="header" style="border-radius:0;">
         <div class="header-icon">📅</div>
         <div class="header-text">
@@ -708,30 +709,8 @@
     </div><!-- end pageKalender -->
 
     <!-- PAGE: PGI Core -->
-    <div class="page" id="pageLinks">
+    <div class="page active" id="pageLinks">
         <div class="pgicore-page">
-
-            <!-- Grup: SENKU -->
-            <div class="pgicore-group">
-                <div class="pgicore-group-label">🏢 SENKU — Sentral Kepala Unit</div>
-                <div class="pgicore-grid">
-                    <a class="pgicore-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">👤</div>
-                        <div class="pgicore-name">HRIS PGI</div>
-                        <div class="pgicore-url">approval.pgindonesia.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">📦</div>
-                        <div class="pgicore-name">GA (Inventory)</div>
-                        <div class="pgicore-url">ga.pgindonesia.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">🔐</div>
-                        <div class="pgicore-name">FPP (Portal PGI)</div>
-                        <div class="pgicore-url">portal.pusatgadai.id</div>
-                    </a>
-                </div>
-            </div>
 
             <!-- Grup: Tools -->
             <div class="pgicore-group">
@@ -762,6 +741,32 @@
 
         </div>
     </div><!-- end pageLinks -->
+
+    <!-- PAGE: SENKU -->
+    <div class="page" id="pageSenku">
+        <div class="pgicore-page">
+            <div class="pgicore-group">
+                <div class="pgicore-group-label">🏢 SENKU — Sentral Kepala Unit</div>
+                <div class="pgicore-grid">
+                    <a class="pgicore-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">👤</div>
+                        <div class="pgicore-name">HRIS PGI</div>
+                        <div class="pgicore-url">approval.pgindonesia.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">📦</div>
+                        <div class="pgicore-name">GA (Inventory)</div>
+                        <div class="pgicore-url">ga.pgindonesia.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">🔐</div>
+                        <div class="pgicore-name">FPP (Portal PGI)</div>
+                        <div class="pgicore-url">portal.pusatgadai.id</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- end pageSenku -->
 
 </div><!-- end mainContainer -->
 
@@ -1564,13 +1569,27 @@ function changeMonth(dir) {
 // ─────────────────────────────────────────
 //  CLOSE ON BACKDROP / ESC
 // ─────────────────────────────────────────
-// Auto-init
-initApp();
+// Auto-init: kalender diinit saat tab Kalender pertama kali dibuka
+window._kalenderInited = false;
 
 document.getElementById('shiftModal').addEventListener('click',function(e){if(e.target===this)closeShiftModal();});
 document.getElementById('taskModal').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
-
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeShiftModal();closeTaskModal();}});
+
+// ─────────────────────────────────────────
+//  PAGE SWITCHING
+// ─────────────────────────────────────────
+function switchPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.app-nav-tab').forEach(t => t.classList.remove('active'));
+    const cap = page.charAt(0).toUpperCase() + page.slice(1);
+    document.getElementById('page' + cap).classList.add('active');
+    document.getElementById('nav'  + cap).classList.add('active');
+    if (page === 'kalender' && typeof initApp === 'function' && !window._kalenderInited) {
+        window._kalenderInited = true;
+        initApp();
+    }
+}
 
 
 </script>
