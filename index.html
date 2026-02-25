@@ -760,7 +760,7 @@ function dateKey(y, m, d) {
 }
 function isRedDate(y, m, d) {
     const dk = dateKey(y, m+1, d);
-    return new Date(y, m, d).getDay() === 0 || !!nationalHolidays[dk] || !!customHolidays[dk];
+    return new Date(Date.UTC(y, m, d)).getUTCDay() === 0 || !!nationalHolidays[dk] || !!customHolidays[dk];
 }
 function isWorkDay(y, m, d) {
     // Pakai UTC untuk hindari timezone shift (sama dengan cara di Apps Script)
