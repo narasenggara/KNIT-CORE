@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalender PGI</title>
+    <title>Kalender PGI — BDG026</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -461,30 +461,17 @@
 </head>
 <body>
 
-<!-- Branch Selection -->
-<div class="branch-screen" id="branchScreen">
-    <div class="branch-card">
-        <div class="logo">📅</div>
-        <h2>Jadwal PGI</h2>
-        <p>Pilih cabang untuk melanjutkan</p>
-        <div class="branch-buttons">
-            <button class="branch-btn" onclick="selectBranch('bdg016')">🏢 BDG016</button>
-            <button class="branch-btn" onclick="selectBranch('bdg026')">🏢 BDG026</button>
-        </div>
-    </div>
-</div>
-
 <!-- Main -->
-<div class="container" id="mainContainer" style="display:none;">
+<div class="container" id="mainContainer">
 
     <div class="header">
         <div class="header-icon">📅</div>
         <div class="header-text">
-            <h1>Jadwal PGI — <span id="branchTitle">BDG016</span></h1>
+            <h1>Kalender PGI</h1>
             <p>Klik tanggal untuk menambah atau mengedit jadwal</p>
         </div>
         <div class="header-actions">
-            <button class="btn-ghost" onclick="backToBranch()">← Ganti Cabang</button>
+
         </div>
     </div>
 
@@ -729,7 +716,7 @@ let taskData         = { oneoff: {}, weekly: [], monthly: [] };
 let customHolidays   = {};
 let omsetData        = {};   // { 'YYYY-MM-DD': { total, elek, bpkb, emas } }
 let omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
-let currentBranch    = 'bdg016';
+let currentBranch    = 'bdg026';
 let calendarMode     = 'shift';
 let selectedDay      = null;
 let selectedFilter   = '';
@@ -837,22 +824,13 @@ function showToast(msg, type='success') {
 // ─────────────────────────────────────────
 //  BRANCH / MODE
 // ─────────────────────────────────────────
-async function selectBranch(branch) {
-    currentBranch  = branch;
+async function initApp() {
+    currentBranch  = 'bdg026';
     selectedFilter = '';
     omsetData      = {};
     omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
-    document.getElementById('branchTitle').textContent = branch.toUpperCase();
-    document.getElementById('branchScreen').classList.add('hidden');
-    document.getElementById('mainContainer').style.display = 'block';
     await Promise.all([ loadData(), loadTasks() ]);
     renderCalendar();
-}
-
-function backToBranch() {
-    document.getElementById('branchScreen').classList.remove('hidden');
-    document.getElementById('mainContainer').style.display = 'none';
-    shiftData = {};
 }
 
 function setMode(mode) {
@@ -1440,6 +1418,9 @@ function changeMonth(dir) {
 // ─────────────────────────────────────────
 //  CLOSE ON BACKDROP / ESC
 // ─────────────────────────────────────────
+// Auto-init
+initApp();
+
 document.getElementById('shiftModal').addEventListener('click',function(e){if(e.target===this)closeShiftModal();});
 document.getElementById('taskModal').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeShiftModal();closeTaskModal();}});
