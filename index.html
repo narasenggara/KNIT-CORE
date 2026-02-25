@@ -462,57 +462,48 @@
         .page { display: none; }
         .page.active { display: block; }
 
-        /* ── QUICK LINKS PAGE ── */
-        .ql-page { background: var(--surface); border-radius: 0 0 20px 20px; }
-        .ql-topbar {
-            padding: 20px 28px; border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        /* ── PGI CORE PAGE ── */
+        .pgicore-page {
+            background: var(--surface); border-radius: 0 0 20px 20px;
+            padding: 24px 28px; display: flex; flex-direction: column; gap: 28px;
         }
-        .ql-topbar-title { font-size: 1em; font-weight: 800; color: var(--text); }
-        .ql-grid {
+        .pgicore-group-label {
+            font-size: 0.75em; font-weight: 700; letter-spacing: 0.05em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .pgicore-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 14px; padding: 24px 28px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
         }
-        .ql-card {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 10px; padding: 22px 12px;
+        .pgicore-card {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; padding: 20px 12px;
             background: var(--bg); border-radius: var(--radius);
             border: 1.5px solid var(--border);
-            cursor: pointer; transition: all 0.2s; text-decoration: none;
-            position: relative; text-align: center;
+            text-decoration: none; text-align: center;
+            transition: all 0.2s; cursor: pointer;
         }
-        .ql-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
-        .ql-card .ql-icon {
-            font-size: 2em; width: 52px; height: 52px;
+        .pgicore-card:hover {
+            border-color: var(--primary); box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .pgicore-icon {
+            font-size: 1.8em; width: 48px; height: 48px;
             display: flex; align-items: center; justify-content: center;
-            background: var(--surface); border-radius: 14px;
+            background: var(--surface); border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .ql-card .ql-name { font-size: 0.82em; font-weight: 700; color: var(--text); line-height: 1.3; }
-        .ql-card .ql-url  { font-size: 0.7em; color: var(--text-muted); margin-top: 2px; word-break: break-all; display: none; }
-        .ql-card:hover .ql-url { display: block; }
-        .ql-card .ql-del {
-            position: absolute; top: 6px; right: 6px;
-            width: 20px; height: 20px; border-radius: 50%;
-            background: var(--danger-light); color: var(--danger);
-            border: none; cursor: pointer; font-size: 0.75em;
-            display: none; align-items: center; justify-content: center;
-            font-weight: 700;
+        .pgicore-name {
+            font-size: 0.83em; font-weight: 700; color: var(--text); line-height: 1.3;
         }
-        .ql-card:hover .ql-del { display: flex; }
-        .ql-card-add {
-            border-style: dashed; cursor: pointer;
-            color: var(--text-muted); font-size: 0.85em; font-weight: 600;
-            background: transparent;
-        }
-        .ql-card-add:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
-        .ql-empty {
-            grid-column: 1/-1; text-align: center;
-            padding: 40px; color: var(--text-muted); font-size: 0.9em;
+        .pgicore-url {
+            font-size: 0.68em; color: var(--text-muted);
+            word-break: break-all; line-height: 1.3;
         }
 
-        /* ── LINK MODAL ── */
+        
         .emoji-grid {
             display: grid; grid-template-columns: repeat(8, 1fr);
             gap: 6px; max-height: 160px; overflow-y: auto;
@@ -559,7 +550,7 @@
     <!-- App Navbar -->
     <div class="app-navbar">
         <button class="app-nav-tab active" id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
-        <button class="app-nav-tab" id="navLinks" onclick="switchPage('links')">🔗 Quick Links</button>
+        <button class="app-nav-tab" id="navLinks" onclick="switchPage('links')">🏢 PGI Core</button>
     </div>
 
     <!-- PAGE: Kalender -->
@@ -716,50 +707,63 @@
     </div>
     </div><!-- end pageKalender -->
 
-    <!-- PAGE: Quick Links -->
+    <!-- PAGE: PGI Core -->
     <div class="page" id="pageLinks">
-        <div class="ql-page">
-            <div class="ql-topbar">
-                <div class="ql-topbar-title">🔗 Quick Links</div>
-                <button class="btn btn-primary" onclick="openAddLink()" style="padding:8px 16px;font-size:0.88em;">+ Tambah Link</button>
+        <div class="pgicore-page">
+
+            <!-- Grup: SENKU -->
+            <div class="pgicore-group">
+                <div class="pgicore-group-label">🏢 SENKU — Sentral Kepala Unit</div>
+                <div class="pgicore-grid">
+                    <a class="pgicore-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">👤</div>
+                        <div class="pgicore-name">HRIS PGI</div>
+                        <div class="pgicore-url">approval.pgindonesia.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">📦</div>
+                        <div class="pgicore-name">GA (Inventory)</div>
+                        <div class="pgicore-url">ga.pgindonesia.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">🔐</div>
+                        <div class="pgicore-name">FPP (Portal PGI)</div>
+                        <div class="pgicore-url">portal.pusatgadai.id</div>
+                    </a>
+                </div>
             </div>
-            <div class="ql-grid" id="qlGrid"></div>
+
+            <!-- Grup: Tools -->
+            <div class="pgicore-group">
+                <div class="pgicore-group-label">🛠️ Tools</div>
+                <div class="pgicore-grid">
+                    <a class="pgicore-card" href="https://gadai.pugindo.com/gadai/simulasi" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">💰</div>
+                        <div class="pgicore-name">PUGINDO</div>
+                        <div class="pgicore-url">gadai.pugindo.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://www.imei.info/" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">📱</div>
+                        <div class="pgicore-name">IMEI Info</div>
+                        <div class="pgicore-url">imei.info</div>
+                    </a>
+                    <a class="pgicore-card" href="https://notebooklm.google.com/notebook/d40f54cc-474b-4d0a-955c-d48ba41d9489" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">📖</div>
+                        <div class="pgicore-name">Panduan SE</div>
+                        <div class="pgicore-url">notebooklm.google.com</div>
+                    </a>
+                    <a class="pgicore-card" href="https://linktr.ee/outletpgi" target="_blank" rel="noopener">
+                        <div class="pgicore-icon">🔗</div>
+                        <div class="pgicore-name">Linktree Outlet PGI</div>
+                        <div class="pgicore-url">linktr.ee/outletpgi</div>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div><!-- end pageLinks -->
 
 </div><!-- end mainContainer -->
-
-<!-- ── LINK MODAL ── -->
-<div class="modal" id="linkModal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h2 id="linkModalTitle">Tambah Link</h2>
-            <button class="modal-close" onclick="closeLinkModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="form-label">Nama</label>
-                <input class="form-input" id="linkName" placeholder="Contoh: Google Sheets Omset">
-            </div>
-            <div class="form-group">
-                <label class="form-label">URL</label>
-                <input class="form-input" id="linkUrl" placeholder="https://...">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Ikon</label>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                    <div id="iconPreview" style="font-size:2em;width:48px;height:48px;background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border);">🔗</div>
-                    <span style="font-size:0.83em;color:var(--text-muted);">Pilih emoji di bawah</span>
-                </div>
-                <div class="emoji-grid" id="emojiGrid"></div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeLinkModal()">Batal</button>
-            <button class="btn btn-primary" onclick="saveLink()">Simpan</button>
-        </div>
-    </div>
-</div>
 
 <!-- ── SHIFT MODAL ── -->
 <div class="modal" id="shiftModal">
@@ -1565,123 +1569,10 @@ initApp();
 
 document.getElementById('shiftModal').addEventListener('click',function(e){if(e.target===this)closeShiftModal();});
 document.getElementById('taskModal').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
-document.getElementById('linkModal').addEventListener('click',function(e){if(e.target===this)closeLinkModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeShiftModal();closeTaskModal();closeLinkModal();}});
 
-// ─────────────────────────────────────────
-//  PAGE SWITCHING
-// ─────────────────────────────────────────
-function switchPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.app-nav-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
-    document.getElementById('nav' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
-    if (page === 'links') renderQuickLinks();
-}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeShiftModal();closeTaskModal();}});
 
-// ─────────────────────────────────────────
-//  QUICK LINKS
-// ─────────────────────────────────────────
-const EMOJI_LIST = ['🔗','📊','📋','📅','📁','📂','🗂️','📌','📍','🔍','💼','🏢','👥','📝','✅','⚙️','🛠️','💻','🖥️','📱','🌐','🔒','🔓','📧','💬','📞','🔔','⭐','🏆','💡','📈','📉','💰','💳','🧾','🗒️','📎','✂️','🖨️','🖱️','⌨️','🖊️','📏','📐'];
 
-function getLinks() {
-    try { return JSON.parse(localStorage.getItem('pgi_quicklinks') || '[]'); }
-    catch(e) { return []; }
-}
-function saveLinks(links) {
-    localStorage.setItem('pgi_quicklinks', JSON.stringify(links));
-}
-
-function renderQuickLinks() {
-    const grid  = document.getElementById('qlGrid');
-    const links = getLinks();
-    grid.innerHTML = '';
-
-    if (!links.length) {
-        grid.innerHTML = '<div class="ql-empty">Belum ada link. Klik <strong>+ Tambah Link</strong> untuk mulai.</div>';
-    }
-
-    links.forEach((lk, idx) => {
-        const card = document.createElement('a');
-        card.className = 'ql-card';
-        card.href      = lk.url;
-        card.target    = '_blank';
-        card.rel       = 'noopener';
-        card.innerHTML = `
-            <div class="ql-icon">${lk.icon || '🔗'}</div>
-            <div class="ql-name">${lk.name}</div>
-            <div class="ql-url">${lk.url}</div>
-            <button class="ql-del" title="Hapus">✕</button>
-        `;
-        card.querySelector('.ql-del').onclick = (e) => {
-            e.preventDefault(); e.stopPropagation();
-            if (confirm('Hapus link "' + lk.name + '"?')) {
-                const arr = getLinks();
-                arr.splice(idx, 1);
-                saveLinks(arr);
-                renderQuickLinks();
-            }
-        };
-        grid.appendChild(card);
-    });
-
-    // Tombol tambah
-    const addCard = document.createElement('div');
-    addCard.className = 'ql-card ql-card-add';
-    addCard.innerHTML = '<div style="font-size:1.8em;">+</div><div>Tambah Link</div>';
-    addCard.onclick = openAddLink;
-    grid.appendChild(addCard);
-}
-
-// ─────────────────────────────────────────
-//  LINK MODAL
-// ─────────────────────────────────────────
-let selectedEmoji = '🔗';
-
-function openAddLink() {
-    selectedEmoji = '🔗';
-    document.getElementById('linkName').value = '';
-    document.getElementById('linkUrl').value  = '';
-    document.getElementById('iconPreview').textContent = '🔗';
-    document.getElementById('linkModalTitle').textContent = 'Tambah Link';
-
-    // Render emoji grid
-    const eg = document.getElementById('emojiGrid');
-    eg.innerHTML = '';
-    EMOJI_LIST.forEach(em => {
-        const btn = document.createElement('button');
-        btn.className   = 'emoji-btn' + (em === selectedEmoji ? ' selected' : '');
-        btn.textContent = em;
-        btn.onclick = () => {
-            selectedEmoji = em;
-            document.getElementById('iconPreview').textContent = em;
-            eg.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        };
-        eg.appendChild(btn);
-    });
-
-    document.getElementById('linkModal').classList.add('active');
-    setTimeout(() => document.getElementById('linkName').focus(), 80);
-}
-
-function closeLinkModal() {
-    document.getElementById('linkModal').classList.remove('active');
-}
-
-function saveLink() {
-    const name = document.getElementById('linkName').value.trim();
-    const url  = document.getElementById('linkUrl').value.trim();
-    if (!name) { showToast('⚠️ Nama tidak boleh kosong', 'warning'); return; }
-    if (!url || !url.startsWith('http')) { showToast('⚠️ URL tidak valid (harus dimulai dengan http)', 'warning'); return; }
-
-    const links = getLinks();
-    links.push({ name, url, icon: selectedEmoji });
-    saveLinks(links);
-    renderQuickLinks();
-    closeLinkModal();
-    showToast('✅ Link ditambahkan');
-}
 </script>
 </body>
 </html>
