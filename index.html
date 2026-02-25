@@ -91,24 +91,109 @@
         /* ── MAIN CONTAINER ── */
         .container { max-width: 1300px; margin: 0 auto; }
 
-        /* ── HEADER ── */
-        .header {
-            background: linear-gradient(135deg, #1a1d2e 0%, #2d3561 60%, #3d5af1 100%);
-            border-radius: 20px 20px 0 0;
-            padding: 28px 32px;
-            display: flex; align-items: center; gap: 20px;
+        /* ── HEADER KALENDER (GLASSMORPHISM) ── */
+        .kal-header {
+            position: relative; overflow: hidden;
+            border-radius: 0;
+            padding: 0;
+        }
+        .kal-header-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #0f1225 0%, #1a2050 40%, #1e3a8a 70%, #3d5af1 100%);
+            z-index: 0;
+        }
+        .kal-header-bg::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(99,102,241,0.35) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 10% 20%, rgba(16,185,129,0.2) 0%, transparent 50%);
+        }
+        .kal-header-bg::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+        .kal-header-content {
+            position: relative; z-index: 1;
+            padding: 22px 32px;
+            display: flex; align-items: center; justify-content: space-between; gap: 20px;
             flex-wrap: wrap;
         }
-        .header-icon {
-            width: 52px; height: 52px;
-            background: rgba(255,255,255,0.12);
+        .kal-header-left { display: flex; align-items: center; gap: 16px; }
+        .kal-header-icon {
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .header-text h1 { color: white; font-size: 1.6em; font-weight: 800; }
-        .header-text p { color: rgba(255,255,255,0.6); font-size: 0.875em; margin-top: 2px; }
-        .header-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+        .kal-header-text h1 {
+            color: white; font-size: 1.5em; font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .kal-header-text p { color: rgba(255,255,255,0.45); font-size: 0.8em; margin-top: 2px; }
+
+        /* Jam glassmorphism */
+        .kal-clock-glass {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            padding: 12px 22px;
+            text-align: right;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .kal-clock-time {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.6em; font-weight: 500;
+            color: white; letter-spacing: 2px;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(99,102,241,0.5);
+        }
+        .kal-clock-date {
+            font-size: 0.7em; color: rgba(255,255,255,0.45);
+            margin-top: 4px; letter-spacing: 0.03em;
+        }
+
+        /* ── CALENDAR TOGGLE (GLASSMORPHISM) ── */
+        .calendar-toggle {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            padding: 14px 24px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-wrap: wrap;
+            background: #0f172a;
+        }
+        .toggle-label { font-weight: 700; font-size: 0.8em; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; }
+        .toggle-pills { display: flex; gap: 4px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
+        .toggle-pill {
+            padding: 7px 18px; border: none; border-radius: 7px;
+            font-family: inherit; font-weight: 600;
+            font-size: 0.85em; cursor: pointer; transition: all 0.2s;
+            background: transparent; color: rgba(255,255,255,0.35);
+        }
+        .toggle-pill:hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
+        .toggle-pill.active { background: rgba(99,102,241,0.3); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4); box-shadow: 0 0 12px rgba(99,102,241,0.2); }
+        .toggle-pill.task-active { background: rgba(249,115,22,0.2); color: #fdba74; border: 1px solid rgba(249,115,22,0.35); box-shadow: 0 0 12px rgba(249,115,22,0.15); }
+        .toggle-pill.omset-active { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); box-shadow: 0 0 12px rgba(16,185,129,0.15); }
+
+        /* ── FILTER BAR ── */
+        #shiftFilterWrap select {
+            background: rgba(255,255,255,0.06) !important;
+            border: 1px solid rgba(255,255,255,0.12) !important;
+            color: rgba(255,255,255,0.7) !important;
+            border-radius: 8px !important;
+        }
+
+        /* ── NAV ── */
+
         .btn-ghost {
             padding: 8px 16px;
             background: rgba(255,255,255,0.1);
@@ -556,11 +641,22 @@
 
     <!-- PAGE: Kalender -->
     <div class="page" id="pageKalender">
-    <div class="header" style="border-radius:0;">
-        <div class="header-icon">📅</div>
-        <div class="header-text">
-            <h1>Kalender PGI</h1>
-            <p>Klik tanggal untuk menambah atau mengedit jadwal</p>
+    <div class="kal-header">
+        <div class="kal-header-bg"></div>
+        <div class="kal-header-content">
+            <div class="kal-header-left">
+                <div class="kal-header-icon">📅</div>
+                <div class="kal-header-text">
+                    <h1>Kalender PGI</h1>
+                    <p>BDG026 · Klik tanggal untuk edit jadwal</p>
+                </div>
+            </div>
+            <div class="kal-header-right">
+                <div class="kal-clock-glass">
+                    <div class="kal-clock-time" id="kalClockTime">00:00:00</div>
+                    <div class="kal-clock-date" id="kalClockDate">—</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -569,8 +665,8 @@
         <span class="toggle-label">Tampilkan:</span>
         <div class="toggle-pills">
             <button class="toggle-pill active" id="pillShift" onclick="toggleLayer('shift')">👥 Shift</button>
-            <button class="toggle-pill" id="pillTask" onclick="toggleLayer('task')">📋 Tugas</button>
-            <button class="toggle-pill" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
+            <button class="toggle-pill task-active" id="pillTask" onclick="toggleLayer('task')">📋 Tugas</button>
+            <button class="toggle-pill omset-active" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
         </div>
         <div id="shiftFilterWrap" style="display:flex;align-items:center;gap:8px;margin-left:8px;">
             <span class="filter-label">🔍</span>
@@ -851,7 +947,7 @@ let customHolidays   = {};
 let omsetData        = {};   // { 'YYYY-MM-DD': { total, elek, bpkb, emas } }
 let omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
 let currentBranch    = 'bdg026';
-let layers = { shift: true, task: false, omset: false }; // layer on/off
+let layers = { shift: true, task: true, omset: true }; // layer on/off
 let selectedDay      = null;
 let selectedFilter   = '';
 let isSaving         = false;
@@ -959,12 +1055,27 @@ function showToast(msg, type='success') {
 // ─────────────────────────────────────────
 //  BRANCH / MODE
 // ─────────────────────────────────────────
+function updateKalClock() {
+    const now = new Date();
+    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    const t = document.getElementById('kalClockTime');
+    const d = document.getElementById('kalClockDate');
+    if (t) t.textContent = hh+':'+mm+':'+ss;
+    if (d) d.textContent = days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+}
+
 async function initApp() {
     currentBranch  = 'bdg026';
     selectedFilter = '';
     omsetData      = {};
     omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
     updateLayerUI();
+    updateKalClock();
+    setInterval(updateKalClock, 1000);
     await Promise.all([ loadData(), loadTasks() ]);
     renderCalendar();
 }
