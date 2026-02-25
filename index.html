@@ -477,28 +477,18 @@
 
     <!-- Calendar Mode Toggle -->
     <div class="calendar-toggle">
-        <span class="toggle-label">Mode:</span>
+        <span class="toggle-label">Tampilkan:</span>
         <div class="toggle-pills">
-            <button class="toggle-pill active" id="pillShift" onclick="setMode('shift')">👥 Kalender Shift</button>
-            <button class="toggle-pill" id="pillTask" onclick="setMode('task')">📋 Kalender Tugas</button>
-            <button class="toggle-pill" id="pillOmset" onclick="setMode('omset')">📊 Monitoring Omset</button>
+            <button class="toggle-pill active" id="pillShift" onclick="toggleLayer('shift')">👥 Shift</button>
+            <button class="toggle-pill" id="pillTask" onclick="toggleLayer('task')">📋 Tugas</button>
+            <button class="toggle-pill" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
         </div>
-    </div>
-
-    <!-- Toolbar -->
-    <div class="toolbar" id="shiftToolbar">
-        <span class="filter-label">🔍 Filter:</span>
-        <select id="nameFilter" onchange="filterByName()">
-            <option value="">Semua Orang</option>
-        </select>
-    </div>
-    <div class="toolbar" id="taskToolbar" style="display:none;">
-        <span class="filter-label">📋 Mode Tugas</span>
-        <span style="font-size:0.85em;color:var(--text-muted);">Klik tanggal untuk tambah tugas.</span>
-    </div>
-    <div class="toolbar" id="omsetToolbar" style="display:none;">
-        <span class="filter-label">📊 Mode Omset</span>
-        <span style="font-size:0.85em;color:var(--text-muted);">Data omset ditarik otomatis dari Google Sheets.</span>
+        <div id="shiftFilterWrap" style="display:flex;align-items:center;gap:8px;margin-left:8px;">
+            <span class="filter-label">🔍</span>
+            <select id="nameFilter" onchange="filterByName()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.88em;background:var(--bg);color:var(--text);">
+                <option value="">Semua Orang</option>
+            </select>
+        </div>
     </div>
 
     <!-- Nav -->
@@ -594,19 +584,7 @@
                 <div class="progress-detail" id="progressDetail"></div>
             </div>
 
-            <!-- Table -->
-            <div class="omset-table-wrap">
-                <table class="omset-table">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th class="num">Total</th>
-                            <th class="num" style="min-width:100px;">Bar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="omsetTableBody"></tbody>
-                </table>
-            </div>
+
         </div>
     </div>
 
@@ -717,7 +695,7 @@ let customHolidays   = {};
 let omsetData        = {};   // { 'YYYY-MM-DD': { total, elek, bpkb, emas } }
 let omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
 let currentBranch    = 'bdg026';
-let calendarMode     = 'shift';
+let layers = { shift: true, task: false, omset: false }; // layer on/off
 let selectedDay      = null;
 let selectedFilter   = '';
 let isSaving         = false;
@@ -785,7 +763,8 @@ function isRedDate(y, m, d) {
     return new Date(y, m, d).getDay() === 0 || !!nationalHolidays[dk] || !!customHolidays[dk];
 }
 function isWorkDay(y, m, d) {
-    const dow = new Date(y, m, d).getDay();
+    // Pakai UTC untuk hindari timezone shift (sama dengan cara di Apps Script)
+    const dow = new Date(Date.UTC(y, m, d)).getUTCDay();
     const dk  = dateKey(y, m+1, d);
     return dow !== 0 && !nationalHolidays[dk] && !customHolidays[dk];
 }
@@ -829,31 +808,35 @@ async function initApp() {
     selectedFilter = '';
     omsetData      = {};
     omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
+    updateLayerUI();
     await Promise.all([ loadData(), loadTasks() ]);
     renderCalendar();
 }
 
-function setMode(mode) {
-    calendarMode = mode;
-    document.getElementById('pillShift').className  = 'toggle-pill' + (mode==='shift'  ? ' active' : '');
-    document.getElementById('pillTask').className   = 'toggle-pill' + (mode==='task'   ? ' task-active' : '');
-    document.getElementById('pillOmset').className  = 'toggle-pill' + (mode==='omset'  ? ' omset-active' : '');
-    document.getElementById('shiftToolbar').style.display  = mode==='shift'  ? 'flex' : 'none';
-    document.getElementById('taskToolbar').style.display   = mode==='task'   ? 'flex' : 'none';
-    document.getElementById('omsetToolbar').style.display  = mode==='omset'  ? 'flex' : 'none';
-    document.getElementById('shiftLegend').style.display   = mode==='shift'  ? 'flex' : 'none';
-    document.getElementById('taskLegend').style.display    = mode==='task'   ? 'flex' : 'none';
-    document.getElementById('omsetLegend').style.display   = mode==='omset'  ? 'flex' : 'none';
-    // Omset panel below calendar
-    document.getElementById('omsetPanel').style.display    = mode==='omset'  ? 'block' : 'none';
-    document.getElementById('holidaySection').style.display = mode==='omset' ? 'none' : 'block';
-
+function toggleLayer(layer) {
+    layers[layer] = !layers[layer];
+    updateLayerUI();
     renderCalendar();
-
-    if (mode === 'omset') {
+    if (layers.omset) {
         document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
         loadOmsetData();
     }
+}
+
+function updateLayerUI() {
+    // Pills
+    document.getElementById('pillShift').className  = 'toggle-pill' + (layers.shift  ? ' active'       : '');
+    document.getElementById('pillTask').className   = 'toggle-pill' + (layers.task   ? ' task-active'  : '');
+    document.getElementById('pillOmset').className  = 'toggle-pill' + (layers.omset  ? ' omset-active' : '');
+    // Filter nama hanya muncul kalau shift aktif
+    document.getElementById('shiftFilterWrap').style.display = layers.shift ? 'flex' : 'none';
+    // Legend
+    document.getElementById('shiftLegend').style.display  = layers.shift  ? 'flex' : 'none';
+    document.getElementById('taskLegend').style.display   = layers.task   ? 'flex' : 'none';
+    document.getElementById('omsetLegend').style.display  = layers.omset  ? 'flex' : 'none';
+    // Omset panel
+    document.getElementById('omsetPanel').style.display       = layers.omset ? 'block' : 'none';
+    document.getElementById('holidaySection').style.display   = 'block';
 }
 
 // ─────────────────────────────────────────
@@ -1025,33 +1008,6 @@ function renderOmsetPanel(json) {
             : `🎉 Target tercapai! Surplus ${Math.abs(sisa)} transaksi.`;
     } else {
         detEl.textContent = 'Set target bulanan untuk melihat progress.';
-    }
-
-    // Table
-    const tbody = document.getElementById('omsetTableBody');
-    tbody.innerHTML = '';
-    const maxTotal = Math.max(...daily.map(d => d.total), 1);
-
-    daily.forEach(d => {
-        const dObj   = new Date(d.date + 'T00:00:00');
-        const isToday= d.date === dateKey(today.getFullYear(), today.getMonth()+1, today.getDate());
-        const barPct = Math.round((d.total / maxTotal) * 100);
-        const tr     = document.createElement('tr');
-        if (isToday) tr.className = 'today-row';
-        tr.innerHTML = `
-            <td>${dObj.getDate()} ${monthNames[dObj.getMonth()].slice(0,3)}
-                <span class="day-tag">${dayNames[dObj.getDay()].slice(0,3)}</span>
-            </td>
-            <td class="num" style="font-size:1.05em;">${d.total}</td>
-            <td class="num">
-                <div class="omset-bar"><div class="omset-bar-fill" style="width:${barPct}%"></div></div>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-
-    if (!daily.length) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:20px;font-style:italic;">Belum ada data harian</td></tr>';
     }
 
     document.getElementById('omsetContent').style.display = 'block';
@@ -1322,7 +1278,7 @@ function renderCalendar() {
         const red     = isRedDate(currentYear,currentMonth,day);
         const hname   = getHolidayName(currentYear,currentMonth,day);
         const isToday = day===today.getDate() && currentMonth===today.getMonth() && currentYear===today.getFullYear();
-        const hasOmset= calendarMode==='omset' && !!omsetData[dk];
+        const hasOmset= layers.omset && !!omsetData[dk];
 
         const cell=document.createElement('div');
         cell.className='day-cell'+(red?' red-day':'')+(isToday?' today':'')+(hasOmset?' has-omset':'');
@@ -1334,7 +1290,8 @@ function renderCalendar() {
 
         if (hname) { const hl=document.createElement('span');hl.className='holiday-label';hl.textContent=hname;cell.appendChild(hl); }
 
-        if (calendarMode==='shift') {
+        // Layer Shift
+        if (layers.shift) {
             const list=document.createElement('div');list.className='shift-list';
             if (shiftData[dk]) {
                 shiftData[dk].split('\n').filter(s=>s.trim()).forEach(shift=>{
@@ -1344,9 +1301,10 @@ function renderCalendar() {
                 });
             }
             cell.appendChild(list);
-            cell.onclick=()=>openShiftModal(day);
+        }
 
-        } else if (calendarMode==='task') {
+        // Layer Tugas
+        if (layers.task) {
             const list=document.createElement('div');list.className='task-list';
             getTasksForDate(currentYear,currentMonth,day).forEach(t=>{
                 const item=document.createElement('div');item.className=`task-item ${t.kind}`;
@@ -1354,9 +1312,10 @@ function renderCalendar() {
                 list.appendChild(item);
             });
             cell.appendChild(list);
-            cell.onclick=()=>openTaskModal(day);
+        }
 
-        } else if (calendarMode==='omset') {
+        // Layer Omset
+        if (layers.omset) {
             const d=omsetData[dk];
             const wrap=document.createElement('div');wrap.className='omset-cell-data';
             if (d && d.total > 0) {
@@ -1365,13 +1324,17 @@ function renderCalendar() {
                 wrap.innerHTML=`<span class="omset-no-data">—</span>`;
             }
             cell.appendChild(wrap);
-            cell.style.cursor='default';
         }
+
+        // Click handler: shift > task > none
+        if (layers.shift) cell.onclick=()=>openShiftModal(day);
+        else if (layers.task) cell.onclick=()=>openTaskModal(day);
+        else cell.style.cursor='default';
 
         grid.appendChild(cell);
     }
 
-    if (calendarMode !== 'omset') renderHolidays();
+    renderHolidays();
 }
 
 // ─────────────────────────────────────────
@@ -1407,7 +1370,7 @@ function changeMonth(dir) {
     omsetData={};
     omsetMonthlyInfo={totalRealisasi:0,totalTarget:0,found:false};
     renderCalendar();
-    if (calendarMode==='omset') {
+    if (layers.omset) {
         document.getElementById('omsetContent').style.display='none';
         document.getElementById('omsetError').style.display='none';
         document.getElementById('omsetPanelMonth').textContent=`${monthNames[currentMonth]} ${currentYear}`;
