@@ -800,7 +800,7 @@ function isRedDate(y, m, d) {
 function isWorkDay(y, m, d) {
     const dow = new Date(y, m, d).getDay();
     const dk  = dateKey(y, m+1, d);
-    return dow !== 0 && dow !== 6 && !nationalHolidays[dk] && !customHolidays[dk];
+    return dow !== 0 && !nationalHolidays[dk] && !customHolidays[dk];
 }
 function getHolidayName(y, m, d) {
     const dk = dateKey(y, m+1, d);
