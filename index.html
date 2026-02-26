@@ -98,11 +98,11 @@
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
         .top-chrome {
             position: sticky; top: 0; z-index: 200;
-            background: rgba(240,246,255,0.72);
+            background: linear-gradient(135deg, rgba(30,58,138,0.82) 0%, rgba(37,99,235,0.75) 100%);
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 4px 20px rgba(37,99,235,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.10) inset, 0 4px 20px rgba(14,30,80,0.18);
         }
 
         /* Top row: logo left, clock right */
@@ -123,10 +123,10 @@
         .clock-wrap { text-align: right; flex-shrink: 0; }
         .clock-time {
             font-family: 'DM Mono', monospace;
-            font-size: 1.25em; font-weight: 500; color: var(--ink);
+            font-size: 1.25em; font-weight: 500; color: rgba(255,255,255,0.92);
             letter-spacing: 0.06em; line-height: 1;
         }
-        .clock-date { font-size: 0.63em; color: var(--ink-3); margin-top: 2px; }
+        .clock-date { font-size: 0.63em; color: rgba(255,255,255,0.50); margin-top: 2px; }
 
         /* Nav bar — floats BELOW the sticky header, not inside it */
         .nav-bar {
@@ -628,7 +628,14 @@
 <header class="top-chrome">
     <!-- Logo left, Clock right -->
     <div class="identity-row">
-        <img class="brand-logo-img" src="tittlelight.png" alt="PGI BDG026">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <img class="brand-logo-img" src="tittlelight.png" alt="PGI BDG026">
+            <div style="width:1px;height:36px;background:rgba(255,255,255,0.45);flex-shrink:0;"></div>
+            <div style="line-height:1.4;">
+                <div style="font-size:0.68em;font-weight:500;color:rgba(255,255,255,0.70);letter-spacing:0.02em;">Pusat Gadai Indonesia</div>
+                <div style="font-size:0.6em;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.08em;">N . S . W &nbsp;—&nbsp; PGI CORE V.3</div>
+            </div>
+        </div>
         <div class="clock-wrap">
             <div class="clock-time" id="clockTime">00:00:00</div>
             <div class="clock-date" id="clockDate">—</div>
