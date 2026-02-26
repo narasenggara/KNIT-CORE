@@ -3,1820 +3,1140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalender PGI — BDG026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>PGI BDG026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #3d5af1;
-            --primary-light: #e8ecff;
-            --primary-dark: #2a3db0;
-            --accent: #f97316;
-            --accent-light: #fff3e8;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --warning: #f59e0b;
-            --warning-light: #fef3c7;
-            --danger: #ef4444;
-            --danger-light: #fee2e2;
-            --purple: #8b5cf6;
-            --purple-light: #ede9fe;
-            --bg: #f0f2fa;
+            /* Blue milky palette */
+            --sky-0:  #f0f6ff;
+            --sky-1:  #e4eeff;
+            --sky-2:  #c7daff;
+            --sky-3:  #93b4f7;
+            --sky-4:  #5b8dee;
+            --sky-5:  #2563eb;
+            --sky-6:  #1a4ec4;
+            --sky-dk: #0f2d6e;
+
+            /* Glass */
+            --glass-bg:     rgba(255,255,255,0.55);
+            --glass-border: rgba(255,255,255,0.75);
+            --glass-shadow: 0 8px 32px rgba(37,99,235,0.10), 0 2px 8px rgba(37,99,235,0.06);
+            --glass-bg-deep: rgba(255,255,255,0.35);
+
+            /* Semantic */
+            --ink:    #0c1a3a;
+            --ink-2:  #3a4d72;
+            --ink-3:  #7890b8;
+            --ink-4:  #b0c0d8;
+            --line:   rgba(147,180,247,0.30);
+
+            /* Surface for calendar (stays clean) */
             --surface: #ffffff;
-            --border: #e2e5f1;
-            --text: #1a1d2e;
-            --text-muted: #6b7280;
-            --radius: 14px;
-            --radius-sm: 8px;
-            --shadow: 0 4px 20px rgba(61,90,241,0.08);
-            --shadow-lg: 0 12px 40px rgba(61,90,241,0.15);
+            --bg:      #eef4ff;
+
+            /* Status colors */
+            --blue:   #2563eb;
+            --blue-lt:#eff4ff;
+            --green:  #059669;
+            --green-lt:#ecfdf5;
+            --amber:  #d97706;
+            --amber-lt:#fffbeb;
+            --red:    #dc2626;
+            --red-lt: #fef2f2;
+            --indigo: #4f46e5;
+            --orange: #ea580c;
+
+            --r:    10px;
+            --r-sm: 6px;
+            --r-lg: 16px;
+            --r-xl: 22px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
+            font-family: 'Sora', sans-serif;
             min-height: 100vh;
-            padding: 20px;
-            color: var(--text);
+            color: var(--ink);
+            /* Layered blue-milky gradient background */
+            background:
+                radial-gradient(ellipse 80% 60% at 15% 10%,  rgba(147,180,247,0.45) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 80% at 85% 80%,  rgba(193,219,255,0.50) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 50% at 50% 50%,  rgba(224,236,255,0.30) 0%, transparent 70%),
+                linear-gradient(160deg, #deeaff 0%, #f0f6ff 40%, #e8f2ff 70%, #dde8fb 100%);
+            background-attachment: fixed;
         }
 
-        /* ── MAIN CONTAINER ── */
-        .container { max-width: 1300px; margin: 0 auto; }
-
-        /* ── HEADER KALENDER (GLASSMORPHISM) ── */
-        .kal-header {
-            position: relative; overflow: hidden;
-            border-radius: 0;
-            padding: 0;
-        }
-        .kal-header-bg {
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, #0f1225 0%, #1a2050 40%, #1e3a8a 70%, #3d5af1 100%);
+        /* Subtle animated orbs in background */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
             z-index: 0;
         }
-        .kal-header-bg::before {
-            content: '';
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(99,102,241,0.35) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 60% at 10% 20%, rgba(16,185,129,0.2) 0%, transparent 50%);
+        body::before {
+            width: 500px; height: 500px;
+            top: -100px; left: -100px;
+            background: radial-gradient(circle, rgba(147,180,247,0.35) 0%, transparent 70%);
+            animation: drift1 20s ease-in-out infinite alternate;
         }
-        .kal-header-bg::after {
-            content: '';
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        body::after {
+            width: 600px; height: 400px;
+            bottom: -80px; right: -120px;
+            background: radial-gradient(circle, rgba(193,219,255,0.40) 0%, transparent 70%);
+            animation: drift2 25s ease-in-out infinite alternate;
         }
-        .kal-header-content {
+        @keyframes drift1 { from{transform:translate(0,0) scale(1)} to{transform:translate(60px,40px) scale(1.1)} }
+        @keyframes drift2 { from{transform:translate(0,0) scale(1)} to{transform:translate(-50px,-30px) scale(1.08)} }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           TOP CHROME — GLASSMORPHISM
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .top-chrome {
+            position: sticky; top: 0; z-index: 200;
+            background: rgba(240,246,255,0.72);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 4px 20px rgba(37,99,235,0.08);
+        }
+
+        .identity-row {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 0 32px; height: 62px; gap: 20px;
             position: relative; z-index: 1;
-            padding: 22px 32px;
-            display: flex; align-items: center; justify-content: space-between; gap: 20px;
-            flex-wrap: wrap;
         }
-        .kal-header-left { display: flex; align-items: center; gap: 16px; }
-        .kal-header-icon {
-            width: 50px; height: 50px;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 14px;
+
+        /* Brand */
+        .brand { display:flex; align-items:center; gap:11px; flex-shrink:0; }
+        .brand-logo {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--sky-5) 0%, var(--sky-6) 100%);
+            border-radius: var(--r-sm);
             display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            font-size: 13px; font-weight: 800; color: white;
+            letter-spacing: -0.5px;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.30), inset 0 1px 0 rgba(255,255,255,0.25);
+            flex-shrink: 0;
         }
-        .kal-header-text h1 {
-            color: white; font-size: 1.5em; font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-        .kal-header-text p { color: rgba(255,255,255,0.45); font-size: 0.8em; margin-top: 2px; }
+        .brand-name { font-size: 0.9em; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+        .brand-sub  { font-size: 0.66em; color: var(--ink-3); margin-top: 1px; }
 
-        /* Jam glassmorphism */
-        .kal-clock-glass {
-            background: rgba(255,255,255,0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 14px;
-            padding: 12px 22px;
-            text-align: right;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-        }
-        .kal-clock-time {
+        /* Clock */
+        .clock-wrap { text-align: center; }
+        .clock-time {
             font-family: 'DM Mono', monospace;
-            font-size: 1.6em; font-weight: 500;
-            color: white; letter-spacing: 2px;
-            line-height: 1;
-            text-shadow: 0 0 20px rgba(99,102,241,0.5);
+            font-size: 1.3em; font-weight: 500; color: var(--ink);
+            letter-spacing: 0.06em; line-height: 1;
         }
-        .kal-clock-date {
-            font-size: 0.7em; color: rgba(255,255,255,0.45);
-            margin-top: 4px; letter-spacing: 0.03em;
+        .clock-date { font-size: 0.65em; color: var(--ink-3); margin-top: 2px; }
+
+        /* Nav */
+        .nav-pills {
+            display: flex; gap: 2px;
+            background: rgba(255,255,255,0.50);
+            border: 1px solid var(--glass-border);
+            border-radius: 99px; padding: 4px;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+        .nav-pill {
+            padding: 7px 18px; border: none; background: transparent;
+            font-family: 'Sora', sans-serif; font-size: 0.8em; font-weight: 600;
+            color: var(--ink-2); border-radius: 99px; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .nav-pill:hover { color: var(--ink); background: rgba(255,255,255,0.60); }
+        .nav-pill.active {
+            background: linear-gradient(135deg, var(--sky-5) 0%, var(--sky-6) 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(37,99,235,0.30), inset 0 1px 0 rgba(255,255,255,0.2);
         }
 
-        /* ── CALENDAR TOGGLE (dark bar) ── */
-        .calendar-toggle {
-            background: #0f172a;
-            padding: 14px 24px;
-            display: flex; align-items: center; gap: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            flex-wrap: wrap;
-        }
-        .toggle-label { font-weight: 700; font-size: 0.8em; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; }
-        .toggle-pills { display: flex; gap: 4px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
-        .toggle-pill {
-            padding: 7px 18px; border: none; border-radius: 7px;
-            font-family: inherit; font-weight: 600;
-            font-size: 0.85em; cursor: pointer; transition: all 0.2s;
-            background: transparent; color: rgba(255,255,255,0.35);
-        }
-        .toggle-pill:hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
-        .toggle-pill.active       { background: rgba(99,102,241,0.3);  color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4);  box-shadow: 0 0 12px rgba(99,102,241,0.2); }
-        .toggle-pill.task-active  { background: rgba(249,115,22,0.2);  color: #fdba74; border: 1px solid rgba(249,115,22,0.35); box-shadow: 0 0 12px rgba(249,115,22,0.15); }
-        .toggle-pill.omset-active { background: rgba(16,185,129,0.2);  color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); box-shadow: 0 0 12px rgba(16,185,129,0.15); }
-
-        /* ── FILTER BAR ── */
-        #shiftFilterWrap {
-            display: flex; align-items: center; gap: 8px; margin-left: 8px;
-        }
-        #shiftFilterWrap select {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            color: rgba(255,255,255,0.7);
-            border-radius: 8px;
-            padding: 6px 10px;
-            font-family: inherit; font-size: 0.88em;
-            cursor: pointer;
-        }
-        #shiftFilterWrap select option { background: #1e2235; color: white; }
-        .filter-label { color: rgba(255,255,255,0.4); font-size: 0.85em; }
-
-        /* ── NAV ── */
-        .cal-nav {
-            background: var(--surface); padding: 14px 24px;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 2px solid var(--border); gap: 12px; flex-wrap: wrap;
-        }
-        .nav-btn {
-            padding: 9px 18px; background: var(--primary-light);
-            color: var(--primary); border: none; border-radius: var(--radius-sm);
-            font-family: inherit; font-weight: 600; font-size: 0.9em;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .nav-btn:hover { background: var(--primary); color: white; }
-        .month-year { font-size: 1.3em; font-weight: 800; color: var(--text); }
-
-        /* ── CALENDAR GRID ── */
-        .calendar-wrap { background: var(--surface); padding: 24px; overflow-x: auto; }
-        .days-header {
-            display: grid; grid-template-columns: repeat(7, 1fr);
-            gap: 8px; margin-bottom: 8px; min-width: 700px;
-        }
-        .day-name {
-            text-align: center; font-weight: 700; font-size: 0.8em;
-            letter-spacing: 0.04em; color: var(--text-muted); padding: 8px; text-transform: uppercase;
-        }
-        .day-name.weekend { color: var(--danger); }
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; min-width: 700px; }
-        .day-cell {
-            min-height: 110px; border: 1.5px solid var(--border); border-radius: var(--radius);
-            padding: 10px; background: var(--surface); cursor: pointer; transition: all 0.2s; position: relative;
-        }
-        .day-cell:hover:not(.empty) { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-1px); }
-        .day-cell.empty { background: var(--bg); cursor: default; border-color: transparent; }
-        .day-cell.today { border-color: var(--primary); background: var(--primary-light); }
-        .day-cell.red-day { background: #fff8f8; }
-        .day-cell.has-omset { border-color: rgba(16,185,129,0.4); }
-
-        /* Skeleton loading for cells */
-        .day-cell.skeleton {
-            cursor: default;
-            pointer-events: none;
-        }
-        .day-cell.skeleton .skel-num {
-            width: 24px; height: 24px; border-radius: 6px;
-            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-            margin-bottom: 8px;
-        }
-        .day-cell.skeleton .skel-line {
-            height: 18px; border-radius: 4px;
-            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-            margin-bottom: 6px;
-        }
-        .day-cell.skeleton .skel-line.short { width: 60%; }
-        @keyframes shimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .day-number { font-size: 1em; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
-        .day-number.red { color: var(--danger); }
-        .day-number.today-num {
-            color: white; background: var(--primary); width: 26px; height: 26px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85em;
-        }
-        .holiday-label { font-size: 0.65em; color: var(--danger); font-weight: 600; line-height: 1.2; margin-bottom: 5px; display: block; }
-
-        /* Layer action buttons on cell hover */
-        .cell-action-bar {
-            display: none;
-            position: absolute; bottom: 6px; right: 6px;
-            gap: 4px;
-        }
-        .day-cell:hover .cell-action-bar { display: flex; }
-        .cell-action-btn {
-            width: 24px; height: 24px;
-            border: none; border-radius: 6px;
-            font-size: 0.75em; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.15s; font-family: inherit;
-        }
-        .cell-action-btn.shift-btn  { background: var(--primary-light); color: var(--primary); }
-        .cell-action-btn.task-btn   { background: var(--accent-light);   color: var(--accent);  }
-        .cell-action-btn.shift-btn:hover { background: var(--primary); color: white; }
-        .cell-action-btn.task-btn:hover  { background: var(--accent);  color: white; }
-
-        /* Shift items */
-        .shift-list { display: flex; flex-direction: column; gap: 3px; }
-        .shift-item { padding: 4px 7px; border-radius: 5px; font-size: 0.78em; font-weight: 500; line-height: 1.3; }
-        .shift-item.libur  { background: var(--danger-light);  color: #b91c1c; }
-        .shift-item.pulsor { background: var(--success-light); color: #065f46; }
-        .shift-item.siang  { background: var(--warning-light); color: #92400e; }
-        .shift-item.normal { background: var(--primary-light); color: var(--primary-dark); }
-
-        /* Task items */
-        .task-list { display: flex; flex-direction: column; gap: 3px; }
-        .task-item { padding: 4px 7px; border-radius: 5px; font-size: 0.78em; font-weight: 500; line-height: 1.3; display: flex; align-items: flex-start; gap: 4px; }
-        .task-item.tugas           { background: var(--primary-light); color: var(--primary-dark); }
-        .task-item.kunjungan_kc    { background: #fef3c7; color: #92400e; }
-        .task-item.kunjungan_audit { background: #ede9fe; color: #5b21b6; }
-        .task-item.lainnya         { background: #f0fdf4; color: #166534; }
-        .task-item.oneoff          { background: var(--primary-light); color: var(--primary-dark); }
-        .task-item.recurring       { background: var(--accent-light); color: #c2410c; }
-        .task-item.permanent-recurring { background: #e0f2fe; color: #0369a1; border-left: 2px solid #0ea5e9; }
-        .task-item .task-icon      { font-size: 0.9em; flex-shrink: 0; }
-
-        /* Omset cell items */
-        .omset-cell-data { margin-top: 2px; }
-        .omset-total-chip {
-            display: flex; align-items: center; gap: 5px;
-            background: var(--success-light); color: #065f46;
-            padding: 4px 7px; border-radius: 5px;
-            font-size: 0.82em; font-weight: 700;
-            font-family: 'DM Mono', monospace;
-        }
-        .omset-total-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
-        .omset-no-data { font-size: 0.72em; color: var(--text-muted); font-style: italic; }
-
-        /* ── OMSET PANEL ── */
-        .omset-panel {
-            background: var(--surface);
-            border-top: 2px solid var(--border);
-            padding: 28px;
-        }
-        .omset-panel-header {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
-        }
-        .omset-panel-title { font-size: 1.15em; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; }
-
-        /* Stat cards */
-        .omset-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
-        .stat-card {
-            background: var(--bg); border-radius: var(--radius);
-            padding: 18px 20px; position: relative; overflow: hidden;
-        }
-        .stat-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 4px; height: 100%; border-radius: 4px 0 0 4px;
-        }
-        .stat-card.green::before  { background: var(--success); }
-        .stat-card.blue::before   { background: var(--primary); }
-        .stat-card.orange::before { background: var(--accent); }
-        .stat-card.purple::before { background: var(--purple); }
-        .stat-label { font-size: 0.78em; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-        .stat-value { font-size: 1.8em; font-weight: 800; font-family: 'DM Mono', monospace; color: var(--text); }
-        .stat-sub   { font-size: 0.78em; color: var(--text-muted); margin-top: 4px; }
-
-        /* Progress bar */
-        .progress-wrap { margin-bottom: 24px; }
-        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .progress-label { font-size: 0.9em; font-weight: 700; color: var(--text); }
-        .progress-pct   { font-size: 0.9em; font-weight: 800; font-family: 'DM Mono', monospace; }
-        .progress-pct.good { color: var(--success); }
-        .progress-pct.warn { color: var(--warning); }
-        .progress-pct.bad  { color: var(--danger);  }
-        .progress-bar-bg { height: 14px; background: var(--border); border-radius: 99px; overflow: hidden; }
-        .progress-bar-fill {
-            height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-        }
-        .progress-bar-fill.good { background: linear-gradient(90deg, var(--success), #34d399); }
-        .progress-bar-fill.warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
-        .progress-bar-fill.bad  { background: linear-gradient(90deg, var(--danger),  #f87171); }
-        .progress-detail { margin-top: 6px; font-size: 0.82em; color: var(--text-muted); }
-
-        /* Omset loading skeleton */
-        .skel-stat {
-            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-            border-radius: 10px; height: 90px;
-        }
-
-        /* Target editor */
-        .target-editor { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .target-input {
-            width: 100px; padding: 6px 10px; border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm); font-family: 'DM Mono', monospace;
-            font-size: 0.9em; background: var(--bg); color: var(--text); text-align: center;
-        }
-        .target-input:focus { outline: none; border-color: var(--success); }
-        .btn-save-target {
-            padding: 7px 14px; background: var(--success); color: white;
-            border: none; border-radius: var(--radius-sm);
-            font-family: inherit; font-weight: 600; font-size: 0.85em;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .btn-save-target:hover { background: #059669; }
-        .btn-save-target:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* Loading state */
-        .omset-empty { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.95em; }
-
-        /* ── HOLIDAY SECTION ── */
-        .holiday-section { background: var(--surface); padding: 24px; border-top: 2px solid var(--border); }
-        .section-title { font-size: 1em; font-weight: 800; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .holiday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-        .holiday-chip {
-            display: flex; align-items: flex-start; gap: 10px;
-            padding: 10px 14px; background: var(--bg); border-radius: var(--radius-sm); border-left: 3px solid var(--danger);
-        }
-        .holiday-chip .hdate { font-family: 'DM Mono', monospace; font-size: 0.8em; font-weight: 500; color: var(--danger); white-space: nowrap; }
-        .holiday-chip .hname { font-size: 0.85em; font-weight: 600; color: var(--text); }
-        .no-holiday { color: var(--text-muted); font-size: 0.9em; font-style: italic; }
-
-        /* ── LEGEND ── */
-        .legend {
-            background: var(--surface); padding: 16px 24px;
-            border-top: 1px solid var(--border); border-radius: 0 0 20px 20px;
-            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-        }
-        .legend-label { font-size: 0.8em; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.83em; font-weight: 500; }
-        .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-        .ld-libur  { background: var(--danger);  }
-        .ld-pulsor { background: var(--success); }
-        .ld-siang  { background: var(--warning); }
-        .ld-normal { background: var(--primary); }
-        .ld-omset  { background: var(--success); }
-
-        /* ── CONFIRM MODAL (replaces confirm()) ── */
-        .confirm-modal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(26,29,46,0.55); backdrop-filter: blur(6px);
-            z-index: 2000; align-items: center; justify-content: center; padding: 20px;
-        }
-        .confirm-modal.active { display: flex; }
-        .confirm-box {
-            background: var(--surface); border-radius: 18px;
-            max-width: 360px; width: 100%; box-shadow: var(--shadow-lg);
-            overflow: hidden; animation: popIn 0.2s ease;
-        }
-        @keyframes popIn {
-            from { opacity:0; transform: scale(0.92) translateY(10px); }
-            to   { opacity:1; transform: scale(1)    translateY(0);    }
-        }
-        .confirm-icon { text-align: center; font-size: 2.5em; padding: 28px 24px 12px; }
-        .confirm-title { text-align: center; font-size: 1.1em; font-weight: 800; color: var(--text); padding: 0 24px; }
-        .confirm-msg   { text-align: center; font-size: 0.88em; color: var(--text-muted); padding: 8px 24px 24px; line-height: 1.5; }
-        .confirm-btns  { display: flex; border-top: 1px solid var(--border); }
-        .confirm-btn   { flex: 1; padding: 14px; border: none; font-family: inherit; font-size: 0.95em; font-weight: 700; cursor: pointer; transition: background 0.15s; }
-        .confirm-btn.cancel { background: var(--bg); color: var(--text-muted); border-right: 1px solid var(--border); }
-        .confirm-btn.cancel:hover  { background: var(--border); }
-        .confirm-btn.confirm { background: var(--danger); color: white; }
-        .confirm-btn.confirm:hover { background: #dc2626; }
-
-        /* ── SHIFT MODAL ── */
-        .modal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(26,29,46,0.6); backdrop-filter: blur(4px);
-            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
-        }
-        .modal.active { display: flex; }
-        .modal-box {
-            background: var(--surface); border-radius: 20px;
-            width: 100%; max-width: 520px; box-shadow: var(--shadow-lg); overflow: hidden;
-            animation: popIn 0.2s ease;
-        }
-        .modal-header {
-            padding: 20px 24px 16px; border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .modal-header h2 { font-size: 1.05em; font-weight: 800; }
-        .modal-close {
-            width: 32px; height: 32px; background: var(--bg); border: none; border-radius: 8px;
-            cursor: pointer; font-size: 1.1em; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-        }
-        .modal-close:hover { background: var(--danger-light); color: var(--danger); }
-        .modal-body   { padding: 20px 24px; }
-        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
-
-        .form-group    { margin-bottom: 16px; }
-        .form-label    { font-size: 0.85em; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
-        .form-input, .form-select, .form-textarea {
-            width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm); font-family: inherit; font-size: 0.95em;
-            background: var(--bg); color: var(--text); transition: border-color 0.2s;
-        }
-        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary); }
-        .form-textarea { min-height: 100px; resize: vertical; }
-        .help-box {
-            background: var(--bg); border-radius: var(--radius-sm); padding: 12px; font-size: 0.8em;
-            color: var(--text-muted); margin-bottom: 14px; border-left: 3px solid var(--primary); line-height: 1.6;
-        }
-
-        /* Task list in modal */
-        .task-existing-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 10px; border-radius: 8px; background: var(--bg); margin-bottom: 6px; font-size: 0.88em;
-        }
-        .task-existing-item span { flex: 1; }
-        .task-badge { padding: 2px 8px; border-radius: 20px; font-size: 0.75em; font-weight: 600; margin-left: 8px; }
-        .task-del-btn {
-            border: none; background: none; cursor: pointer;
-            color: var(--danger); font-size: 1em; padding: 2px 6px; border-radius: 4px; transition: background 0.2s;
-        }
-        .task-del-btn:hover { background: var(--danger-light); }
-
-        /* Buttons */
-        .btn { padding: 10px 20px; border: none; border-radius: var(--radius-sm); font-family: inherit; font-weight: 600; font-size: 0.9em; cursor: pointer; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-dark); }
-        .btn-primary.task { background: var(--accent); }
-        .btn-primary.task:hover { background: #ea6c0a; }
-        .btn-danger   { background: var(--danger-light); color: var(--danger); }
-        .btn-danger:hover { background: var(--danger); color: white; }
-        .btn-secondary { background: var(--bg); color: var(--text); }
-        .btn-secondary:hover { background: var(--border); }
-
-        /* Loading dots */
-        .loading-dot { display: inline-block; animation: pulse 1.4s ease infinite; }
-        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
-
-        /* Filter empty state */
-        .filter-empty-banner {
-            display: none;
-            background: var(--warning-light); border: 1.5px solid var(--warning);
-            border-radius: var(--radius-sm); padding: 10px 16px;
-            font-size: 0.85em; font-weight: 600; color: #92400e;
-            margin-left: auto; align-items: center; gap: 8px;
-        }
-        .filter-empty-banner.visible { display: flex; }
-        .filter-clear-btn {
-            border: none; background: var(--warning); color: white;
-            border-radius: 6px; padding: 3px 10px; font-family: inherit;
-            font-size: 0.88em; font-weight: 700; cursor: pointer;
-        }
-
-        /* ── APP NAVBAR ── */
-        .app-navbar {
-            background: linear-gradient(135deg, #1a1d2e 0%, #2d3561 60%, #3d5af1 100%);
-            border-radius: 20px 20px 0 0;
-            padding: 0 32px;
-            display: flex; align-items: flex-end; gap: 4px;
-        }
-        .app-nav-tab {
-            padding: 14px 22px 12px;
-            color: rgba(255,255,255,0.5);
-            font-weight: 700; font-size: 0.9em;
-            cursor: pointer; border: none; background: none;
-            font-family: inherit; border-radius: 12px 12px 0 0;
-            transition: all 0.2s; display: flex; align-items: center; gap: 7px;
-            border-bottom: 3px solid transparent;
-        }
-        .app-nav-tab:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
-        .app-nav-tab.active { color: white; background: rgba(255,255,255,0.12); border-bottom-color: white; }
-
-        /* ── PAGE SECTIONS ── */
-        .page { display: none; }
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PAGE FRAME
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .page { display:none; position: relative; z-index: 1; }
         .page.active { display: block; }
 
-        /* ── PGI CORE PAGE ── */
-        .pgicore-page {
-            background: var(--surface); border-radius: 0 0 20px 20px;
-            padding: 24px 28px; display: flex; flex-direction: column; gap: 28px;
+        .page-inner {
+            max-width: 1340px; margin: 0 auto;
+            padding: 28px 32px 52px;
         }
-        .pgicore-group-label {
-            font-size: 0.75em; font-weight: 700; letter-spacing: 0.05em;
-            text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px;
-        }
-        .pgicore-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-        .pgicore-card {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 8px; padding: 20px 12px;
-            background: var(--bg); border-radius: var(--radius);
-            border: 1.5px solid var(--border);
-            text-decoration: none; text-align: center;
-            transition: all 0.2s; cursor: pointer;
-        }
-        .pgicore-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
-        .pgicore-icon {
-            font-size: 1.8em; width: 48px; height: 48px;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--surface); border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .pgicore-name { font-size: 0.83em; font-weight: 700; color: var(--text); line-height: 1.3; }
-        .pgicore-url  { font-size: 0.68em; color: var(--text-muted); word-break: break-all; line-height: 1.3; }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            body { padding: 0; }
-            .kal-header-content { padding: 16px; }
-            .calendar-wrap { padding: 12px; }
-            .day-cell { min-height: 80px; padding: 6px; }
-            .shift-item, .task-item { font-size: 0.72em; }
-            .holiday-section { padding: 16px; }
-            .holiday-grid { grid-template-columns: 1fr; }
-            .modal-box { max-width: 100%; margin: 10px; }
-            .modal-footer { flex-direction: column-reverse; }
-            .modal-footer .btn { width: 100%; text-align: center; }
-            .legend { border-radius: 0; flex-direction: column; align-items: flex-start; }
-            .cal-nav { flex-direction: column; gap: 8px; }
-            .nav-btn { width: 100%; }
-            .month-year { text-align: center; }
-            .omset-stats { grid-template-columns: 1fr 1fr; }
-            .omset-panel { padding: 16px; }
-            .app-navbar { padding: 0 12px; }
-            .app-nav-tab { padding: 12px 14px 10px; font-size: 0.82em; }
-            .cell-action-bar { display: flex !important; } /* always show on mobile */
+        .page-header {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+        }
+        .page-title {
+            font-size: 1.5em; font-weight: 800; color: var(--ink);
+            letter-spacing: -0.03em; line-height: 1.1;
+        }
+        .page-subtitle { font-size: 0.8em; color: var(--ink-3); margin-top: 5px; }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           GLASS CARD (reusable)
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PGI CENTER / SENKU
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .section-label {
+            font-size: 0.68em; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.10em; color: var(--ink-3); margin-bottom: 12px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px; margin-bottom: 32px;
+        }
+        .tool-card {
+            display: flex; flex-direction: column; gap: 10px;
+            padding: 20px 16px 18px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-lg);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
+            text-decoration: none; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(37,99,235,0.14), 0 4px 12px rgba(37,99,235,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+            border-color: rgba(255,255,255,0.9);
+        }
+        .tool-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(228,238,255,0.8) 100%);
+            border-radius: var(--r-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3em;
+            border: 1px solid rgba(147,180,247,0.3);
+            box-shadow: 0 2px 6px rgba(37,99,235,0.10);
+        }
+        .tool-name { font-size: 0.83em; font-weight: 700; color: var(--ink); line-height: 1.3; }
+        .tool-url  { font-size: 0.66em; color: var(--ink-3); word-break: break-all; line-height: 1.3; }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           CALENDAR — mostly unchanged,
+           just adapted chip/cell to glass
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+        .kal-controls {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+        }
+        .layer-toggle {
+            display: flex; gap: 3px;
+            background: rgba(255,255,255,0.50);
+            border: 1px solid var(--glass-border);
+            border-radius: 99px; padding: 4px;
+            backdrop-filter: blur(10px);
+        }
+        .layer-btn {
+            padding: 6px 15px; border: none; border-radius: 99px;
+            font-family: 'Sora', sans-serif; font-size: 0.77em; font-weight: 600;
+            cursor: pointer; transition: all 0.18s;
+            background: transparent; color: var(--ink-3);
+        }
+        .layer-btn:hover { color: var(--ink); background: rgba(255,255,255,0.55); }
+        .layer-btn.on-shift { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color:white; box-shadow:0 2px 8px rgba(37,99,235,0.30); }
+        .layer-btn.on-task  { background: linear-gradient(135deg,#f97316,#c2410c); color:white; box-shadow:0 2px 8px rgba(234,88,12,0.25); }
+        .layer-btn.on-omset { background: linear-gradient(135deg,#10b981,#047857); color:white; box-shadow:0 2px 8px rgba(5,150,105,0.25); }
+
+        .name-filter-wrap select {
+            padding: 7px 14px;
+            font-family: 'Sora', sans-serif; font-size: 0.78em; font-weight: 500;
+            border: 1px solid var(--glass-border); border-radius: 99px;
+            background: rgba(255,255,255,0.55); color: var(--ink);
+            backdrop-filter: blur(10px); cursor: pointer;
+        }
+        .name-filter-wrap select:focus { outline: none; border-color: var(--sky-4); }
+
+        .filter-empty-banner {
+            display: none; align-items: center; gap: 8px;
+            background: rgba(255,251,235,0.80); backdrop-filter: blur(10px);
+            border: 1px solid #fcd34d; border-radius: var(--r-sm);
+            padding: 6px 13px; font-size: 0.75em; font-weight: 600; color: var(--amber);
+        }
+        .filter-empty-banner.visible { display:flex; }
+        .filter-clear-btn {
+            border: none; background: var(--amber); color: white;
+            border-radius: 99px; padding: 2px 9px;
+            font-family: 'Sora', sans-serif; font-size: 0.85em; font-weight: 700; cursor: pointer;
+        }
+
+        /* Month nav */
+        .month-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            margin: 20px 0 14px;
+        }
+        .month-nav-btn {
+            width: 34px; height: 34px;
+            border: 1px solid var(--glass-border); border-radius: 50%;
+            background: rgba(255,255,255,0.60); color: var(--ink-2);
+            backdrop-filter: blur(10px);
+            font-size: 1em; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.18s;
+        }
+        .month-nav-btn:hover {
+            background: linear-gradient(135deg,var(--sky-5),var(--sky-6));
+            border-color: transparent; color: white;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.28);
+        }
+        .month-label { font-size: 1.2em; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+
+        /* Grid */
+        .cal-grid-wrap { overflow-x: auto; }
+        .cal-day-names {
+            display: grid; grid-template-columns: repeat(7,1fr);
+            gap: 5px; margin-bottom: 5px; min-width: 620px;
+        }
+        .cal-day-name {
+            text-align: center; font-size: 0.68em; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: var(--ink-3); padding: 6px 0;
+        }
+        .cal-day-name.wknd { color: var(--red); }
+
+        .cal-grid {
+            display: grid; grid-template-columns: repeat(7,1fr);
+            gap: 5px; min-width: 620px;
+        }
+
+        .cal-cell {
+            min-height: 106px;
+            background: rgba(255,255,255,0.52);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.80);
+            border-radius: var(--r);
+            padding: 9px;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative; overflow: hidden;
+            box-shadow: 0 1px 4px rgba(37,99,235,0.05);
+        }
+        .cal-cell:hover:not(.empty):not(.skeleton) {
+            background: rgba(255,255,255,0.80);
+            border-color: rgba(147,180,247,0.60);
+            box-shadow: 0 6px 20px rgba(37,99,235,0.12), 0 2px 6px rgba(37,99,235,0.06);
+            transform: translateY(-2px);
+        }
+        .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; box-shadow:none; }
+        .cal-cell.today {
+            background: rgba(235,244,255,0.85);
+            border-color: rgba(91,141,238,0.55);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.14), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        .cal-cell.red-day { background: rgba(255,248,248,0.65); }
+        .cal-cell.has-omset { border-color: rgba(16,185,129,0.40); }
+
+        /* Skeleton */
+        .cal-cell.skeleton { cursor:default; pointer-events:none; }
+        .skel-block {
+            border-radius: 4px;
+            background: linear-gradient(90deg, rgba(199,218,255,0.6) 25%, rgba(228,238,255,0.4) 50%, rgba(199,218,255,0.6) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.3s infinite;
+        }
+        .skel-num  { width:22px; height:22px; margin-bottom:8px; border-radius:50%; }
+        .skel-line { height:13px; margin-bottom:5px; }
+        .skel-line.w60 { width:60%; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        .cell-num {
+            font-family: 'DM Mono', monospace; font-size: 0.8em; font-weight: 500;
+            color: var(--ink); margin-bottom: 4px;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 23px; height: 23px; border-radius: 50%;
+        }
+        .cell-num.red { color: var(--red); }
+        .cell-num.today-n {
+            background: linear-gradient(135deg, var(--sky-5), var(--sky-6));
+            color: white; font-size: 0.76em;
+            box-shadow: 0 2px 6px rgba(37,99,235,0.30);
+        }
+        .holiday-tag {
+            font-size: 0.58em; font-weight: 600; color: var(--red);
+            line-height: 1.2; margin-bottom: 4px; display: block;
+        }
+
+        /* Chips */
+        .chip-stack { display: flex; flex-direction: column; gap: 3px; }
+        .chip {
+            padding: 3px 7px; border-radius: 4px;
+            font-size: 0.71em; font-weight: 500; line-height: 1.3;
+        }
+        .chip.libur   { background: rgba(254,226,226,0.80); color: #991b1b; }
+        .chip.pulsor  { background: rgba(209,250,229,0.80); color: #065f46; }
+        .chip.siang   { background: rgba(254,243,199,0.80); color: #92400e; }
+        .chip.normal  { background: rgba(219,234,254,0.80); color: #1e40af; }
+        .chip.task    { background: rgba(255,247,237,0.80); color: #9a3412; }
+        .chip.task-kc { background: rgba(254,243,199,0.80); color: #92400e; }
+        .chip.task-au { background: rgba(245,243,255,0.80); color: #4c1d95; }
+        .chip.task-ot { background: rgba(240,253,244,0.80); color: #14532d; }
+        .chip.perm    { background: rgba(224,242,254,0.80); color: #075985; border-left: 2px solid #0ea5e9; }
+        .chip.omset   { background: rgba(209,250,229,0.80); color: #065f46; display:flex;align-items:center;gap:4px; }
+        .chip.omset .dot { width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0; }
+        .chip.no-data { font-size:0.66em; color:var(--ink-4); font-style:italic; }
+
+        /* Cell action bar */
+        .cell-actions { position:absolute; bottom:6px; right:6px; display:none; gap:3px; }
+        .cal-cell:hover .cell-actions { display:flex; }
+        .cell-act-btn {
+            width:21px; height:21px; border:none; border-radius:4px;
+            font-size:0.7em; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; transition:all 0.14s;
+        }
+        .cell-act-btn.sb { background:rgba(219,234,254,0.90); color:var(--blue); }
+        .cell-act-btn.tb { background:rgba(255,247,237,0.90); color:var(--orange); }
+        .cell-act-btn.sb:hover { background:var(--blue); color:white; }
+        .cell-act-btn.tb:hover { background:var(--orange); color:white; }
+
+        /* ━━━ OMSET PANEL ━━━ */
+        .omset-panel {
+            margin-top: 22px; padding: 22px 26px;
+        }
+        .omset-panel-head {
+            display: flex; align-items:center; justify-content:space-between;
+            flex-wrap:wrap; gap:12px; margin-bottom:18px;
+        }
+        .omset-panel-title { font-size:0.92em; font-weight:700; color:var(--ink); }
+        .target-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+        .target-row span { font-size:0.75em; color:var(--ink-3); font-weight:600; }
+        .target-input {
+            width:88px; padding:6px 10px;
+            border:1px solid rgba(147,180,247,0.40); border-radius:var(--r-sm);
+            font-family:'DM Mono',monospace; font-size:0.86em;
+            background:rgba(255,255,255,0.65); color:var(--ink); text-align:center;
+        }
+        .target-input:focus { outline:none; border-color:var(--sky-4); }
+        .btn-target {
+            padding:6px 14px; background:linear-gradient(135deg,var(--green),#047857); color:white;
+            border:none; border-radius:var(--r-sm);
+            font-family:'Sora',sans-serif; font-weight:600; font-size:0.76em;
+            cursor:pointer; transition:opacity 0.15s;
+            box-shadow: 0 2px 8px rgba(5,150,105,0.25);
+        }
+        .btn-target:hover { opacity:0.88; }
+        .btn-target:disabled { opacity:0.5; cursor:not-allowed; }
+
+        /* Omset skeleton */
+        .omset-skel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; margin-bottom:18px; }
+        .omset-skel-card { height:84px; border-radius:var(--r); }
+
+        /* Stat cards */
+        .stat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; margin-bottom:18px; }
+        .stat-card {
+            background: rgba(255,255,255,0.55);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r); padding:15px 17px;
+            border-left: 3px solid transparent;
+        }
+        .stat-card.g { border-left-color: var(--green); }
+        .stat-card.b { border-left-color: var(--blue); }
+        .stat-card.a { border-left-color: var(--amber); }
+        .stat-card.p { border-left-color: var(--indigo); }
+        .stat-lbl { font-size:0.68em; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3); margin-bottom:5px; }
+        .stat-val { font-size:1.55em; font-weight:800; font-family:'DM Mono',monospace; color:var(--ink); line-height:1; }
+        .stat-sub { font-size:0.7em; color:var(--ink-4); margin-top:3px; }
+
+        /* Progress */
+        .prog-wrap { margin-bottom:18px; }
+        .prog-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+        .prog-lbl { font-size:0.8em; font-weight:600; color:var(--ink); }
+        .prog-pct { font-size:0.8em; font-weight:800; font-family:'DM Mono',monospace; }
+        .prog-pct.g{color:var(--green)} .prog-pct.w{color:var(--amber)} .prog-pct.r{color:var(--red)}
+        .prog-track { height:7px; background:rgba(199,218,255,0.55); border-radius:99px; overflow:hidden; }
+        .prog-fill { height:100%; border-radius:99px; transition:width 0.7s cubic-bezier(0.4,0,0.2,1); }
+        .prog-fill.g{background:var(--green)} .prog-fill.w{background:var(--amber)} .prog-fill.r{background:var(--red)}
+        .prog-sub { margin-top:5px; font-size:0.72em; color:var(--ink-3); }
+
+        /* Daily need */
+        .daily-need-box {
+            background:rgba(255,255,255,0.45); border:1px solid var(--glass-border);
+            border-radius:var(--r); padding:14px 18px;
+        }
+        .daily-need-lbl { font-size:0.68em; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-4); margin-bottom:10px; }
+        .daily-need-body { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+        .omset-empty { text-align:center; padding:30px; color:var(--ink-3); font-size:0.88em; }
+
+        /* ━━━ HOLIDAYS ━━━ */
+        .holiday-panel { margin-top:20px; padding:18px 22px; }
+        .holiday-panel-title { font-size:0.86em; font-weight:700; color:var(--ink); margin-bottom:12px; }
+        .holiday-chips { display:flex; flex-wrap:wrap; gap:7px; }
+        .hchip {
+            display:flex; align-items:center; gap:8px;
+            padding:6px 11px;
+            background:rgba(254,226,226,0.65); backdrop-filter:blur(8px);
+            border:1px solid rgba(252,165,165,0.50); border-radius:var(--r-sm);
+        }
+        .hchip .hdate { font-family:'DM Mono',monospace; font-size:0.7em; font-weight:500; color:var(--red); white-space:nowrap; }
+        .hchip .hname { font-size:0.76em; font-weight:600; color:var(--ink); }
+        .hchip.custom { background:rgba(255,247,237,0.70); border-color:rgba(253,186,116,0.50); }
+        .hchip.custom .hdate { color:var(--orange); }
+        .no-holiday { font-size:0.8em; color:var(--ink-4); font-style:italic; }
+
+        /* ━━━ LEGEND ━━━ */
+        .legend-strip {
+            margin-top:14px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+        }
+        .leg-lbl { font-size:0.66em; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); }
+        .leg-item { display:flex; align-items:center; gap:5px; font-size:0.73em; color:var(--ink-2); font-weight:500; }
+        .leg-dot { width:7px; height:7px; border-radius:2px; }
+        .leg-hint { margin-left:auto; font-size:0.7em; color:var(--ink-4); font-style:italic; }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           CONFIRM MODAL
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .modal-backdrop {
+            display:none; position:fixed; inset:0;
+            background:rgba(14,30,80,0.35); backdrop-filter:blur(8px);
+            z-index:500; align-items:center; justify-content:center; padding:20px;
+        }
+        .modal-backdrop.open { display:flex; }
+
+        @keyframes popIn {
+            from{opacity:0;transform:scale(0.94) translateY(8px)}
+            to{opacity:1;transform:scale(1) translateY(0)}
+        }
+
+        .confirm-box {
+            background: rgba(240,246,255,0.90);
+            backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-xl);
+            box-shadow: 0 24px 60px rgba(14,30,80,0.20), inset 0 1px 0 rgba(255,255,255,0.95);
+            animation: popIn 0.18s ease;
+            max-width: 340px; width: 100%; overflow: hidden;
+        }
+        .confirm-icon  { text-align:center; font-size:2em; padding:24px 20px 8px; }
+        .confirm-title { text-align:center; font-size:0.98em; font-weight:800; color:var(--ink); padding:0 20px 4px; }
+        .confirm-msg   { text-align:center; font-size:0.8em; color:var(--ink-3); padding:0 20px 20px; line-height:1.5; }
+        .confirm-btns  { display:flex; border-top:1px solid var(--line); }
+        .confirm-btn   { flex:1; padding:13px; border:none; font-family:'Sora',sans-serif; font-size:0.86em; font-weight:700; cursor:pointer; transition:background 0.14s; }
+        .confirm-btn.cancel { background:rgba(255,255,255,0.50); color:var(--ink-3); border-right:1px solid var(--line); }
+        .confirm-btn.cancel:hover { background:rgba(255,255,255,0.80); }
+        .confirm-btn.ok { background:linear-gradient(135deg,#ef4444,#b91c1c); color:white; }
+        .confirm-btn.ok:hover { opacity:0.90; }
+
+        /* Shift / Task modal */
+        .modal-box {
+            background: rgba(240,246,255,0.88);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-xl);
+            box-shadow: 0 24px 60px rgba(14,30,80,0.20), inset 0 1px 0 rgba(255,255,255,0.95);
+            animation: popIn 0.18s ease;
+            width: 100%; max-width: 480px; overflow: hidden;
+        }
+        .modal-head {
+            padding:17px 22px 13px; border-bottom:1px solid var(--line);
+            display:flex; align-items:center; justify-content:space-between;
+        }
+        .modal-head h3 { font-size:0.93em; font-weight:800; color:var(--ink); }
+        .modal-close {
+            width:27px; height:27px; background:rgba(199,218,255,0.40); border:none; border-radius:50%;
+            cursor:pointer; font-size:0.85em; display:flex; align-items:center; justify-content:center;
+            color:var(--ink-3); transition:all 0.15s;
+        }
+        .modal-close:hover { background:rgba(220,38,38,0.12); color:var(--red); }
+        .modal-body   { padding:17px 22px; }
+        .modal-footer { padding:13px 22px; border-top:1px solid var(--line); display:flex; gap:8px; justify-content:flex-end; }
+
+        .form-lbl {
+            font-size:0.72em; font-weight:700; color:var(--ink-3); margin-bottom:5px;
+            display:block; text-transform:uppercase; letter-spacing:0.04em;
+        }
+        .form-ctrl {
+            width:100%; padding:9px 12px;
+            border:1px solid rgba(147,180,247,0.40); border-radius:var(--r-sm);
+            font-family:'Sora',sans-serif; font-size:0.86em;
+            background:rgba(255,255,255,0.65); color:var(--ink);
+            transition:border-color 0.14s;
+        }
+        .form-ctrl:focus { outline:none; border-color:var(--sky-4); }
+        textarea.form-ctrl { min-height:94px; resize:vertical; }
+        .form-group { margin-bottom:13px; }
+
+        .hint-box {
+            background:rgba(219,234,254,0.55); border-radius:var(--r-sm);
+            padding:9px 12px; font-size:0.74em; color:var(--blue-dk);
+            margin-bottom:11px; border-left:3px solid var(--sky-4); line-height:1.6;
+        }
+        .blue-dk { color: var(--sky-6); }
+
+        .task-row {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:7px 10px; border-radius:var(--r-sm);
+            background:rgba(255,255,255,0.55); margin-bottom:5px; font-size:0.82em;
+        }
+        .task-row span { flex:1; }
+        .task-badge {
+            padding:2px 7px; border-radius:99px;
+            font-size:0.70em; font-weight:700; margin-left:7px;
+        }
+        .task-del {
+            border:none; background:none; cursor:pointer; color:var(--red);
+            padding:2px 5px; border-radius:4px; transition:background 0.14s; font-size:0.88em;
+        }
+        .task-del:hover { background:rgba(254,226,226,0.80); }
+
+        /* Buttons */
+        .btn { padding:9px 18px; border:none; border-radius:var(--r-sm); font-family:'Sora',sans-serif; font-weight:600; font-size:0.84em; cursor:pointer; transition:all 0.15s; }
+        .btn-ink    { background:linear-gradient(135deg,var(--sky-5),var(--sky-6)); color:white; box-shadow:0 2px 8px rgba(37,99,235,0.28); }
+        .btn-ink:hover { opacity:0.90; }
+        .btn-orange { background:linear-gradient(135deg,#f97316,#c2410c); color:white; box-shadow:0 2px 8px rgba(234,88,12,0.22); }
+        .btn-orange:hover { opacity:0.90; }
+        .btn-danger { background:rgba(254,226,226,0.80); color:var(--red); border:1px solid rgba(252,165,165,0.40); }
+        .btn-danger:hover { background:var(--red); color:white; }
+        .btn-ghost  { background:rgba(255,255,255,0.60); color:var(--ink-2); border:1px solid var(--line); }
+        .btn-ghost:hover { background:rgba(255,255,255,0.85); }
+
+        /* ━━━ RESPONSIVE ━━━ */
+        @media (max-width:700px) {
+            .identity-row { padding:0 16px; }
+            .clock-wrap { display:none; }
+            .page-inner { padding:16px 14px 40px; }
+            .cal-cell { min-height:74px; padding:6px; }
+            .cell-actions { display:flex !important; }
+            .nav-pill { padding:6px 11px; font-size:0.76em; }
+            .page-header { flex-direction:column; }
         }
     </style>
 </head>
 <body>
 
-<!-- Main -->
-<div class="container" id="mainContainer">
+<!-- TOP CHROME -->
+<header class="top-chrome">
+    <div class="identity-row">
+        <div class="brand">
+            <div class="brand-logo" id="brandLogo">PGI</div>
+            <div>
+                <div class="brand-name" id="brandName">PGI BDG026</div>
+                <div class="brand-sub"  id="brandSub">Pusat Gadai Indonesia</div>
+            </div>
+        </div>
 
-    <!-- App Navbar -->
-    <div class="app-navbar">
-        <button class="app-nav-tab active" id="navLinks"    onclick="switchPage('links')">🏢 PGI Core</button>
-        <button class="app-nav-tab"        id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
-        <button class="app-nav-tab"        id="navSenku"    onclick="switchPage('senku')">🏢 SENKU</button>
+        <div class="clock-wrap">
+            <div class="clock-time" id="clockTime">00:00:00</div>
+            <div class="clock-date" id="clockDate">—</div>
+        </div>
+
+        <nav class="nav-pills">
+            <button class="nav-pill active" id="navLinks"    onclick="switchPage('links')">PGI Center</button>
+            <button class="nav-pill"        id="navKalender" onclick="switchPage('kalender')">Kalender</button>
+            <button class="nav-pill"        id="navSenku"    onclick="switchPage('senku')">SENKU</button>
+        </nav>
     </div>
+</header>
 
-    <!-- PAGE: Kalender -->
-    <div class="page" id="pageKalender">
-        <div class="kal-header">
-            <div class="kal-header-bg"></div>
-            <div class="kal-header-content">
-                <div class="kal-header-left">
-                    <div class="kal-header-icon">📅</div>
-                    <div class="kal-header-text">
-                        <h1>Kalender PGI</h1>
-                        <p>BDG026 · Hover tanggal untuk edit jadwal atau tugas</p>
-                    </div>
-                </div>
-                <div class="kal-header-right">
-                    <div class="kal-clock-glass">
-                        <div class="kal-clock-time" id="kalClockTime">00:00:00</div>
-                        <div class="kal-clock-date" id="kalClockDate">—</div>
-                    </div>
-                </div>
+<!-- PAGE: PGI Center -->
+<div class="page active" id="pageLinks">
+    <div class="page-inner">
+        <div class="page-header">
+            <div>
+                <div class="page-title">PGI Center</div>
+                <div class="page-subtitle">Akses cepat tools dan sistem operasional</div>
             </div>
         </div>
-
-        <!-- Calendar Mode Toggle -->
-        <div class="calendar-toggle">
-            <span class="toggle-label">Tampilkan:</span>
-            <div class="toggle-pills">
-                <button class="toggle-pill active"       id="pillShift" onclick="toggleLayer('shift')">👥 Shift</button>
-                <button class="toggle-pill task-active"  id="pillTask"  onclick="toggleLayer('task')">📋 Tugas</button>
-                <button class="toggle-pill omset-active" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
-            </div>
-            <div id="shiftFilterWrap">
-                <span class="filter-label">🔍</span>
-                <select id="nameFilter" onchange="filterByName()">
-                    <option value="">Semua Orang</option>
-                </select>
-            </div>
-            <!-- Filter empty state notice -->
-            <div class="filter-empty-banner" id="filterEmptyBanner">
-                ⚠️ Tidak ada data untuk <span id="filterEmptyName" style="font-style:italic;margin:0 4px;"></span> bulan ini
-                <button class="filter-clear-btn" onclick="clearFilter()">Reset</button>
-            </div>
-        </div>
-
-        <!-- Nav -->
-        <div class="cal-nav">
-            <button class="nav-btn" onclick="changeMonth(-1)">← Sebelumnya</button>
-            <div class="month-year" id="monthYear"></div>
-            <button class="nav-btn" onclick="changeMonth(1)">Berikutnya →</button>
-        </div>
-
-        <!-- Calendar -->
-        <div class="calendar-wrap" id="calendarWrap">
-            <div id="calendarContent">
-                <div class="days-header">
-                    <div class="day-name">Sen</div><div class="day-name">Sel</div>
-                    <div class="day-name">Rab</div><div class="day-name">Kam</div>
-                    <div class="day-name">Jum</div>
-                    <div class="day-name weekend">Sab</div><div class="day-name weekend">Min</div>
-                </div>
-                <div class="days-grid" id="daysGrid"></div>
-            </div>
-        </div>
-
-        <!-- OMSET PANEL -->
-        <div class="omset-panel" id="omsetPanel" style="display:none;">
-            <div class="omset-panel-header">
-                <div class="omset-panel-title">📊 Monitoring Omset — <span id="omsetPanelMonth"></span></div>
-                <div class="target-editor">
-                    <span style="font-size:0.82em;color:var(--text-muted);font-weight:600;">Target Bulanan:</span>
-                    <input type="number" class="target-input" id="targetInput" placeholder="0" min="0">
-                    <button class="btn-save-target" id="btnSaveTarget" onclick="saveTarget()">Simpan Target</button>
-                </div>
-            </div>
-
-            <!-- Skeleton loading -->
-            <div id="omsetLoading" style="display:none;">
-                <div class="omset-stats">
-                    <div class="skel-stat"></div>
-                    <div class="skel-stat"></div>
-                    <div class="skel-stat"></div>
-                    <div class="skel-stat"></div>
-                </div>
-                <div class="skel-stat" style="height:40px;margin-bottom:20px;"></div>
-            </div>
-            <div id="omsetError" class="omset-empty" style="display:none;"></div>
-
-            <!-- Stats -->
-            <div id="omsetContent" style="display:none;">
-                <div class="omset-stats">
-                    <div class="stat-card green">
-                        <div class="stat-label">Total Realisasi</div>
-                        <div class="stat-value" id="statRealisasi">—</div>
-                        <div class="stat-sub">transaksi bulan ini</div>
-                    </div>
-                    <div class="stat-card blue">
-                        <div class="stat-label">Target Bulanan</div>
-                        <div class="stat-value" id="statTarget">—</div>
-                        <div class="stat-sub">transaksi ditargetkan</div>
-                    </div>
-                    <div class="stat-card orange">
-                        <div class="stat-label">Rata-rata Harian</div>
-                        <div class="stat-value" id="statAvg">—</div>
-                        <div class="stat-sub" id="statAvgSub">per hari kerja</div>
-                    </div>
-                    <div class="stat-card purple">
-                        <div class="stat-label">Proyeksi Akhir Bulan</div>
-                        <div class="stat-value" id="statProyeksi">—</div>
-                        <div class="stat-sub">estimasi total</div>
-                    </div>
-                </div>
-
-                <!-- Progress bar -->
-                <div class="progress-wrap">
-                    <div class="progress-header">
-                        <span class="progress-label">Progress Target</span>
-                        <span class="progress-pct" id="progressPct">0%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill good" id="progressBar" style="width:0%"></div>
-                    </div>
-                    <div class="progress-detail" id="progressDetail"></div>
-                </div>
-
-                <!-- Kebutuhan per hari -->
-                <div id="dailyNeedWrap" style="margin-top:16px;padding:16px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--bg);">
-                    <div style="font-size:0.8em;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;">Kebutuhan Harian untuk Capai Target</div>
-                    <div id="dailyNeedContent" style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Holiday Section -->
-        <div class="holiday-section" id="holidaySection">
-            <div class="section-title">🗓️ Libur Nasional Bulan Ini</div>
-            <div class="holiday-grid" id="holidayGrid"></div>
-        </div>
-
-        <!-- Legend -->
-        <div class="legend" id="legendSection">
-            <span class="legend-label">Keterangan:</span>
-            <div id="shiftLegend" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                <div class="legend-item"><div class="legend-dot ld-libur"></div> Libur (L)</div>
-                <div class="legend-item"><div class="legend-dot ld-pulsor"></div> Pulsor (P)</div>
-                <div class="legend-item"><div class="legend-dot ld-siang"></div> Siang (S)</div>
-                <div class="legend-item"><div class="legend-dot ld-normal"></div> Normal</div>
-            </div>
-            <div id="taskLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
-                <div class="legend-item"><div class="legend-dot ld-normal"></div> Tugas Sekali</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#0ea5e9"></div> Tugas Tetap</div>
-            </div>
-            <div id="omsetLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
-                <div class="legend-item"><div class="legend-dot ld-omset"></div> Ada data omset</div>
-                <div class="legend-item" style="font-size:0.82em;color:var(--text-muted);">Angka = total transaksi harian</div>
-            </div>
-            <div id="cellClickHint" style="margin-left:auto;font-size:0.78em;color:var(--text-muted);font-style:italic;"></div>
-        </div>
-    </div><!-- end pageKalender -->
-
-    <!-- PAGE: PGI Core -->
-    <div class="page active" id="pageLinks">
-        <div class="pgicore-page">
-            <div class="pgicore-group">
-                <div class="pgicore-group-label">🛠️ Tools</div>
-                <div class="pgicore-grid">
-                    <a class="pgicore-card" href="https://gadai.pugindo.com/gadai/simulasi" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">💰</div>
-                        <div class="pgicore-name">PUGINDO</div>
-                        <div class="pgicore-url">gadai.pugindo.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://www.imei.info/" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">📱</div>
-                        <div class="pgicore-name">IMEI Info</div>
-                        <div class="pgicore-url">imei.info</div>
-                    </a>
-                    <a class="pgicore-card" href="https://notebooklm.google.com/notebook/d40f54cc-474b-4d0a-955c-d48ba41d9489" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">📖</div>
-                        <div class="pgicore-name">Panduan SE</div>
-                        <div class="pgicore-url">notebooklm.google.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://linktr.ee/outletpgi" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">🔗</div>
-                        <div class="pgicore-name">Linktree Outlet PGI</div>
-                        <div class="pgicore-url">linktr.ee/outletpgi</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PAGE: SENKU -->
-    <div class="page" id="pageSenku">
-        <div class="pgicore-page">
-            <div class="pgicore-group">
-                <div class="pgicore-group-label">🏢 SENKU — Sentral Kepala Unit</div>
-                <div class="pgicore-grid">
-                    <a class="pgicore-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">👤</div>
-                        <div class="pgicore-name">HRIS PGI</div>
-                        <div class="pgicore-url">approval.pgindonesia.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">📦</div>
-                        <div class="pgicore-name">GA (Inventory)</div>
-                        <div class="pgicore-url">ga.pgindonesia.com</div>
-                    </a>
-                    <a class="pgicore-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
-                        <div class="pgicore-icon">🔐</div>
-                        <div class="pgicore-name">FPP (Portal PGI)</div>
-                        <div class="pgicore-url">portal.pusatgadai.id</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div><!-- end mainContainer -->
-
-<!-- ── CONFIRM MODAL (replaces browser confirm()) ── -->
-<div class="confirm-modal" id="confirmModal">
-    <div class="confirm-box">
-        <div class="confirm-icon" id="confirmIcon">⚠️</div>
-        <div class="confirm-title" id="confirmTitle">Konfirmasi</div>
-        <div class="confirm-msg"   id="confirmMsg">Apakah Anda yakin?</div>
-        <div class="confirm-btns">
-            <button class="confirm-btn cancel"  id="confirmCancel">Batal</button>
-            <button class="confirm-btn confirm" id="confirmOk">Hapus</button>
+        <div class="section-label">Tools</div>
+        <div class="tool-grid">
+            <a class="tool-card" href="https://gadai.pugindo.com/gadai/simulasi" target="_blank" rel="noopener">
+                <div class="tool-icon">💰</div>
+                <div class="tool-name">PUGINDO</div>
+                <div class="tool-url">gadai.pugindo.com</div>
+            </a>
+            <a class="tool-card" href="https://www.imei.info/" target="_blank" rel="noopener">
+                <div class="tool-icon">📱</div>
+                <div class="tool-name">IMEI Info</div>
+                <div class="tool-url">imei.info</div>
+            </a>
+            <a class="tool-card" href="https://notebooklm.google.com/notebook/d40f54cc-474b-4d0a-955c-d48ba41d9489" target="_blank" rel="noopener">
+                <div class="tool-icon">📖</div>
+                <div class="tool-name">Panduan SE</div>
+                <div class="tool-url">notebooklm.google.com</div>
+            </a>
+            <a class="tool-card" href="https://linktr.ee/outletpgi" target="_blank" rel="noopener">
+                <div class="tool-icon">🔗</div>
+                <div class="tool-name">Linktree Outlet</div>
+                <div class="tool-url">linktr.ee/outletpgi</div>
+            </a>
         </div>
     </div>
 </div>
 
-<!-- ── SHIFT MODAL ── -->
-<div class="modal" id="shiftModal">
+<!-- PAGE: Kalender -->
+<div class="page" id="pageKalender">
+    <div class="page-inner">
+        <div class="page-header">
+            <div>
+                <div class="page-title">Kalender</div>
+                <div class="page-subtitle">Jadwal shift, tugas dan monitoring omset BDG026</div>
+            </div>
+            <div class="kal-controls">
+                <div class="layer-toggle">
+                    <button class="layer-btn on-shift" id="pillShift" onclick="toggleLayer('shift')">Shift</button>
+                    <button class="layer-btn on-task"  id="pillTask"  onclick="toggleLayer('task')">Tugas</button>
+                    <button class="layer-btn on-omset" id="pillOmset" onclick="toggleLayer('omset')">Omset</button>
+                </div>
+                <div class="name-filter-wrap" id="nameFilterWrap">
+                    <select id="nameFilter" onchange="filterByName()">
+                        <option value="">Semua Orang</option>
+                    </select>
+                </div>
+                <div class="filter-empty-banner" id="filterEmptyBanner">
+                    <span id="filterEmptyName"></span> tidak ada bulan ini
+                    <button class="filter-clear-btn" onclick="clearFilter()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="month-nav">
+            <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
+            <span class="month-label" id="monthLabel">—</span>
+            <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
+        </div>
+
+        <div class="cal-grid-wrap">
+            <div class="cal-day-names">
+                <div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div>
+                <div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div>
+                <div class="cal-day-name">Jum</div>
+                <div class="cal-day-name wknd">Sab</div><div class="cal-day-name wknd">Min</div>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+        </div>
+
+        <div class="legend-strip" id="legendStrip">
+            <span class="leg-lbl">Keterangan</span>
+            <div id="legShift" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Libur</div>
+                <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Pulsor</div>
+                <div class="leg-item"><div class="leg-dot" style="background:var(--amber)"></div>Siang</div>
+                <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div>Normal</div>
+            </div>
+            <div id="legTask" style="display:none;gap:10px;flex-wrap:wrap;align-items:center;">
+                <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>Tugas Sekali</div>
+                <div class="leg-item"><div class="leg-dot" style="background:#0ea5e9"></div>Tugas Tetap</div>
+            </div>
+            <div id="legOmset" style="display:none;gap:10px;flex-wrap:wrap;align-items:center;">
+                <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Ada omset</div>
+            </div>
+            <span class="leg-hint" id="legHint"></span>
+        </div>
+
+        <!-- Omset Panel -->
+        <div class="glass-card omset-panel" id="omsetPanel" style="display:none;">
+            <div class="omset-panel-head">
+                <div class="omset-panel-title">Monitoring Omset — <span id="omsetPanelMonth"></span></div>
+                <div class="target-row">
+                    <span>Target Bulanan</span>
+                    <input type="number" class="target-input" id="targetInput" placeholder="0" min="0">
+                    <button class="btn-target" id="btnTarget" onclick="saveTarget()">Simpan</button>
+                </div>
+            </div>
+            <div id="omsetSkelWrap" style="display:none;">
+                <div class="omset-skel-grid">
+                    <div class="skel-block omset-skel-card"></div>
+                    <div class="skel-block omset-skel-card"></div>
+                    <div class="skel-block omset-skel-card"></div>
+                    <div class="skel-block omset-skel-card"></div>
+                </div>
+                <div class="skel-block" style="height:22px;border-radius:99px;margin-bottom:18px;"></div>
+            </div>
+            <div id="omsetErr" class="omset-empty" style="display:none;"></div>
+            <div id="omsetContent" style="display:none;">
+                <div class="stat-grid">
+                    <div class="stat-card g"><div class="stat-lbl">Total Realisasi</div><div class="stat-val" id="statReal">—</div><div class="stat-sub">transaksi bulan ini</div></div>
+                    <div class="stat-card b"><div class="stat-lbl">Target Bulanan</div><div class="stat-val" id="statTgt">—</div><div class="stat-sub">ditargetkan</div></div>
+                    <div class="stat-card a"><div class="stat-lbl">Rata-rata Harian</div><div class="stat-val" id="statAvg">—</div><div class="stat-sub" id="statAvgSub">per hari kerja</div></div>
+                    <div class="stat-card p"><div class="stat-lbl">Proyeksi Akhir Bulan</div><div class="stat-val" id="statProj">—</div><div class="stat-sub">estimasi total</div></div>
+                </div>
+                <div class="prog-wrap">
+                    <div class="prog-head"><span class="prog-lbl">Progress Target</span><span class="prog-pct g" id="progPct">0%</span></div>
+                    <div class="prog-track"><div class="prog-fill g" id="progBar" style="width:0%"></div></div>
+                    <div class="prog-sub" id="progDetail"></div>
+                </div>
+                <div class="daily-need-box">
+                    <div class="daily-need-lbl">Kebutuhan Harian untuk Capai Target</div>
+                    <div class="daily-need-body" id="dailyNeedBody"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Holidays -->
+        <div class="glass-card holiday-panel" id="holidayPanel">
+            <div class="holiday-panel-title">Libur Bulan Ini</div>
+            <div class="holiday-chips" id="holidayChips"></div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE: SENKU -->
+<div class="page" id="pageSenku">
+    <div class="page-inner">
+        <div class="page-header">
+            <div>
+                <div class="page-title">SENKU</div>
+                <div class="page-subtitle">Sentral Kepala Unit — akses sistem manajemen</div>
+            </div>
+        </div>
+        <div class="section-label">Sistem Internal</div>
+        <div class="tool-grid">
+            <a class="tool-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
+                <div class="tool-icon">👤</div>
+                <div class="tool-name">HRIS PGI</div>
+                <div class="tool-url">approval.pgindonesia.com</div>
+            </a>
+            <a class="tool-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
+                <div class="tool-icon">📦</div>
+                <div class="tool-name">GA (Inventory)</div>
+                <div class="tool-url">ga.pgindonesia.com</div>
+            </a>
+            <a class="tool-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
+                <div class="tool-icon">🔐</div>
+                <div class="tool-name">FPP (Portal PGI)</div>
+                <div class="tool-url">portal.pusatgadai.id</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-backdrop" id="confirmModal">
+    <div class="confirm-box">
+        <div class="confirm-icon"  id="cIcon">⚠️</div>
+        <div class="confirm-title" id="cTitle">Konfirmasi</div>
+        <div class="confirm-msg"   id="cMsg"></div>
+        <div class="confirm-btns">
+            <button class="confirm-btn cancel" id="cCancel">Batal</button>
+            <button class="confirm-btn ok"     id="cOk">Hapus</button>
+        </div>
+    </div>
+</div>
+
+<!-- SHIFT MODAL -->
+<div class="modal-backdrop" id="shiftModal">
     <div class="modal-box">
-        <div class="modal-header">
-            <h2 id="shiftModalTitle">Edit Jadwal Shift</h2>
-            <button class="modal-close" onclick="closeShiftModal()">✕</button>
+        <div class="modal-head">
+            <h3 id="shiftModalTitle">Edit Jadwal Shift</h3>
+            <button class="modal-close" onclick="closeModal('shiftModal')">✕</button>
         </div>
         <div class="modal-body">
-            <div class="help-box">
-                <strong>Format:</strong> Nama (Kode)<br>
-                <strong>(L)</strong> Libur &nbsp;|&nbsp; <strong>(P)</strong> Pulsor &nbsp;|&nbsp; <strong>(S)</strong> Siang &nbsp;|&nbsp; <em>tanpa kode</em> = Normal<br>
-                Pisahkan dengan enter untuk banyak orang.
+            <div class="hint-box">
+                <strong>Format:</strong> Nama (Kode) — satu baris per orang<br>
+                <strong>(L)</strong> Libur &nbsp;·&nbsp; <strong>(P)</strong> Pulsor &nbsp;·&nbsp; <strong>(S)</strong> Siang &nbsp;·&nbsp; <em>tanpa kode</em> = Normal
             </div>
             <div class="form-group">
-                <label class="form-label">Data Shift</label>
-                <textarea class="form-textarea" id="shiftInput" placeholder="Andi (L)&#10;Budi (P)&#10;Citra (S)&#10;Deni"></textarea>
+                <label class="form-lbl">Data Shift</label>
+                <textarea class="form-ctrl" id="shiftInput" placeholder="Andi (L)&#10;Budi (P)&#10;Citra (S)&#10;Deni"></textarea>
             </div>
         </div>
         <div class="modal-footer">
-            <button id="btnCancelShift" class="btn btn-secondary" onclick="closeShiftModal()">Batal</button>
-            <button id="btnDeleteShift" class="btn btn-danger"    onclick="deleteShift()">🗑 Hapus</button>
-            <button id="btnSaveShift"   class="btn btn-primary"   onclick="saveShift()">Simpan</button>
+            <button id="btnCancelShift" class="btn btn-ghost"   onclick="closeModal('shiftModal')">Batal</button>
+            <button id="btnDeleteShift" class="btn btn-danger"  onclick="deleteShift()">Hapus</button>
+            <button id="btnSaveShift"   class="btn btn-ink"     onclick="saveShift()">Simpan</button>
         </div>
     </div>
 </div>
 
-<!-- ── TASK MODAL ── -->
-<div class="modal" id="taskModal">
+<!-- TASK MODAL -->
+<div class="modal-backdrop" id="taskModal">
     <div class="modal-box">
-        <div class="modal-header">
-            <h2 id="taskModalTitle">Kelola Tugas</h2>
-            <button class="modal-close" onclick="closeTaskModal()">✕</button>
+        <div class="modal-head">
+            <h3 id="taskModalTitle">Kelola Tugas</h3>
+            <button class="modal-close" onclick="closeModal('taskModal')">✕</button>
         </div>
         <div class="modal-body">
-            <div id="existingTasksWrap">
-                <label class="form-label">Tugas pada tanggal ini:</label>
-                <div id="existingTasksList"></div>
-            </div>
-            <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+            <label class="form-lbl">Tugas pada tanggal ini</label>
+            <div id="existingTasksList" style="margin-bottom:13px;"></div>
+            <hr style="border:none;border-top:1px solid var(--line);margin-bottom:13px;">
             <div class="form-group">
-                <label class="form-label">Tambah Catatan</label>
-                <select class="form-select" id="taskType" onchange="toggleAddOptions()">
+                <label class="form-lbl">Jenis</label>
+                <select class="form-ctrl" id="taskType" onchange="toggleTaskType()">
                     <option value="tugas">Tugas Harian</option>
                     <option value="kunjungan_kc">Kunjungan KC</option>
                     <option value="kunjungan_audit">Kunjungan AUDIT</option>
                     <option value="holiday">Libur Tambahan</option>
                     <option value="lainnya">Lainnya</option>
                 </select>
-                <div id="taskNameWrap" style="margin-top:10px;">
-                    <label class="form-label" id="taskNameLabel">Nama Tugas</label>
-                    <input class="form-input" id="taskName" placeholder="Nama tugas...">
-                </div>
-                <div id="holidayNameWrap" style="display:none;margin-top:10px;">
-                    <label class="form-label">Keterangan Libur</label>
-                    <input class="form-input" id="holidayName" placeholder="Contoh: Cuti Bersama, Libur Kantor...">
-                    <div style="margin-top:8px;font-size:0.8em;color:var(--danger);background:var(--danger-light);padding:8px 10px;border-radius:6px;">
-                        Tanggal ini akan ditandai merah sebagai hari libur tambahan.
-                    </div>
+            </div>
+            <div id="taskNameWrap" class="form-group">
+                <label class="form-lbl" id="taskNameLbl">Nama Tugas</label>
+                <input class="form-ctrl" id="taskName" placeholder="Nama tugas...">
+            </div>
+            <div id="holidayWrap" style="display:none;" class="form-group">
+                <label class="form-lbl">Keterangan Libur</label>
+                <input class="form-ctrl" id="holidayName" placeholder="Contoh: Cuti Bersama...">
+                <div style="margin-top:6px;font-size:0.73em;color:var(--red);background:rgba(254,226,226,0.65);padding:7px 10px;border-radius:var(--r-sm);">
+                    Tanggal ini akan ditandai merah sebagai libur tambahan.
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeTaskModal()">Tutup</button>
-            <button class="btn btn-primary task" id="btnAddTask" onclick="addTask()">+ Tambah</button>
+            <button class="btn btn-ghost"   onclick="closeModal('taskModal')">Tutup</button>
+            <button class="btn btn-orange"  id="btnAddTask" onclick="addTask()">Tambah</button>
         </div>
     </div>
 </div>
 
+<!-- ━━━━━━━━━━━━━━ SCRIPT ━━━━━━━━━━━━━━ -->
 <script>
-// ─────────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────────
-const today      = new Date();
-let currentMonth = today.getMonth();
-let currentYear  = today.getFullYear();
-let shiftData        = {};
-let taskData         = { oneoff: {}, weekly: [], monthly: [] };
-let customHolidays   = {};
-let omsetData        = {};
-let omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
-let currentBranch    = 'bdg026';
-let layers           = { shift: true, task: true, omset: true };
-let selectedDay      = null;
-let selectedFilter   = '';
-let isSaving         = false;
-let _calenderInited  = false;
+const today = new Date();
+let currentMonth = today.getMonth(), currentYear = today.getFullYear();
+let shiftData = {}, taskData = {oneoff:{},weekly:[],monthly:[]}, customHolidays = {}, omsetData = {};
+let currentBranch = 'bdg026', layers = {shift:true,task:true,omset:true};
+let selectedDay = null, selectedFilter = '', isSaving = false, _kalInited = false;
 
-// ─────────────────────────────────────────
-//  CONFIG
-// ─────────────────────────────────────────
 const SCRIPT_URLS = {
-    bdg016: 'https://script.google.com/macros/s/AKfycbzGXFycufPgLbXSNzxdxQBmE9VAXYxeGrKr6H81fIOOgUflIc2f9nOhQ6HohfPZYqw0Vw/exec',
-    bdg026: 'https://script.google.com/macros/s/AKfycbwZwB9wS0XkopObAh0uTzSK41ZIi4vRQRBCl_HlvQiP12ln96vxcKFd_qC_lGcXwzzE/exec'
+    bdg016:'https://script.google.com/macros/s/AKfycbzGXFycufPgLbXSNzxdxQBmE9VAXYxeGrKr6H81fIOOgUflIc2f9nOhQ6HohfPZYqw0Vw/exec',
+    bdg026:'https://script.google.com/macros/s/AKfycbwZwB9wS0XkopObAh0uTzSK41ZIi4vRQRBCl_HlvQiP12ln96vxcKFd_qC_lGcXwzzE/exec'
 };
-
-// Hardcoded omset URL for bdg026
 const OMSET_URL = 'https://script.google.com/macros/s/AKfycbzXuFgBLpgbkIH9rsuuA40j5aFc07WU3Y4oHomrfhS_dBscCh034fcFUTN8fzVssXn9/exec';
 
-// ─────────────────────────────────────────
-//  CONFIG — National Holidays
-// ─────────────────────────────────────────
 const nationalHolidays = {
-    '2025-01-01':'Tahun Baru 2025','2025-01-16':'Isra Mikraj Nabi Muhammad SAW',
-    '2025-01-29':'Tahun Baru Imlek 2576','2025-03-29':'Hari Suci Nyepi (Tahun Baru Saka 1947)',
-    '2025-03-31':'Wafat Isa Al Masih','2025-04-01':'Cuti Bersama Wafat Isa Al Masih',
-    '2025-04-02':'Cuti Bersama Idul Fitri','2025-04-03':'Idul Fitri 1446 H',
-    '2025-04-04':'Idul Fitri 1446 H','2025-04-07':'Cuti Bersama Idul Fitri',
-    '2025-05-01':'Hari Buruh Internasional','2025-05-12':'Kenaikan Isa Al Masih',
-    '2025-05-29':'Hari Raya Waisak 2569','2025-06-01':'Hari Lahir Pancasila',
-    '2025-06-06':'Idul Adha 1446 H','2025-06-27':'Tahun Baru Islam 1447 H',
-    '2025-08-17':'Hari Kemerdekaan RI','2025-09-05':'Maulid Nabi Muhammad SAW',
-    '2025-12-25':'Hari Raya Natal','2025-12-26':'Cuti Bersama Hari Raya Natal',
-    '2026-01-01':'Tahun Baru 2026','2026-01-06':'Isra Mikraj Nabi Muhammad SAW',
-    '2026-02-17':'Tahun Baru Imlek 2577','2026-03-19':'Hari Suci Nyepi (Tahun Baru Saka 1948)',
-    '2026-03-20':'Idul Fitri 1447 H','2026-03-21':'Idul Fitri 1447 H',
-    '2026-04-03':'Wafat Isa Al Masih','2026-05-01':'Hari Buruh Internasional',
-    '2026-05-14':'Kenaikan Isa Al Masih','2026-05-18':'Hari Raya Waisak 2570',
-    '2026-05-27':'Idul Adha 1447 H','2026-06-01':'Hari Lahir Pancasila',
-    '2026-06-17':'Tahun Baru Islam 1448 H','2026-08-17':'Hari Kemerdekaan RI',
-    '2026-08-26':'Maulid Nabi Muhammad SAW','2026-12-25':'Hari Raya Natal'
+    '2025-01-01':'Tahun Baru 2025','2025-01-16':'Isra Mikraj Nabi Muhammad SAW','2025-01-29':'Tahun Baru Imlek 2576','2025-03-29':'Hari Suci Nyepi','2025-03-31':'Wafat Isa Al Masih','2025-04-01':'Cuti Bersama Wafat Isa Al Masih','2025-04-02':'Cuti Bersama Idul Fitri','2025-04-03':'Idul Fitri 1446 H','2025-04-04':'Idul Fitri 1446 H','2025-04-07':'Cuti Bersama Idul Fitri','2025-05-01':'Hari Buruh Internasional','2025-05-12':'Kenaikan Isa Al Masih','2025-05-29':'Hari Raya Waisak 2569','2025-06-01':'Hari Lahir Pancasila','2025-06-06':'Idul Adha 1446 H','2025-06-27':'Tahun Baru Islam 1447 H','2025-08-17':'Hari Kemerdekaan RI','2025-09-05':'Maulid Nabi Muhammad SAW','2025-12-25':'Hari Raya Natal','2025-12-26':'Cuti Bersama Natal',
+    '2026-01-01':'Tahun Baru 2026','2026-01-06':'Isra Mikraj Nabi Muhammad SAW','2026-02-17':'Tahun Baru Imlek 2577','2026-03-19':'Hari Suci Nyepi','2026-03-20':'Idul Fitri 1447 H','2026-03-21':'Idul Fitri 1447 H','2026-04-03':'Wafat Isa Al Masih','2026-05-01':'Hari Buruh Internasional','2026-05-14':'Kenaikan Isa Al Masih','2026-05-18':'Hari Raya Waisak 2570','2026-05-27':'Idul Adha 1447 H','2026-06-01':'Hari Lahir Pancasila','2026-06-17':'Tahun Baru Islam 1448 H','2026-08-17':'Hari Kemerdekaan RI','2026-08-26':'Maulid Nabi Muhammad SAW','2026-12-25':'Hari Raya Natal'
 };
-
-// ─────────────────────────────────────────
-//  CONFIG — Permanent Tasks
-// ─────────────────────────────────────────
 const PERMANENT_TASKS = [
-    { name: 'Perawatan PC',        type: 'weekly',      days:  [6]     },
-    { name: 'Perawatan PC',        type: 'monthly-odd', dates: [15]    },
-    { name: 'Penggantian Air Uji', type: 'monthly',     dates: [1, 16] },
+    {name:'Perawatan PC',type:'weekly',days:[6]},
+    {name:'Perawatan PC',type:'monthly-odd',dates:[15]},
+    {name:'Penggantian Air Uji',type:'monthly',dates:[1,16]},
 ];
+const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const DN=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 
-// ─────────────────────────────────────────
-//  HELPERS
-// ─────────────────────────────────────────
-const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const dayNames   = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+function dk(y,m,d){return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function isRed(y,m,d){return new Date(Date.UTC(y,m,d)).getUTCDay()===0||!!nationalHolidays[dk(y,m+1,d)]||!!customHolidays[dk(y,m+1,d)];}
+function isWork(y,m,d){const dow=new Date(Date.UTC(y,m,d)).getUTCDay();return dow!==0&&!nationalHolidays[dk(y,m+1,d)]&&!customHolidays[dk(y,m+1,d)];}
+function getHolName(y,m,d){return nationalHolidays[dk(y,m+1,d)]||customHolidays[dk(y,m+1,d)]||null;}
+function normShift(raw){return raw.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{l=l.replace(/([^\s])\(([LPSlps])\)/g,'$1 ($2)');l=l.replace(/\(([lps])\)/gi,(_,c)=>`(${c.toUpperCase()})`);return l;}).join('\n');}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function shiftClass(t){return t.includes('(L)')?'libur':t.includes('(P)')?'pulsor':t.includes('(S)')?'siang':'normal';}
 
-function dateKey(y, m, d) {
-    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
-function isRedDate(y, m, d) {
-    const dk = dateKey(y, m+1, d);
-    return new Date(Date.UTC(y, m, d)).getUTCDay() === 0 || !!nationalHolidays[dk] || !!customHolidays[dk];
-}
-function isWorkDay(y, m, d) {
-    const dow = new Date(Date.UTC(y, m, d)).getUTCDay();
-    const dk  = dateKey(y, m+1, d);
-    return dow !== 0 && !nationalHolidays[dk] && !customHolidays[dk];
-}
-function getHolidayName(y, m, d) {
-    const dk = dateKey(y, m+1, d);
-    return nationalHolidays[dk] || customHolidays[dk] || null;
-}
-function normaliseShiftInput(raw) {
-    return raw.split('\n').map(l=>l.trim()).filter(Boolean).map(line=>{
-        line = line.replace(/([^\s])\(([LPSlps])\)/g,'$1 ($2)');
-        line = line.replace(/\(([lps])\)/gi,(_,c)=>`(${c.toUpperCase()})`);
-        return line;
-    }).join('\n');
+// Clock
+function tickClock(){
+    const n=new Date(),months=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const t=document.getElementById('clockTime'),d=document.getElementById('clockDate');
+    if(t) t.textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');
+    if(d) d.textContent=DN[n.getDay()]+', '+n.getDate()+' '+months[n.getMonth()]+' '+n.getFullYear();
 }
 
-// ─────────────────────────────────────────
-//  CONFIRM MODAL (replaces browser confirm())
-// ─────────────────────────────────────────
-function showConfirm({ icon = '🗑️', title, msg, okLabel = 'Hapus', onConfirm }) {
-    const modal = document.getElementById('confirmModal');
-    document.getElementById('confirmIcon').textContent  = icon;
-    document.getElementById('confirmTitle').textContent = title;
-    document.getElementById('confirmMsg').textContent   = msg;
-    document.getElementById('confirmOk').textContent    = okLabel;
-    modal.classList.add('active');
-
-    const ok     = document.getElementById('confirmOk');
-    const cancel = document.getElementById('confirmCancel');
-
-    const close = () => modal.classList.remove('active');
-    ok.onclick     = () => { close(); onConfirm(); };
-    cancel.onclick = close;
-    modal.onclick  = (e) => { if (e.target === modal) close(); };
+// Toast
+function toast(msg,type='success'){
+    document.getElementById('_t')?.remove();
+    const el=document.createElement('div');el.id='_t';
+    const bg={success:'#059669',error:'#dc2626',info:'#2563eb',warning:'#d97706'}[type]||'#059669';
+    el.style.cssText=`position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:${bg};color:white;padding:10px 22px;border-radius:8px;font-family:'Sora',sans-serif;font-weight:600;font-size:0.83em;box-shadow:0 8px 24px rgba(0,0,0,0.16);z-index:9999;animation:tIn 0.22s ease;white-space:nowrap;pointer-events:none;backdrop-filter:blur(10px);`;
+    el.textContent=msg;
+    if(!document.getElementById('_ts')){const s=document.createElement('style');s.id='_ts';s.textContent='@keyframes tIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes tOut{from{opacity:1}to{opacity:0;transform:translateX(-50%) translateY(8px)}}';document.head.appendChild(s);}
+    document.body.appendChild(el);
+    setTimeout(()=>{el.style.animation='tOut 0.22s ease forwards';setTimeout(()=>el.remove(),220);},2300);
 }
 
-// ─────────────────────────────────────────
-//  TOAST
-// ─────────────────────────────────────────
-function showToast(msg, type='success') {
-    const ex = document.getElementById('toast');
-    if (ex) ex.remove();
-    const t = document.createElement('div');
-    t.id = 'toast';
-    const c = {success:'background:#10b981;',error:'background:#ef4444;',info:'background:#3d5af1;',warning:'background:#f59e0b;'};
-    t.style.cssText = `position:fixed;bottom:28px;left:50%;transform:translateX(-50%);${c[type]||c.success}color:white;padding:12px 24px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.9em;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:9999;animation:toastIn 0.3s ease;white-space:nowrap;`;
-    t.textContent = msg;
-    if (!document.getElementById('toast-style')) {
-        const s = document.createElement('style'); s.id='toast-style';
-        s.textContent='@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes toastOut{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(12px)}}';
-        document.head.appendChild(s);
-    }
-    document.body.appendChild(t);
-    setTimeout(()=>{ t.style.animation='toastOut 0.3s ease forwards'; setTimeout(()=>t.remove(),300); }, 2500);
+// Confirm
+function showConfirm({icon='⚠️',title,msg,okLabel='Hapus',onConfirm}){
+    const m=document.getElementById('confirmModal');
+    document.getElementById('cIcon').textContent=icon;
+    document.getElementById('cTitle').textContent=title;
+    document.getElementById('cMsg').textContent=msg;
+    document.getElementById('cOk').textContent=okLabel;
+    m.classList.add('open');
+    const close=()=>m.classList.remove('open');
+    document.getElementById('cOk').onclick=()=>{close();onConfirm();};
+    document.getElementById('cCancel').onclick=close;
+    m.onclick=e=>{if(e.target===m)close();};
 }
 
-// ─────────────────────────────────────────
-//  CLOCK
-// ─────────────────────────────────────────
-function updateKalClock() {
-    const now = new Date();
-    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-    const hh = String(now.getHours()).padStart(2,'0');
-    const mm = String(now.getMinutes()).padStart(2,'0');
-    const ss = String(now.getSeconds()).padStart(2,'0');
-    const t = document.getElementById('kalClockTime');
-    const d = document.getElementById('kalClockDate');
-    if (t) t.textContent = hh+':'+mm+':'+ss;
-    if (d) d.textContent = dayNames[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){if(isSaving)return;document.getElementById(id).classList.remove('open');selectedDay=null;}
+
+function toggleLayer(l){layers[l]=!layers[l];updateLayerUI();renderCalendar();if(layers.omset){document.getElementById('omsetPanelMonth').textContent=`${MN[currentMonth]} ${currentYear}`;loadOmsetData();}}
+function updateLayerUI(){
+    document.getElementById('pillShift').className='layer-btn'+(layers.shift?' on-shift':'');
+    document.getElementById('pillTask').className='layer-btn'+(layers.task?' on-task':'');
+    document.getElementById('pillOmset').className='layer-btn'+(layers.omset?' on-omset':'');
+    document.getElementById('nameFilterWrap').style.display=layers.shift?'flex':'none';
+    document.getElementById('legShift').style.display=layers.shift?'flex':'none';
+    document.getElementById('legTask').style.display=layers.task?'flex':'none';
+    document.getElementById('legOmset').style.display=layers.omset?'flex':'none';
+    document.getElementById('omsetPanel').style.display=layers.omset?'block':'none';
+    const h=document.getElementById('legHint');
+    if(layers.shift&&layers.task) h.textContent='Klik cell = edit shift · tombol di cell = tugas';
+    else if(layers.shift) h.textContent='Klik cell = edit shift';
+    else if(layers.task)  h.textContent='Klik cell = kelola tugas';
+    else h.textContent='';
+}
+function updateNameFilter(){
+    const names=new Set();
+    Object.values(shiftData).forEach(s=>{if(s)s.split('\n').forEach(l=>{const n=l.replace(/\s*\([LPS]\)/g,'').trim();if(n)names.add(n);});});
+    const sel=document.getElementById('nameFilter'),prev=sel.value;
+    sel.innerHTML='<option value="">Semua Orang</option>';
+    [...names].sort().forEach(n=>{const o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o);});
+    if(prev&&[...names].includes(prev))sel.value=prev;
+    else if(prev){sel.value='';selectedFilter='';}
+}
+function filterByName(){selectedFilter=document.getElementById('nameFilter').value;renderCalendar();checkFilterEmpty();}
+function clearFilter(){document.getElementById('nameFilter').value='';selectedFilter='';renderCalendar();document.getElementById('filterEmptyBanner').classList.remove('visible');}
+function checkFilterEmpty(){
+    if(!selectedFilter){document.getElementById('filterEmptyBanner').classList.remove('visible');return;}
+    const dim=new Date(currentYear,currentMonth+1,0).getDate();let found=false;
+    for(let d=1;d<=dim;d++){const k=dk(currentYear,currentMonth+1,d);if(shiftData[k]?.split('\n').some(l=>l.replace(/\s*\([LPS]\)/g,'').trim()===selectedFilter)){found=true;break;}}
+    const b=document.getElementById('filterEmptyBanner');
+    if(!found){document.getElementById('filterEmptyName').textContent=selectedFilter;b.classList.add('visible');}
+    else b.classList.remove('visible');
 }
 
-// ─────────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────────
-async function initApp() {
-    currentBranch    = 'bdg026';
-    selectedFilter   = '';
-    omsetData        = {};
-    omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
-    updateLayerUI();
-    updateKalClock();
-    setInterval(updateKalClock, 1000);
-
-    // Show skeleton while loading
-    renderSkeletonCalendar();
-
-    await Promise.all([ loadData(), loadTasks() ]);
-    renderCalendar();
-    renderHolidays();
+function renderSkeleton(){
+    document.getElementById('monthLabel').textContent=`${MN[currentMonth]} ${currentYear}`;
+    const grid=document.getElementById('calGrid'),frag=document.createDocumentFragment();
+    const first=new Date(currentYear,currentMonth,1).getDay(),fd=first===0?6:first-1;
+    const dim=new Date(currentYear,currentMonth+1,0).getDate();
+    for(let i=0;i<fd;i++){const e=document.createElement('div');e.className='cal-cell empty';frag.appendChild(e);}
+    for(let d=1;d<=dim;d++){const c=document.createElement('div');c.className='cal-cell skeleton';c.innerHTML='<div class="skel-block skel-num"></div><div class="skel-block skel-line"></div><div class="skel-block skel-line w60"></div>';frag.appendChild(c);}
+    grid.innerHTML='';grid.appendChild(frag);
 }
 
-// ─────────────────────────────────────────
-//  LAYER TOGGLE
-// ─────────────────────────────────────────
-function toggleLayer(layer) {
-    layers[layer] = !layers[layer];
-    updateLayerUI();
-    renderCalendar();
-    if (layers.omset) {
-        document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-        loadOmsetData();
-    }
+async function loadShift(){
+    try{const res=await fetch(SCRIPT_URLS[currentBranch]);if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();shiftData={};data.forEach(row=>{if(!row.date)return;let key=row.date;if(key.includes('T')){const d=new Date(key);key=dk(d.getFullYear(),d.getMonth()+1,d.getDate());}shiftData[key]=row.names||'';});updateNameFilter();}
+    catch(e){console.error(e);toast('Gagal memuat jadwal shift','error');}
+}
+async function loadTasks(){
+    try{const res=await fetch(SCRIPT_URLS[currentBranch]+'?action=tasks');if(!res.ok)throw new Error('HTTP '+res.status);const rows=await res.json();taskData={oneoff:{},weekly:[],monthly:[]};customHolidays={};rows.forEach(row=>{if(!row.date)return;let key=row.date;if(key.includes('T')){const d=new Date(key);key=dk(d.getFullYear(),d.getMonth()+1,d.getDate());}if(row.type==='__holiday__')customHolidays[key]=row.name||'Libur Tambahan';else{if(!taskData.oneoff[key])taskData.oneoff[key]=[];taskData.oneoff[key].push({id:row.id,name:row.name,type:row.type||'tugas'});}});}
+    catch(e){console.error(e);toast('Gagal memuat tugas — coba refresh','warning');taskData={oneoff:{},weekly:[],monthly:[]};customHolidays={};}
+}
+async function initApp(){tickClock();setInterval(tickClock,1000);updateLayerUI();renderSkeleton();await Promise.all([loadShift(),loadTasks()]);renderCalendar();if(layers.omset){document.getElementById('omsetPanelMonth').textContent=`${MN[currentMonth]} ${currentYear}`;loadOmsetData();}}
+
+function getTasksForDay(y,m,d){
+    const key=dk(y,m+1,d),dow=new Date(Date.UTC(y,m,d)).getUTCDay();
+    const perm=PERMANENT_TASKS.filter(t=>{if(t.type==='weekly')return t.days.includes(dow);if(t.type==='monthly')return t.dates.includes(d);if(t.type==='monthly-odd')return t.dates.includes(d)&&(m%2===0);return false;}).map(t=>({name:t.name,kind:'permanent-recurring'}));
+    return [...perm,...(taskData.oneoff[key]||[]).map(t=>({...t,kind:t.type||'tugas'}))];
 }
 
-function updateLayerUI() {
-    document.getElementById('pillShift').className  = 'toggle-pill' + (layers.shift  ? ' active'       : '');
-    document.getElementById('pillTask').className   = 'toggle-pill' + (layers.task   ? ' task-active'  : '');
-    document.getElementById('pillOmset').className  = 'toggle-pill' + (layers.omset  ? ' omset-active' : '');
-
-    document.getElementById('shiftFilterWrap').style.display = layers.shift ? 'flex' : 'none';
-
-    document.getElementById('shiftLegend').style.display  = layers.shift  ? 'flex' : 'none';
-    document.getElementById('taskLegend').style.display   = layers.task   ? 'flex' : 'none';
-    document.getElementById('omsetLegend').style.display  = layers.omset  ? 'flex' : 'none';
-
-    // Click hint in legend
-    const hint = document.getElementById('cellClickHint');
-    if (layers.shift && layers.task) {
-        hint.textContent = '💡 Klik cell = edit shift · Tombol 📋 = tambah tugas';
-    } else if (layers.shift) {
-        hint.textContent = '💡 Klik cell = edit shift';
-    } else if (layers.task) {
-        hint.textContent = '💡 Klik cell = kelola tugas';
-    } else {
-        hint.textContent = '';
-    }
-
-    document.getElementById('omsetPanel').style.display = layers.omset ? 'block' : 'none';
-}
-
-// ─────────────────────────────────────────
-//  SKELETON CALENDAR (while loading)
-// ─────────────────────────────────────────
-function renderSkeletonCalendar() {
-    document.getElementById('monthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-    const grid = document.getElementById('daysGrid');
-    grid.innerHTML = '';
-
-    const jsDay    = new Date(currentYear, currentMonth, 1).getDay();
-    const firstDay = jsDay === 0 ? 6 : jsDay - 1;
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const frag = document.createDocumentFragment();
-
-    for (let i = 0; i < firstDay; i++) {
-        const e = document.createElement('div'); e.className = 'day-cell empty'; frag.appendChild(e);
-    }
-    for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement('div');
-        cell.className = 'day-cell skeleton';
-        cell.innerHTML = `<div class="skel-num"></div><div class="skel-line"></div><div class="skel-line short"></div>`;
+function renderCalendar(){
+    document.getElementById('monthLabel').textContent=`${MN[currentMonth]} ${currentYear}`;
+    const grid=document.getElementById('calGrid'),frag=document.createDocumentFragment();
+    const first=new Date(currentYear,currentMonth,1).getDay(),fd=first===0?6:first-1;
+    const dim=new Date(currentYear,currentMonth+1,0).getDate();
+    for(let i=0;i<fd;i++){const e=document.createElement('div');e.className='cal-cell empty';frag.appendChild(e);}
+    for(let day=1;day<=dim;day++){
+        const key=dk(currentYear,currentMonth+1,day),red=isRed(currentYear,currentMonth,day),hname=getHolName(currentYear,currentMonth,day);
+        const isT=day===today.getDate()&&currentMonth===today.getMonth()&&currentYear===today.getFullYear();
+        const hasO=layers.omset&&!!omsetData[key];
+        const cell=document.createElement('div');
+        cell.className='cal-cell'+(red?' red-day':'')+(isT?' today':'')+(hasO?' has-omset':'');
+        const num=document.createElement('div');num.className='cell-num'+(red?' red':'')+(isT?' today-n':'');num.textContent=day;cell.appendChild(num);
+        if(hname){const ht=document.createElement('span');ht.className='holiday-tag';ht.textContent=hname;cell.appendChild(ht);}
+        if(layers.shift){const s=document.createElement('div');s.className='chip-stack';if(shiftData[key])shiftData[key].split('\n').filter(x=>x.trim()).forEach(x=>{const n=x.replace(/\s*\([LPS]\)/g,'').trim();if(selectedFilter&&n!==selectedFilter)return;const c=document.createElement('div');c.className=`chip ${shiftClass(x)}`;c.textContent=x.trim();s.appendChild(c);});cell.appendChild(s);}
+        if(layers.task){const s=document.createElement('div');s.className='chip-stack';getTasksForDay(currentYear,currentMonth,day).forEach(t=>{const c=document.createElement('div');const cls={tugas:'task',kunjungan_kc:'task-kc',kunjungan_audit:'task-au',lainnya:'task-ot','permanent-recurring':'perm'}[t.kind]||'task';c.className=`chip ${cls}`;c.textContent=t.name;s.appendChild(c);});cell.appendChild(s);}
+        if(layers.omset){const d=omsetData[key],w=document.createElement('div');w.className='chip-stack';if(d&&d.total>0){const c=document.createElement('div');c.className='chip omset';c.innerHTML=`<span class="dot"></span>${d.total}`;w.appendChild(c);}else if(isWork(currentYear,currentMonth,day)){const c=document.createElement('div');c.className='chip no-data';c.textContent='—';w.appendChild(c);}cell.appendChild(w);}
+        const bar=document.createElement('div');bar.className='cell-actions';
+        if(layers.shift&&layers.task){cell.onclick=e=>{if(!e.target.closest('.cell-actions'))openShiftModal(day);};const tb=document.createElement('button');tb.className='cell-act-btn tb';tb.title='Tugas';tb.textContent='T';tb.onclick=e=>{e.stopPropagation();openTaskModal(day);};bar.appendChild(tb);}
+        else if(layers.shift)cell.onclick=()=>openShiftModal(day);
+        else if(layers.task)cell.onclick=()=>openTaskModal(day);
+        else cell.style.cursor='default';
+        if(bar.children.length)cell.appendChild(bar);
         frag.appendChild(cell);
     }
-    grid.appendChild(frag);
+    grid.innerHTML='';grid.appendChild(frag);
+    renderHolidays();checkFilterEmpty();
 }
 
-// ─────────────────────────────────────────
-//  SHIFT DATA
-// ─────────────────────────────────────────
-async function loadData() {
-    try {
-        const res  = await fetch(SCRIPT_URLS[currentBranch]);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        shiftData  = {};
-        data.forEach(row => {
-            if (!row.date) return;
-            let dk = row.date;
-            if (dk.includes('T')) { const d = new Date(dk); dk = dateKey(d.getFullYear(), d.getMonth()+1, d.getDate()); }
-            shiftData[dk] = row.names || '';
-        });
-        updateNameFilter();
-    } catch(e) {
-        console.error('loadData error:', e);
-        showToast('❌ Gagal memuat jadwal shift', 'error');
-    }
+function renderHolidays(){
+    const wrap=document.getElementById('holidayChips'),dim=new Date(currentYear,currentMonth+1,0).getDate(),hols=[],frag=document.createDocumentFragment();
+    for(let d=1;d<=dim;d++){const key=dk(currentYear,currentMonth+1,d),hn=nationalHolidays[key]||customHolidays[key];if(hn)hols.push({day:d,dow:DN[new Date(currentYear,currentMonth,d).getDay()],name:hn,custom:!nationalHolidays[key]});}
+    if(!hols.length){wrap.innerHTML='<span class="no-holiday">Tidak ada libur bulan ini.</span>';return;}
+    hols.forEach(h=>{const chip=document.createElement('div');chip.className='hchip'+(h.custom?' custom':'');chip.innerHTML=`<span class="hdate">${String(h.day).padStart(2,'0')} ${MN[currentMonth].slice(0,3)}<br>${h.dow}</span><span class="hname">${h.name}${h.custom?' · <span style="font-size:0.75em;color:var(--orange);">Tambahan</span>':''}</span>`;frag.appendChild(chip);});
+    wrap.innerHTML='';wrap.appendChild(frag);
 }
 
-function updateNameFilter() {
-    const names = new Set();
-    Object.values(shiftData).forEach(s => {
-        if (s) s.split('\n').forEach(line => {
-            const n = line.replace(/\s*\([LPS]\)/g,'').trim();
-            if (n) names.add(n);
-        });
-    });
-    const sel  = document.getElementById('nameFilter');
-    const prev = sel.value;
-    sel.innerHTML = '<option value="">Semua Orang</option>';
-    [...names].sort().forEach(n => {
-        const o = document.createElement('option');
-        o.value = o.textContent = n;
-        sel.appendChild(o);
-    });
-    // Restore previous selection if still valid
-    if (prev && [...names].includes(prev)) {
-        sel.value = prev;
-    } else if (prev) {
-        // Previously selected name no longer exists this month
-        sel.value = '';
-        selectedFilter = '';
-    }
+function changeMonth(dir){
+    currentMonth+=dir;if(currentMonth>11){currentMonth=0;currentYear++;}else if(currentMonth<0){currentMonth=11;currentYear--;}
+    omsetData={};document.getElementById('targetInput').value='';
+    renderSkeleton();
+    if(layers.omset){document.getElementById('omsetContent').style.display='none';document.getElementById('omsetErr').style.display='none';document.getElementById('omsetPanelMonth').textContent=`${MN[currentMonth]} ${currentYear}`;loadOmsetData();}
+    Promise.all([loadShift(),loadTasks()]).then(()=>renderCalendar());
 }
 
-function filterByName() {
-    selectedFilter = document.getElementById('nameFilter').value;
-    renderCalendar();
-    checkFilterEmpty();
+function openShiftModal(day){selectedDay=day;document.getElementById('shiftModalTitle').textContent=`Shift — ${day} ${MN[currentMonth]} ${currentYear}`;document.getElementById('shiftInput').value=shiftData[dk(currentYear,currentMonth+1,day)]||'';openModal('shiftModal');setTimeout(()=>document.getElementById('shiftInput').focus(),80);}
+function setShiftBtns(s,del=false){isSaving=s||del;['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id=>document.getElementById(id).disabled=s||del);document.getElementById('btnSaveShift').textContent=s?'Menyimpan...':'Simpan';document.getElementById('btnDeleteShift').textContent=del?'Menghapus...':'Hapus';}
+async function saveShift(){if(isSaving)return;const raw=document.getElementById('shiftInput').value,shifts=normShift(raw),key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];if(shifts)shiftData[key]=shifts;else delete shiftData[key];setShiftBtns(true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:shifts})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal disimpan');}catch(e){if(prev!==undefined)shiftData[key]=prev;else delete shiftData[key];setShiftBtns(false);toast('Gagal menyimpan','error');}}
+async function deleteShift(){if(isSaving)return;showConfirm({icon:'🗑️',title:'Hapus Jadwal Shift',msg:`Hapus semua jadwal pada ${selectedDay} ${MN[currentMonth]} ${currentYear}?`,okLabel:'Hapus',onConfirm:async()=>{const key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];delete shiftData[key];setShiftBtns(false,true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:''})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal dihapus','info');}catch(e){if(prev!==undefined)shiftData[key]=prev;setShiftBtns(false);toast('Gagal menghapus','error');}}});}
+
+function openTaskModal(day){selectedDay=day;document.getElementById('taskModalTitle').textContent=`Tugas — ${day} ${MN[currentMonth]} ${currentYear}`;document.getElementById('taskName').value='';document.getElementById('holidayName').value='';document.getElementById('taskType').value='tugas';document.getElementById('taskNameWrap').style.display='block';document.getElementById('holidayWrap').style.display='none';document.getElementById('taskNameLbl').textContent='Nama Tugas';document.getElementById('taskName').placeholder='Nama tugas...';document.getElementById('btnAddTask').textContent='Tambah';renderExistingTasks(day);openModal('taskModal');setTimeout(()=>document.getElementById('taskName').focus(),80);}
+function toggleTaskType(){const v=document.getElementById('taskType').value,isH=v==='holiday';document.getElementById('taskNameWrap').style.display=isH?'none':'block';document.getElementById('holidayWrap').style.display=isH?'block':'none';const lm={tugas:'Nama Tugas',kunjungan_kc:'Keterangan KC',kunjungan_audit:'Keterangan AUDIT',lainnya:'Catatan'};const pm={tugas:'Nama tugas...',kunjungan_kc:'Contoh: Kunjungan Supervisor...',kunjungan_audit:'Contoh: Audit Internal Q1...',lainnya:'Tulis catatan...'};if(!isH){document.getElementById('taskNameLbl').textContent=lm[v]||'Catatan';document.getElementById('taskName').placeholder=pm[v]||'Tulis...';}document.getElementById('btnAddTask').textContent=isH?'Tambah Libur':'Tambah';}
+function renderExistingTasks(day){
+    const wrap=document.getElementById('existingTasksList');wrap.innerHTML='';
+    const key=dk(currentYear,currentMonth+1,day);
+    const BADGE={tugas:{bg:'rgba(219,234,254,0.70)',c:'#1e40af',l:'Tugas Harian'},kunjungan_kc:{bg:'rgba(254,243,199,0.70)',c:'#92400e',l:'KC'},kunjungan_audit:{bg:'rgba(245,243,255,0.70)',c:'#4c1d95',l:'AUDIT'},lainnya:{bg:'rgba(240,253,244,0.70)',c:'#14532d',l:'Lainnya'},oneoff:{bg:'rgba(219,234,254,0.70)',c:'#1e40af',l:'Tugas'}};
+    if(customHolidays[key]){const row=document.createElement('div');row.className='task-row';row.style.background='rgba(254,226,226,0.70)';row.innerHTML=`<span>${customHolidays[key]}<span class="task-badge" style="background:rgba(254,202,202,0.90);color:#991b1b;">Libur Tambahan</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='✕';btn.onclick=()=>showConfirm({icon:'🗓️',title:'Hapus Libur Tambahan',msg:`Hapus libur tambahan pada ${day} ${MN[currentMonth]}?`,okLabel:'Hapus',onConfirm:async()=>{const prev=customHolidays[key];delete customHolidays[key];renderExistingTasks(day);renderCalendar();renderHolidays();toast('Libur dihapus','info');try{await postTask({action:'deleteHoliday',date:key});}catch(e){customHolidays[key]=prev;renderExistingTasks(day);renderCalendar();renderHolidays();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);}
+    getTasksForDay(currentYear,currentMonth,day).filter(t=>t.kind==='permanent-recurring').forEach(t=>{const row=document.createElement('div');row.className='task-row';row.style.background='rgba(224,242,254,0.70)';row.innerHTML=`<span>${t.name}<span class="task-badge" style="background:rgba(186,230,253,0.90);color:#075985;">Tetap</span></span><span style="color:#075985;font-size:0.88em;padding:0 5px;cursor:default;">Terkunci</span>`;wrap.appendChild(row);});
+    (taskData.oneoff[key]||[]).forEach((t,idx)=>{const b=BADGE[t.type||'tugas']||BADGE.oneoff;const row=document.createElement('div');row.className='task-row';row.innerHTML=`<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.c};">${b.l}</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='✕';btn.onclick=()=>showConfirm({icon:'📋',title:'Hapus Catatan',msg:`Hapus "${t.name}"?`,okLabel:'Hapus',onConfirm:async()=>{const removed=taskData.oneoff[key].splice(idx,1)[0];if(!taskData.oneoff[key].length)delete taskData.oneoff[key];renderExistingTasks(day);renderCalendar();toast('Catatan dihapus','info');try{await postTask({action:'deleteTask',id:removed.id});}catch(e){if(!taskData.oneoff[key])taskData.oneoff[key]=[];taskData.oneoff[key].splice(idx,0,removed);renderExistingTasks(day);renderCalendar();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);});
+    if(!wrap.children.length)wrap.innerHTML='<div style="font-size:0.78em;color:var(--ink-4);font-style:italic;padding:3px 0;">Belum ada tugas pada tanggal ini.</div>';
+}
+async function addTask(){
+    const type=document.getElementById('taskType').value,key=dk(currentYear,currentMonth+1,selectedDay),btn=document.getElementById('btnAddTask');btn.disabled=true;
+    if(type==='holiday'){const label=document.getElementById('holidayName').value.trim()||'Libur Tambahan';if(customHolidays[key]){toast('Sudah ada libur tambahan','warning');btn.disabled=false;return;}customHolidays[key]=label;document.getElementById('holidayName').value='';renderExistingTasks(selectedDay);renderCalendar();renderHolidays();toast('Libur ditambahkan');btn.disabled=false;try{await postTask({action:'saveHoliday',date:key,name:label});}catch(e){delete customHolidays[key];renderExistingTasks(selectedDay);renderCalendar();renderHolidays();toast('Gagal simpan','error');}return;}
+    const name=document.getElementById('taskName').value.trim();if(!name){toast('Nama tidak boleh kosong','warning');document.getElementById('taskName').focus();btn.disabled=false;return;}
+    const id=genId();if(!taskData.oneoff[key])taskData.oneoff[key]=[];taskData.oneoff[key].push({id,name,type});document.getElementById('taskName').value='';renderExistingTasks(selectedDay);renderCalendar();toast('Ditambahkan');btn.disabled=false;
+    try{await postTask({action:'saveTask',date:key,name,type,id});}catch(e){const arr=taskData.oneoff[key];const i=arr.findIndex(t=>t.id===id);if(i>-1)arr.splice(i,1);if(!arr.length)delete taskData.oneoff[key];renderExistingTasks(selectedDay);renderCalendar();toast('Gagal simpan','error');}
+}
+async function postTask(p){await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});}
+
+async function loadOmsetData(){
+    document.getElementById('omsetContent').style.display='none';document.getElementById('omsetErr').style.display='none';document.getElementById('omsetSkelWrap').style.display='block';
+    try{const res=await fetch(`${OMSET_URL}?action=omset&year=${currentYear}&month=${currentMonth+1}`);if(!res.ok)throw new Error('HTTP '+res.status);const json=await res.json();if(json.error)throw new Error(json.error);omsetData={};(json.daily||[]).forEach(d=>{omsetData[d.date]=d;});document.getElementById('omsetSkelWrap').style.display='none';
+    if(!json.found){document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;">📭</div>Sheet <strong>${MN[currentMonth]} ${currentYear}</strong> belum ditemukan.<br><span style="font-size:0.8em;color:var(--ink-4);">Pastikan nama tab sesuai.</span>`;renderCalendar();return;}
+    renderOmsetPanel(json);renderCalendar();document.getElementById('targetInput').value=json.totalTarget||'';}
+    catch(e){document.getElementById('omsetSkelWrap').style.display='none';document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;">❌</div>Gagal memuat data omset.<br><span style="font-size:0.8em;color:var(--ink-4);">${e.message}</span><br><button onclick="loadOmsetData()" style="margin-top:10px;padding:7px 16px;background:var(--sky-5);color:white;border:none;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:600;">Coba Lagi</button>`;}
+}
+function renderOmsetPanel(json){
+    const real=json.totalRealisasi||0,tgt=json.totalTarget||0,dim=new Date(currentYear,currentMonth+1,0).getDate();
+    let passed=0,total=0;for(let d=1;d<=dim;d++){if(isWork(currentYear,currentMonth,d)){total++;if(d<=today.getDate()&&currentMonth===today.getMonth()&&currentYear===today.getFullYear())passed++;else if(currentMonth<today.getMonth()||currentYear<today.getFullYear())passed++;}}
+    const avg=passed>0?(real/passed).toFixed(1):0,proj=total>0?Math.round(parseFloat(avg)*total):0,pct=tgt>0?Math.min(Math.round((real/tgt)*100),999):0;
+    document.getElementById('statReal').textContent=real;document.getElementById('statTgt').textContent=tgt||'—';document.getElementById('statAvg').textContent=avg;document.getElementById('statAvgSub').textContent=`dari ${passed} hari kerja`;document.getElementById('statProj').textContent=total>0?proj:'—';
+    const cls=pct>=100?'g':pct>=70?'w':'r';
+    document.getElementById('progPct').textContent=tgt>0?`${pct}%`:'—';document.getElementById('progPct').className=`prog-pct ${cls}`;document.getElementById('progBar').style.width=tgt>0?`${Math.min(pct,100)}%`:'0%';document.getElementById('progBar').className=`prog-fill ${cls}`;
+    const sisa=tgt-real,sisaHari=total-passed;document.getElementById('progDetail').textContent=tgt>0?(sisa>0?`Butuh ${sisa} transaksi lagi · Sisa ${sisaHari} hari kerja`:`Target tercapai! Surplus ${Math.abs(sisa)}`):'Set target bulanan.';
+    const nb=document.getElementById('dailyNeedBody');nb.innerHTML='';
+    if(tgt<=0)nb.innerHTML='<span style="font-size:0.8em;color:var(--ink-4);font-style:italic;">Set target untuk melihat kebutuhan harian.</span>';
+    else if(real>=tgt)nb.innerHTML='<span style="font-size:0.92em;font-weight:700;color:var(--green);">Target sudah tercapai!</span>';
+    else if(sisaHari<=0)nb.innerHTML='<span style="font-size:0.82em;color:var(--red);font-weight:600;">Tidak ada hari kerja tersisa.</span>';
+    else{const ph=Math.ceil((tgt-real)/sisaHari),phd=((tgt-real)/sisaHari).toFixed(1),clr=ph<=4?'var(--green)':ph<=6?'var(--amber)':'var(--red)';nb.innerHTML=`<div style="display:flex;align-items:baseline;gap:5px;"><span style="font-size:1.9em;font-weight:800;font-family:'DM Mono',monospace;color:${clr};">${ph}</span><span style="font-size:0.8em;font-weight:600;color:var(--ink-3);">transaksi/hari</span></div><div style="width:1px;height:34px;background:var(--line);flex-shrink:0;"></div><div style="font-size:0.76em;color:var(--ink-3);line-height:1.7;">Sisa <strong style="color:var(--ink);">${tgt-real}</strong> dalam <strong style="color:var(--ink);">${sisaHari}</strong> hari kerja<br>Rata-rata persis: <strong style="color:var(--ink);">${phd}/hari</strong> · Sejauh ini: <strong style="color:var(--ink);">${avg}/hari</strong></div>`;}
+    document.getElementById('omsetContent').style.display='block';
+}
+async function saveTarget(){const tgt=parseInt(document.getElementById('targetInput').value);if(isNaN(tgt)||tgt<0){toast('Target tidak valid','warning');return;}const btn=document.getElementById('btnTarget');btn.disabled=true;btn.textContent='...';try{await fetch(OMSET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'updateTarget',year:currentYear,month:currentMonth+1,target:tgt})});toast('Target disimpan');loadOmsetData();}catch(e){toast('Gagal simpan target','error');}finally{btn.disabled=false;btn.textContent='Simpan';}}
+
+function switchPage(page){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-pill').forEach(b=>b.classList.remove('active'));
+    document.getElementById('page'+page.charAt(0).toUpperCase()+page.slice(1)).classList.add('active');
+    document.getElementById('nav'+page.charAt(0).toUpperCase()+page.slice(1)).classList.add('active');
+    if(page==='kalender'&&!_kalInited){_kalInited=true;initApp();}
 }
 
-function clearFilter() {
-    document.getElementById('nameFilter').value = '';
-    selectedFilter = '';
-    renderCalendar();
-    document.getElementById('filterEmptyBanner').classList.remove('visible');
-}
+document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&!isSaving)m.classList.remove('open');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop.open').forEach(m=>{if(!isSaving)m.classList.remove('open');});});
 
-function checkFilterEmpty() {
-    if (!selectedFilter) {
-        document.getElementById('filterEmptyBanner').classList.remove('visible');
-        return;
-    }
-    // Check if this name appears anywhere this month
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    let found = false;
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dk = dateKey(currentYear, currentMonth + 1, d);
-        if (shiftData[dk]) {
-            const lines = shiftData[dk].split('\n');
-            if (lines.some(l => l.replace(/\s*\([LPS]\)/g,'').trim() === selectedFilter)) {
-                found = true; break;
-            }
-        }
-    }
-    const banner = document.getElementById('filterEmptyBanner');
-    if (!found) {
-        document.getElementById('filterEmptyName').textContent = selectedFilter;
-        banner.classList.add('visible');
-    } else {
-        banner.classList.remove('visible');
-    }
-}
-
-function getShiftClass(text) {
-    if (text.includes('(L)')) return 'libur';
-    if (text.includes('(P)')) return 'pulsor';
-    if (text.includes('(S)')) return 'siang';
-    return 'normal';
-}
-
-// ─────────────────────────────────────────
-//  OMSET DATA
-// ─────────────────────────────────────────
-async function loadOmsetData() {
-    document.getElementById('omsetContent').style.display = 'none';
-    document.getElementById('omsetError').style.display   = 'none';
-    document.getElementById('omsetLoading').style.display = 'block';
-
-    try {
-        const res  = await fetch(`${OMSET_URL}?action=omset&year=${currentYear}&month=${currentMonth + 1}`);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const json = await res.json();
-        if (json.error) throw new Error(json.error);
-
-        omsetData = {};
-        (json.daily || []).forEach(d => { omsetData[d.date] = d; });
-        omsetMonthlyInfo = {
-            totalRealisasi: json.totalRealisasi || 0,
-            totalTarget:    json.totalTarget    || 0,
-            found:          json.found
-        };
-
-        document.getElementById('omsetLoading').style.display = 'none';
-
-        if (!json.found) {
-            document.getElementById('omsetError').style.display = 'block';
-            document.getElementById('omsetError').innerHTML =
-                `<div style="font-size:2em;margin-bottom:12px;">📭</div>
-                 Sheet untuk <strong>${monthNames[currentMonth]} ${currentYear}</strong> belum ditemukan.<br>
-                 <span style="font-size:0.85em;color:var(--text-muted);">Pastikan nama tab sesuai (contoh: "Januari 2026")</span>`;
-            renderCalendar();
-            return;
-        }
-
-        renderOmsetPanel(json);
-        renderCalendar();
-        document.getElementById('targetInput').value = json.totalTarget || '';
-
-    } catch(e) {
-        console.error('loadOmsetData error:', e);
-        document.getElementById('omsetLoading').style.display = 'none';
-        document.getElementById('omsetError').style.display   = 'block';
-        document.getElementById('omsetError').innerHTML =
-            `<div style="font-size:2em;margin-bottom:12px;">❌</div>
-             Gagal memuat data omset.<br>
-             <span style="font-size:0.85em;color:var(--text-muted);">${e.message}</span><br>
-             <button onclick="loadOmsetData()" style="margin-top:12px;padding:8px 18px;background:var(--primary);color:white;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;">Coba Lagi</button>`;
-    }
-}
-
-function renderOmsetPanel(json) {
-    const realisasi = json.totalRealisasi || 0;
-    const target    = json.totalTarget    || 0;
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    let workDaysPassed = 0, workDaysTotal = 0;
-    for (let d = 1; d <= daysInMonth; d++) {
-        if (isWorkDay(currentYear, currentMonth, d)) {
-            workDaysTotal++;
-            if (d <= today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) workDaysPassed++;
-            else if (currentMonth < today.getMonth() || currentYear < today.getFullYear()) workDaysPassed++;
-        }
-    }
-
-    const avg      = workDaysPassed > 0 ? (realisasi / workDaysPassed).toFixed(1) : 0;
-    const proyeksi = workDaysTotal  > 0 ? Math.round(parseFloat(avg) * workDaysTotal) : 0;
-    const pct      = target > 0 ? Math.min(Math.round((realisasi / target) * 100), 999) : 0;
-
-    document.getElementById('statRealisasi').textContent = realisasi;
-    document.getElementById('statTarget').textContent    = target || '—';
-    document.getElementById('statAvg').textContent       = avg;
-    document.getElementById('statAvgSub').textContent    = `dari ${workDaysPassed} hari kerja`;
-    document.getElementById('statProyeksi').textContent  = workDaysTotal > 0 ? proyeksi : '—';
-
-    const pctEl = document.getElementById('progressPct');
-    const barEl = document.getElementById('progressBar');
-    const detEl = document.getElementById('progressDetail');
-    const cls   = pct >= 100 ? 'good' : pct >= 70 ? 'warn' : 'bad';
-
-    pctEl.textContent = target > 0 ? `${pct}%` : 'Target belum diset';
-    pctEl.className   = `progress-pct ${cls}`;
-    barEl.style.width = target > 0 ? `${Math.min(pct, 100)}%` : '0%';
-    barEl.className   = `progress-bar-fill ${cls}`;
-
-    if (target > 0) {
-        const sisa = target - realisasi;
-        detEl.textContent = sisa > 0
-            ? `Butuh ${sisa} transaksi lagi. Sisa ${workDaysTotal - workDaysPassed} hari kerja.`
-            : `🎉 Target tercapai! Surplus ${Math.abs(sisa)} transaksi.`;
-    } else {
-        detEl.textContent = 'Set target bulanan untuk melihat progress.';
-    }
-
-    // Daily need
-    const needWrap   = document.getElementById('dailyNeedContent');
-    const sisaHari   = workDaysTotal - workDaysPassed;
-    needWrap.innerHTML = '';
-
-    if (target <= 0) {
-        needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--text-muted);font-style:italic;">Set target bulanan untuk melihat kebutuhan harian.</span>';
-    } else if (realisasi >= target) {
-        needWrap.innerHTML = '<span style="font-size:1em;font-weight:700;color:var(--success);">🎉 Target sudah tercapai!</span>';
-    } else if (sisaHari <= 0) {
-        needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--danger);font-weight:600;">Tidak ada hari kerja tersisa bulan ini.</span>';
-    } else {
-        const sisaTransaksi = target - realisasi;
-        const perHariInt    = Math.ceil(sisaTransaksi / sisaHari);
-        const perHari       = (sisaTransaksi / sisaHari).toFixed(1);
-        const clr           = perHariInt <= 4 ? 'var(--success)' : perHariInt <= 6 ? 'var(--warning)' : 'var(--danger)';
-        needWrap.innerHTML = `
-            <div style="display:flex;align-items:baseline;gap:6px;">
-                <span style="font-size:2.2em;font-weight:800;font-family:'DM Mono',monospace;color:${clr};">${perHariInt}</span>
-                <span style="font-size:0.9em;font-weight:600;color:var(--text-muted);">transaksi/hari</span>
-            </div>
-            <div style="width:1px;height:40px;background:var(--border);flex-shrink:0;"></div>
-            <div style="font-size:0.83em;color:var(--text-muted);line-height:1.7;">
-                Sisa <strong style="color:var(--text);">${sisaTransaksi}</strong> transaksi dalam
-                <strong style="color:var(--text);">${sisaHari}</strong> hari kerja<br>
-                Rata-rata persis: <strong style="color:var(--text);">${perHari}/hari</strong>
-                &nbsp;·&nbsp; Sejauh ini: <strong style="color:var(--text);">${avg}/hari</strong>
-            </div>`;
-    }
-    document.getElementById('omsetContent').style.display = 'block';
-}
-
-async function saveTarget() {
-    const target = parseInt(document.getElementById('targetInput').value);
-    if (isNaN(target) || target < 0) { showToast('⚠️ Target tidak valid', 'warning'); return; }
-    const btn = document.getElementById('btnSaveTarget');
-    btn.disabled = true; btn.textContent = '⏳ Menyimpan...';
-    try {
-        await fetch(OMSET_URL, {
-            method: 'POST', mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'updateTarget', year: currentYear, month: currentMonth + 1, target })
-        });
-        omsetMonthlyInfo.totalTarget = target;
-        showToast('✅ Target disimpan');
-        loadOmsetData();
-    } catch(e) {
-        showToast('❌ Gagal menyimpan target', 'error');
-    } finally {
-        btn.disabled = false; btn.textContent = 'Simpan Target';
-    }
-}
-
-// ─────────────────────────────────────────
-//  SHIFT MODAL
-// ─────────────────────────────────────────
-function openShiftModal(day) {
-    selectedDay = day;
-    const dk = dateKey(currentYear, currentMonth+1, day);
-    document.getElementById('shiftModalTitle').textContent = `Jadwal Shift — ${day} ${monthNames[currentMonth]} ${currentYear}`;
-    document.getElementById('shiftInput').value = shiftData[dk] || '';
-    document.getElementById('shiftModal').classList.add('active');
-    setTimeout(() => document.getElementById('shiftInput').focus(), 80);
-}
-function closeShiftModal() {
-    if (isSaving) return;
-    document.getElementById('shiftModal').classList.remove('active');
-    selectedDay = null;
-}
-function setSavingState(saving) {
-    isSaving = saving;
-    ['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id => document.getElementById(id).disabled = saving);
-    document.getElementById('btnSaveShift').textContent = saving ? '⏳ Menyimpan...' : 'Simpan';
-}
-function setDeletingState(deleting) {
-    isSaving = deleting;
-    ['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id => document.getElementById(id).disabled = deleting);
-    document.getElementById('btnDeleteShift').textContent = deleting ? '⏳ Menghapus...' : '🗑 Hapus';
-}
-
-async function saveShift() {
-    if (isSaving) return;
-    const raw    = document.getElementById('shiftInput').value;
-    const shifts = normaliseShiftInput(raw);
-    const dk     = dateKey(currentYear, currentMonth+1, selectedDay);
-    const prev   = shiftData[dk];
-    if (shifts) shiftData[dk] = shifts; else delete shiftData[dk];
-    setSavingState(true);
-    try {
-        await fetch(SCRIPT_URLS[currentBranch], { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({date:dk,names:shifts}) });
-        updateNameFilter(); renderCalendar(); setSavingState(false); closeShiftModal();
-        showToast('✅ Jadwal berhasil disimpan');
-    } catch(e) {
-        if (prev !== undefined) shiftData[dk] = prev; else delete shiftData[dk];
-        setSavingState(false); showToast('❌ Gagal menyimpan. Periksa koneksi.', 'error');
-    }
-}
-
-async function deleteShift() {
-    if (isSaving) return;
-    showConfirm({
-        icon: '🗑️',
-        title: 'Hapus Jadwal Shift',
-        msg: `Hapus semua jadwal pada ${selectedDay} ${monthNames[currentMonth]} ${currentYear}?`,
-        okLabel: 'Hapus',
-        onConfirm: async () => {
-            const dk = dateKey(currentYear, currentMonth+1, selectedDay), prev = shiftData[dk];
-            delete shiftData[dk];
-            setDeletingState(true);
-            try {
-                await fetch(SCRIPT_URLS[currentBranch], {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:dk,names:''})});
-                updateNameFilter(); renderCalendar(); setDeletingState(false); closeShiftModal();
-                showToast('🗑 Jadwal berhasil dihapus','info');
-            } catch(e) {
-                if (prev !== undefined) shiftData[dk] = prev;
-                setDeletingState(false); showToast('❌ Gagal menghapus.','error');
-            }
-        }
-    });
-}
-
-// ─────────────────────────────────────────
-//  TASK DATA
-// ─────────────────────────────────────────
-function genId() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-
-async function loadTasks() {
-    try {
-        const res  = await fetch(SCRIPT_URLS[currentBranch]+'?action=tasks');
-        if (!res.ok) throw new Error('HTTP '+res.status);
-        const rows = await res.json();
-        taskData = { oneoff:{}, weekly:[], monthly:[] };
-        customHolidays = {};
-        rows.forEach(row => {
-            if (!row.date) return;
-            let dk = row.date;
-            if (dk.includes('T')) { const d = new Date(dk); dk = dateKey(d.getFullYear(),d.getMonth()+1,d.getDate()); }
-            if (row.type === '__holiday__') { customHolidays[dk] = row.name || 'Libur Tambahan'; }
-            else { if (!taskData.oneoff[dk]) taskData.oneoff[dk] = []; taskData.oneoff[dk].push({id:row.id,name:row.name,type:row.type||'tugas'}); }
-        });
-    } catch(e) {
-        console.error('loadTasks error:', e);
-        taskData = { oneoff:{}, weekly:[], monthly:[] };
-        customHolidays = {};
-        showToast('⚠️ Gagal memuat data tugas — coba refresh halaman', 'warning');
-    }
-}
-
-async function postTask(payload) {
-    await fetch(SCRIPT_URLS[currentBranch], {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-}
-async function saveTaskToSheets(dk,name,type,id)  { await postTask({action:'saveTask',  date:dk,name,type,id}); }
-async function deleteTaskFromSheets(id)            { await postTask({action:'deleteTask',id}); }
-async function saveHolidayToSheets(dk,name)        { await postTask({action:'saveHoliday',date:dk,name}); }
-async function deleteHolidayFromSheets(dk)         { await postTask({action:'deleteHoliday',date:dk}); }
-
-function getPermanentTasksForDate(y, m, d) {
-    const dow = new Date(Date.UTC(y, m, d)).getUTCDay(); // fixed: use UTC consistent with isRedDate
-    return PERMANENT_TASKS.filter(t => {
-        if (t.type==='weekly')      return t.days.includes(dow);
-        if (t.type==='monthly')     return t.dates.includes(d);
-        if (t.type==='monthly-odd') return t.dates.includes(d) && (m % 2 === 0);
-        return false;
-    }).map(t => ({ name: t.name, kind: 'permanent-recurring' }));
-}
-
-function getTasksForDate(y, m, d) {
-    const dk  = dateKey(y, m+1, d);
-    const dow = new Date(Date.UTC(y, m, d)).getUTCDay();
-    return [
-        ...getPermanentTasksForDate(y, m, d),
-        ...(taskData.oneoff[dk]||[]).map(t=>({...t, kind: t.type||'tugas'})),
-        ...taskData.weekly.filter(t=>t.days.includes(dow)).map(t=>({...t, kind:'recurring'})),
-        ...taskData.monthly.filter(t=>t.dates.includes(d)).map(t=>({...t, kind:'recurring'})),
-    ];
-}
-
-// ─────────────────────────────────────────
-//  TASK MODAL
-// ─────────────────────────────────────────
-function openTaskModal(day) {
-    selectedDay = day;
-    document.getElementById('taskModalTitle').textContent = `Tugas — ${day} ${monthNames[currentMonth]} ${currentYear}`;
-    document.getElementById('taskName').value    = '';
-    document.getElementById('holidayName').value = '';
-    document.getElementById('taskType').value    = 'tugas';
-    document.getElementById('taskNameWrap').style.display    = 'block';
-    document.getElementById('holidayNameWrap').style.display = 'none';
-    document.getElementById('taskNameLabel').textContent     = 'Nama Tugas';
-    document.getElementById('taskName').placeholder          = 'Nama tugas...';
-    document.getElementById('btnAddTask').textContent        = '+ Tambah';
-    renderExistingTasks(day);
-    document.getElementById('taskModal').classList.add('active');
-    setTimeout(()=>document.getElementById('taskName').focus(), 80);
-}
-function closeTaskModal() {
-    document.getElementById('taskModal').classList.remove('active');
-    selectedDay = null;
-}
-function toggleAddOptions() {
-    const v  = document.getElementById('taskType').value;
-    const isH = v === 'holiday';
-    document.getElementById('taskNameWrap').style.display    = isH ? 'none'  : 'block';
-    document.getElementById('holidayNameWrap').style.display = isH ? 'block' : 'none';
-    const lm = { tugas:'Nama Tugas', kunjungan_kc:'Keterangan Kunjungan KC', kunjungan_audit:'Keterangan Kunjungan AUDIT', lainnya:'Catatan' };
-    const pm = { tugas:'Nama tugas...', kunjungan_kc:'Contoh: Kunjungan Supervisor KC...', kunjungan_audit:'Contoh: Audit Internal Q1...', lainnya:'Tulis catatan...' };
-    if (!isH) { document.getElementById('taskNameLabel').textContent = lm[v]||'Catatan'; document.getElementById('taskName').placeholder = pm[v]||'Tulis...'; }
-    document.getElementById('btnAddTask').textContent = isH ? '+ Tambah Libur' : '+ Tambah';
-}
-
-function renderExistingTasks(day) {
-    const wrap = document.getElementById('existingTasksList');
-    wrap.innerHTML = '';
-    const dk = dateKey(currentYear, currentMonth+1, day);
-
-    if (customHolidays[dk]) {
-        const div = document.createElement('div');
-        div.className = 'task-existing-item';
-        div.style.cssText = 'background:var(--danger-light);';
-        div.innerHTML = `<span>${customHolidays[dk]}<span class="task-badge" style="background:#fecaca;color:#991b1b;">Libur Tambahan</span></span>`;
-        const btn = document.createElement('button');
-        btn.className = 'task-del-btn'; btn.textContent = '✕';
-        btn.onclick = () => {
-            showConfirm({
-                icon: '🗓️',
-                title: 'Hapus Libur Tambahan',
-                msg: `Hapus libur tambahan pada ${day} ${monthNames[currentMonth]}?`,
-                okLabel: 'Hapus',
-                onConfirm: async () => {
-                    const prev = customHolidays[dk];
-                    delete customHolidays[dk];
-                    renderExistingTasks(day); renderCalendar(); renderHolidays();
-                    showToast('Libur tambahan dihapus', 'info');
-                    try { await deleteHolidayFromSheets(dk); }
-                    catch(e) { customHolidays[dk] = prev; renderExistingTasks(day); renderCalendar(); renderHolidays(); showToast('❌ Gagal hapus libur','error'); }
-                }
-            });
-        };
-        div.appendChild(btn); wrap.appendChild(div);
-    }
-
-    getPermanentTasksForDate(currentYear, currentMonth, day).forEach(t => {
-        const div = document.createElement('div');
-        div.className = 'task-existing-item';
-        div.style.cssText = 'background:#e0f2fe;';
-        div.innerHTML = `<span>${t.name}<span class="task-badge" style="background:#bae6fd;color:#0369a1;">Tugas Tetap</span></span><span title="Tugas tetap tidak dapat dihapus" style="padding:2px 8px;color:#0369a1;font-size:0.9em;cursor:default;">🔒</span>`;
-        wrap.appendChild(div);
-    });
-
-    const NOTE_BADGE = {
-        tugas:           { bg:'var(--primary-light)', color:'var(--primary-dark)', label:'Tugas Harian'   },
-        kunjungan_kc:    { bg:'#fef3c7',              color:'#92400e',             label:'Kunjungan KC'   },
-        kunjungan_audit: { bg:'#ede9fe',              color:'#5b21b6',             label:'Kunjungan AUDIT'},
-        lainnya:         { bg:'#f0fdf4',              color:'#166534',             label:'Lainnya'        },
-        oneoff:          { bg:'var(--primary-light)', color:'var(--primary-dark)', label:'Tugas'          },
-    };
-
-    (taskData.oneoff[dk]||[]).forEach((t, idx) => {
-        const b   = NOTE_BADGE[t.type||'tugas'] || NOTE_BADGE['oneoff'];
-        const div = document.createElement('div');
-        div.className = 'task-existing-item';
-        div.innerHTML = `<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.color};">${b.label}</span></span>`;
-        const btn = document.createElement('button');
-        btn.className = 'task-del-btn'; btn.textContent = '✕';
-        btn.onclick = () => {
-            showConfirm({
-                icon: '📋',
-                title: 'Hapus Catatan',
-                msg: `Hapus "${t.name}"?`,
-                okLabel: 'Hapus',
-                onConfirm: async () => {
-                    const removed = taskData.oneoff[dk].splice(idx, 1)[0];
-                    if (!taskData.oneoff[dk].length) delete taskData.oneoff[dk];
-                    renderExistingTasks(day); renderCalendar();
-                    showToast('Catatan dihapus', 'info');
-                    try { await deleteTaskFromSheets(removed.id); }
-                    catch(e) {
-                        if (!taskData.oneoff[dk]) taskData.oneoff[dk] = [];
-                        taskData.oneoff[dk].splice(idx, 0, removed);
-                        renderExistingTasks(day); renderCalendar();
-                        showToast('❌ Gagal hapus catatan','error');
-                    }
-                }
-            });
-        };
-        div.appendChild(btn); wrap.appendChild(div);
-    });
-
-    if (!wrap.children.length) {
-        wrap.innerHTML = '<div style="font-size:0.85em;color:var(--text-muted);font-style:italic;padding:4px 0;">Belum ada tugas pada tanggal ini.</div>';
-    }
-}
-
-async function addTask() {
-    const type = document.getElementById('taskType').value;
-    const dk   = dateKey(currentYear, currentMonth+1, selectedDay);
-    const btn  = document.getElementById('btnAddTask');
-    btn.disabled = true;
-
-    if (type === 'holiday') {
-        const label = document.getElementById('holidayName').value.trim() || 'Libur Tambahan';
-        if (customHolidays[dk]) { showToast('⚠️ Tanggal ini sudah memiliki libur tambahan','warning'); btn.disabled=false; return; }
-        customHolidays[dk] = label;
-        document.getElementById('holidayName').value = '';
-        renderExistingTasks(selectedDay); renderCalendar(); renderHolidays();
-        showToast('✅ Libur tambahan ditambahkan'); btn.disabled = false;
-        try { await saveHolidayToSheets(dk, label); }
-        catch(e) { delete customHolidays[dk]; renderExistingTasks(selectedDay); renderCalendar(); renderHolidays(); showToast('❌ Gagal simpan libur','error'); }
-        return;
-    }
-
-    const name = document.getElementById('taskName').value.trim();
-    if (!name) { showToast('⚠️ Kolom tidak boleh kosong','warning'); document.getElementById('taskName').focus(); btn.disabled=false; return; }
-    const id = genId();
-    if (!taskData.oneoff[dk]) taskData.oneoff[dk] = [];
-    taskData.oneoff[dk].push({ id, name, type });
-    document.getElementById('taskName').value = '';
-    renderExistingTasks(selectedDay); renderCalendar();
-    const tl = { tugas:'Tugas Harian', kunjungan_kc:'Kunjungan KC', kunjungan_audit:'Kunjungan AUDIT', lainnya:'Catatan' };
-    showToast(`✅ ${tl[type]||'Catatan'} ditambahkan`); btn.disabled = false;
-    try { await saveTaskToSheets(dk, name, type, id); }
-    catch(e) {
-        const arr = taskData.oneoff[dk];
-        const i   = arr.findIndex(t => t.id === id);
-        if (i > -1) arr.splice(i, 1);
-        if (!arr.length) delete taskData.oneoff[dk];
-        renderExistingTasks(selectedDay); renderCalendar();
-        showToast('❌ Gagal simpan catatan','error');
-    }
-}
-
-// ─────────────────────────────────────────
-//  RENDER CALENDAR
-// ─────────────────────────────────────────
-function renderCalendar() {
-    document.getElementById('monthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-    const grid = document.getElementById('daysGrid');
-    const frag = document.createDocumentFragment(); // Use fragment for perf
-
-    const jsDay       = new Date(currentYear, currentMonth, 1).getDay();
-    const firstDay    = jsDay === 0 ? 6 : jsDay - 1;
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    for (let i = 0; i < firstDay; i++) {
-        const e = document.createElement('div'); e.className = 'day-cell empty'; frag.appendChild(e);
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dk      = dateKey(currentYear, currentMonth+1, day);
-        const red     = isRedDate(currentYear, currentMonth, day);
-        const hname   = getHolidayName(currentYear, currentMonth, day);
-        const isToday = day===today.getDate() && currentMonth===today.getMonth() && currentYear===today.getFullYear();
-        const hasOmset= layers.omset && !!omsetData[dk];
-
-        const cell = document.createElement('div');
-        cell.className = 'day-cell' + (red?' red-day':'') + (isToday?' today':'') + (hasOmset?' has-omset':'');
-
-        const numDiv = document.createElement('div');
-        numDiv.className = 'day-number' + (red?' red':'') + (isToday?' today-num':'');
-        numDiv.textContent = day;
-        cell.appendChild(numDiv);
-
-        if (hname) {
-            const hl = document.createElement('span');
-            hl.className = 'holiday-label';
-            hl.textContent = hname;
-            cell.appendChild(hl);
-        }
-
-        // Layer Shift
-        if (layers.shift) {
-            const list = document.createElement('div');
-            list.className = 'shift-list';
-            if (shiftData[dk]) {
-                shiftData[dk].split('\n').filter(s=>s.trim()).forEach(shift => {
-                    const name = shift.replace(/\s*\([LPS]\)/g,'').trim();
-                    if (selectedFilter && name !== selectedFilter) return;
-                    const item = document.createElement('div');
-                    item.className = `shift-item ${getShiftClass(shift)}`;
-                    item.textContent = shift.trim();
-                    list.appendChild(item);
-                });
-            }
-            cell.appendChild(list);
-        }
-
-        // Layer Tugas
-        if (layers.task) {
-            const list = document.createElement('div');
-            list.className = 'task-list';
-            getTasksForDate(currentYear, currentMonth, day).forEach(t => {
-                const item = document.createElement('div');
-                item.className = `task-item ${t.kind}`;
-                item.textContent = t.name;
-                list.appendChild(item);
-            });
-            cell.appendChild(list);
-        }
-
-        // Layer Omset
-        if (layers.omset) {
-            const d    = omsetData[dk];
-            const wrap = document.createElement('div');
-            wrap.className = 'omset-cell-data';
-            if (d && d.total > 0) {
-                wrap.innerHTML = `<div class="omset-total-chip"><span class="dot"></span>${d.total}</div>`;
-            } else if (isWorkDay(currentYear, currentMonth, day)) {
-                wrap.innerHTML = `<span class="omset-no-data">—</span>`;
-            }
-            cell.appendChild(wrap);
-        }
-
-        // ── Action buttons (hover) ──
-        // Both shift & task active: primary click = shift, action button = task
-        // Only one active: primary click = that layer
-        // Both inactive: no click
-        const actionBar = document.createElement('div');
-        actionBar.className = 'cell-action-bar';
-
-        if (layers.shift && layers.task) {
-            cell.onclick = (e) => { if (!e.target.classList.contains('cell-action-btn')) openShiftModal(day); };
-            const taskBtn = document.createElement('button');
-            taskBtn.className = 'cell-action-btn task-btn';
-            taskBtn.title = 'Kelola Tugas';
-            taskBtn.textContent = '📋';
-            taskBtn.onclick = (e) => { e.stopPropagation(); openTaskModal(day); };
-            actionBar.appendChild(taskBtn);
-        } else if (layers.shift) {
-            cell.onclick = () => openShiftModal(day);
-        } else if (layers.task) {
-            cell.onclick = () => openTaskModal(day);
-        } else {
-            cell.style.cursor = 'default';
-        }
-
-        if (actionBar.children.length) cell.appendChild(actionBar);
-        frag.appendChild(cell);
-    }
-
-    grid.innerHTML = '';
-    grid.appendChild(frag);
-    renderHolidays();
-    checkFilterEmpty();
-}
-
-// ─────────────────────────────────────────
-//  RENDER HOLIDAY PANEL
-// ─────────────────────────────────────────
-function renderHolidays() {
-    const grid = document.getElementById('holidayGrid');
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const holidays = [];
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dk = dateKey(currentYear, currentMonth+1, d);
-        const hn = nationalHolidays[dk] || customHolidays[dk];
-        if (hn) holidays.push({ day:d, dayName:dayNames[new Date(currentYear,currentMonth,d).getDay()], name:hn, custom:!nationalHolidays[dk] });
-    }
-    if (!holidays.length) { grid.innerHTML = '<span class="no-holiday">Tidak ada libur bulan ini.</span>'; return; }
-    const frag = document.createDocumentFragment();
-    holidays.forEach(h => {
-        const chip = document.createElement('div');
-        chip.className = 'holiday-chip';
-        if (h.custom) chip.style.borderLeftColor = '#f97316';
-        chip.innerHTML = `<span class="hdate">${String(h.day).padStart(2,'0')} ${monthNames[currentMonth].slice(0,3)}<br>${h.dayName}</span><span class="hname">${h.name}${h.custom?' <span style="font-size:0.78em;color:#f97316;">(Tambahan)</span>':''}</span>`;
-        frag.appendChild(chip);
-    });
-    grid.innerHTML = '';
-    grid.appendChild(frag);
-}
-
-// ─────────────────────────────────────────
-//  MONTH NAV
-// ─────────────────────────────────────────
-function changeMonth(dir) {
-    currentMonth += dir;
-    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-    else if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-
-    omsetData        = {};
-    omsetMonthlyInfo = { totalRealisasi:0, totalTarget:0, found:false };
-
-    // Show skeleton immediately on month change
-    renderSkeletonCalendar();
-
-    // Reset filter if name no longer available — will be rechecked after loadData
-    // (don't reset selectedFilter value yet, let updateNameFilter handle it)
-
-    // Reset target input
-    document.getElementById('targetInput').value = '';
-
-    if (layers.omset) {
-        document.getElementById('omsetContent').style.display = 'none';
-        document.getElementById('omsetError').style.display   = 'none';
-        document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-        loadOmsetData();
-    }
-
-    // Load new month data
-    Promise.all([loadData(), loadTasks()]).then(() => {
-        renderCalendar();
-    });
-}
-
-// ─────────────────────────────────────────
-//  KEYBOARD / BACKDROP
-// ─────────────────────────────────────────
-document.getElementById('shiftModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeShiftModal(); });
-document.getElementById('taskModal').addEventListener('click',  e => { if (e.target === e.currentTarget) closeTaskModal();  });
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeShiftModal(); closeTaskModal(); document.getElementById('confirmModal').classList.remove('active'); }
-});
-
-// ─────────────────────────────────────────
-//  PAGE SWITCHING
-// ─────────────────────────────────────────
-function switchPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.app-nav-tab').forEach(t => t.classList.remove('active'));
-    const cap = page.charAt(0).toUpperCase() + page.slice(1);
-    document.getElementById('page' + cap).classList.add('active');
-    document.getElementById('nav'  + cap).classList.add('active');
-    if (page === 'kalender' && !_calenderInited) {
-        _calenderInited = true;
-        initApp().then(() => {
-            if (layers.omset) {
-                document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-                loadOmsetData();
-            }
-        });
-    }
-}
+tickClock(); setInterval(tickClock,1000);
 </script>
 </body>
 </html>
