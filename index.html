@@ -109,12 +109,12 @@
         .identity-row {
             display: flex; align-items: center;
             justify-content: space-between;
-            padding: 0 32px; height: 58px; gap: 20px;
+            padding: 0 32px; height: 72px; gap: 20px;
         }
 
         /* Brand — just the PNG logo */
         .brand-logo-img {
-            height: 34px; width: auto;
+            height: 52px; width: auto;
             display: block;
             object-fit: contain;
         }
@@ -128,27 +128,27 @@
         }
         .clock-date { font-size: 0.63em; color: var(--ink-3); margin-top: 2px; }
 
-        /* Nav bar — second row below identity row */
+        /* Nav bar — floats BELOW the sticky header, not inside it */
         .nav-bar {
-            display: flex; align-items: center;
-            padding: 0 32px 10px;
-            gap: 4px;
-            border-top: 1px solid rgba(147,180,247,0.15);
+            max-width: 1340px;
+            margin: 20px auto 0;
+            padding: 0 32px;
         }
         .nav-pills {
-            display: flex; gap: 2px;
-            background: rgba(255,255,255,0.45);
+            display: inline-flex; gap: 2px;
+            background: rgba(255,255,255,0.55);
             border: 1px solid var(--glass-border);
-            border-radius: 99px; padding: 3px;
-            backdrop-filter: blur(10px);
+            border-radius: 99px; padding: 4px;
+            backdrop-filter: blur(16px) saturate(160%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
         }
         .nav-pill {
-            padding: 6px 20px; border: none; background: transparent;
-            font-family: 'Sora', sans-serif; font-size: 0.8em; font-weight: 600;
+            padding: 8px 22px; border: none; background: transparent;
+            font-family: 'Sora', sans-serif; font-size: 0.82em; font-weight: 600;
             color: var(--ink-2); border-radius: 99px; cursor: pointer;
             transition: all 0.2s; white-space: nowrap;
         }
-        .nav-pill:hover { color: var(--ink); background: rgba(255,255,255,0.65); }
+        .nav-pill:hover { color: var(--ink); background: rgba(255,255,255,0.70); }
         .nav-pill.active {
             background: linear-gradient(135deg, var(--sky-5) 0%, var(--sky-6) 100%);
             color: white;
@@ -610,8 +610,8 @@
         /* ━━━ RESPONSIVE ━━━ */
         @media (max-width:700px) {
             .identity-row { padding:0 16px; }
-            .nav-bar { padding:0 16px 9px; }
-            .brand-logo-img { height:26px; }
+            .nav-bar { padding:0 16px; }
+            .brand-logo-img { height:36px; }
             .clock-time { font-size:1em; }
             .clock-date { display:none; }
             .page-inner { padding:16px 14px 40px; }
@@ -626,7 +626,7 @@
 
 <!-- TOP CHROME -->
 <header class="top-chrome">
-    <!-- Row 1: Logo + Clock -->
+    <!-- Logo left, Clock right -->
     <div class="identity-row">
         <img class="brand-logo-img" src="tittlelight.png" alt="PGI BDG026">
         <div class="clock-wrap">
@@ -634,15 +634,16 @@
             <div class="clock-date" id="clockDate">—</div>
         </div>
     </div>
-    <!-- Row 2: Nav tabs -->
-    <div class="nav-bar">
-        <nav class="nav-pills">
-            <button class="nav-pill active" id="navLinks"    onclick="switchPage('links')">PGI Center</button>
-            <button class="nav-pill"        id="navKalender" onclick="switchPage('kalender')">Kalender</button>
-            <button class="nav-pill"        id="navSenku"    onclick="switchPage('senku')">SENKU</button>
-        </nav>
-    </div>
 </header>
+
+<!-- Nav tabs — outside header, floats below -->
+<div class="nav-bar">
+    <nav class="nav-pills">
+        <button class="nav-pill active" id="navLinks"    onclick="switchPage('links')">PGI Center</button>
+        <button class="nav-pill"        id="navKalender" onclick="switchPage('kalender')">Kalender</button>
+        <button class="nav-pill"        id="navSenku"    onclick="switchPage('senku')">SENKU</button>
+    </nav>
+</div>
 
 <!-- PAGE: PGI Center -->
 <div class="page active" id="pageLinks">
