@@ -41,53 +41,6 @@
             color: var(--text);
         }
 
-        /* ── BRANCH SELECTION ── */
-        .branch-screen {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, #1a1d2e 0%, #2d3561 60%, #3d5af1 100%);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 2000; padding: 20px;
-        }
-        .branch-screen.hidden { display: none; }
-
-        .branch-card {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 24px;
-            padding: 50px 40px;
-            text-align: center;
-            max-width: 440px; width: 100%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-        }
-        .branch-card .logo {
-            width: 64px; height: 64px;
-            background: var(--primary);
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; margin: 0 auto 24px;
-            box-shadow: 0 8px 24px rgba(61,90,241,0.4);
-        }
-        .branch-card h2 { font-size: 1.8em; color: white; font-weight: 800; margin-bottom: 8px; }
-        .branch-card p { color: rgba(255,255,255,0.6); margin-bottom: 36px; font-size: 0.95em; }
-        .branch-buttons { display: flex; flex-direction: column; gap: 12px; }
-        .branch-btn {
-            padding: 18px 24px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.08);
-            color: white; border-radius: var(--radius);
-            font-size: 1.1em; font-weight: 600;
-            cursor: pointer; transition: all 0.25s;
-            font-family: inherit;
-            display: flex; align-items: center; gap: 12px; justify-content: center;
-        }
-        .branch-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(61,90,241,0.4);
-        }
-
         /* ── MAIN CONTAINER ── */
         .container { max-width: 1300px; margin: 0 auto; }
 
@@ -161,15 +114,13 @@
             margin-top: 4px; letter-spacing: 0.03em;
         }
 
-        /* ── CALENDAR TOGGLE (GLASSMORPHISM) ── */
+        /* ── CALENDAR TOGGLE (dark bar) ── */
         .calendar-toggle {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px);
+            background: #0f172a;
             padding: 14px 24px;
             display: flex; align-items: center; gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
             flex-wrap: wrap;
-            background: #0f172a;
         }
         .toggle-label { font-weight: 700; font-size: 0.8em; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; }
         .toggle-pills { display: flex; gap: 4px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
@@ -180,64 +131,25 @@
             background: transparent; color: rgba(255,255,255,0.35);
         }
         .toggle-pill:hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
-        .toggle-pill.active { background: rgba(99,102,241,0.3); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4); box-shadow: 0 0 12px rgba(99,102,241,0.2); }
-        .toggle-pill.task-active { background: rgba(249,115,22,0.2); color: #fdba74; border: 1px solid rgba(249,115,22,0.35); box-shadow: 0 0 12px rgba(249,115,22,0.15); }
-        .toggle-pill.omset-active { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); box-shadow: 0 0 12px rgba(16,185,129,0.15); }
+        .toggle-pill.active       { background: rgba(99,102,241,0.3);  color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4);  box-shadow: 0 0 12px rgba(99,102,241,0.2); }
+        .toggle-pill.task-active  { background: rgba(249,115,22,0.2);  color: #fdba74; border: 1px solid rgba(249,115,22,0.35); box-shadow: 0 0 12px rgba(249,115,22,0.15); }
+        .toggle-pill.omset-active { background: rgba(16,185,129,0.2);  color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); box-shadow: 0 0 12px rgba(16,185,129,0.15); }
 
         /* ── FILTER BAR ── */
+        #shiftFilterWrap {
+            display: flex; align-items: center; gap: 8px; margin-left: 8px;
+        }
         #shiftFilterWrap select {
-            background: rgba(255,255,255,0.06) !important;
-            border: 1px solid rgba(255,255,255,0.12) !important;
-            color: rgba(255,255,255,0.7) !important;
-            border-radius: 8px !important;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-family: inherit; font-size: 0.88em;
+            cursor: pointer;
         }
-
-        /* ── NAV ── */
-
-        .btn-ghost {
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: var(--radius-sm);
-            cursor: pointer; font-size: 0.85em;
-            font-family: inherit; font-weight: 500;
-            transition: all 0.2s;
-        }
-        .btn-ghost:hover { background: rgba(255,255,255,0.2); }
-
-        /* ── CALENDAR TOGGLE ── */
-        .calendar-toggle {
-            background: var(--surface);
-            padding: 16px 24px;
-            display: flex; align-items: center; gap: 12px;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
-        }
-        .toggle-label { font-weight: 700; font-size: 0.875em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .toggle-pills { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 10px; }
-        .toggle-pill {
-            padding: 8px 20px; border: none; border-radius: 7px;
-            font-family: inherit; font-weight: 600;
-            font-size: 0.9em; cursor: pointer; transition: all 0.2s;
-            background: transparent; color: var(--text-muted);
-        }
-        .toggle-pill.active { background: var(--surface); color: var(--primary); box-shadow: 0 2px 8px rgba(61,90,241,0.15); }
-        .toggle-pill.task-active { background: var(--surface); color: var(--accent); box-shadow: 0 2px 8px rgba(249,115,22,0.15); }
-        .toggle-pill.omset-active { background: var(--surface); color: var(--success); box-shadow: 0 2px 8px rgba(16,185,129,0.15); }
-
-        /* ── TOOLBAR ── */
-        .toolbar {
-            background: var(--surface); padding: 12px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-        }
-        .toolbar select {
-            padding: 8px 12px; border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9em;
-            background: var(--bg); color: var(--text); cursor: pointer; min-width: 180px;
-        }
-        .toolbar select:focus { outline: none; border-color: var(--primary); }
-        .filter-label { font-weight: 600; font-size: 0.875em; color: var(--text-muted); }
+        #shiftFilterWrap select option { background: #1e2235; color: white; }
+        .filter-label { color: rgba(255,255,255,0.4); font-size: 0.85em; }
 
         /* ── NAV ── */
         .cal-nav {
@@ -276,6 +188,31 @@
         .day-cell.red-day { background: #fff8f8; }
         .day-cell.has-omset { border-color: rgba(16,185,129,0.4); }
 
+        /* Skeleton loading for cells */
+        .day-cell.skeleton {
+            cursor: default;
+            pointer-events: none;
+        }
+        .day-cell.skeleton .skel-num {
+            width: 24px; height: 24px; border-radius: 6px;
+            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            margin-bottom: 8px;
+        }
+        .day-cell.skeleton .skel-line {
+            height: 18px; border-radius: 4px;
+            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            margin-bottom: 6px;
+        }
+        .day-cell.skeleton .skel-line.short { width: 60%; }
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         .day-number { font-size: 1em; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
         .day-number.red { color: var(--danger); }
         .day-number.today-num {
@@ -284,25 +221,44 @@
         }
         .holiday-label { font-size: 0.65em; color: var(--danger); font-weight: 600; line-height: 1.2; margin-bottom: 5px; display: block; }
 
+        /* Layer action buttons on cell hover */
+        .cell-action-bar {
+            display: none;
+            position: absolute; bottom: 6px; right: 6px;
+            gap: 4px;
+        }
+        .day-cell:hover .cell-action-bar { display: flex; }
+        .cell-action-btn {
+            width: 24px; height: 24px;
+            border: none; border-radius: 6px;
+            font-size: 0.75em; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s; font-family: inherit;
+        }
+        .cell-action-btn.shift-btn  { background: var(--primary-light); color: var(--primary); }
+        .cell-action-btn.task-btn   { background: var(--accent-light);   color: var(--accent);  }
+        .cell-action-btn.shift-btn:hover { background: var(--primary); color: white; }
+        .cell-action-btn.task-btn:hover  { background: var(--accent);  color: white; }
+
         /* Shift items */
         .shift-list { display: flex; flex-direction: column; gap: 3px; }
         .shift-item { padding: 4px 7px; border-radius: 5px; font-size: 0.78em; font-weight: 500; line-height: 1.3; }
-        .shift-item.libur { background: var(--danger-light); color: #b91c1c; }
+        .shift-item.libur  { background: var(--danger-light);  color: #b91c1c; }
         .shift-item.pulsor { background: var(--success-light); color: #065f46; }
-        .shift-item.siang { background: var(--warning-light); color: #92400e; }
+        .shift-item.siang  { background: var(--warning-light); color: #92400e; }
         .shift-item.normal { background: var(--primary-light); color: var(--primary-dark); }
 
         /* Task items */
         .task-list { display: flex; flex-direction: column; gap: 3px; }
         .task-item { padding: 4px 7px; border-radius: 5px; font-size: 0.78em; font-weight: 500; line-height: 1.3; display: flex; align-items: flex-start; gap: 4px; }
-        .task-item.tugas { background: var(--primary-light); color: var(--primary-dark); }
-        .task-item.kunjungan_kc { background: #fef3c7; color: #92400e; }
+        .task-item.tugas           { background: var(--primary-light); color: var(--primary-dark); }
+        .task-item.kunjungan_kc    { background: #fef3c7; color: #92400e; }
         .task-item.kunjungan_audit { background: #ede9fe; color: #5b21b6; }
-        .task-item.lainnya { background: #f0fdf4; color: #166534; }
-        .task-item.oneoff { background: var(--primary-light); color: var(--primary-dark); }
-        .task-item.recurring { background: var(--accent-light); color: #c2410c; }
+        .task-item.lainnya         { background: #f0fdf4; color: #166534; }
+        .task-item.oneoff          { background: var(--primary-light); color: var(--primary-dark); }
+        .task-item.recurring       { background: var(--accent-light); color: #c2410c; }
         .task-item.permanent-recurring { background: #e0f2fe; color: #0369a1; border-left: 2px solid #0ea5e9; }
-        .task-item .task-icon { font-size: 0.9em; flex-shrink: 0; }
+        .task-item .task-icon      { font-size: 0.9em; flex-shrink: 0; }
 
         /* Omset cell items */
         .omset-cell-data { margin-top: 2px; }
@@ -314,9 +270,7 @@
             font-family: 'DM Mono', monospace;
         }
         .omset-total-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
-        .omset-no-data {
-            font-size: 0.72em; color: var(--text-muted); font-style: italic;
-        }
+        .omset-no-data { font-size: 0.72em; color: var(--text-muted); font-style: italic; }
 
         /* ── OMSET PANEL ── */
         .omset-panel {
@@ -329,17 +283,6 @@
             margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
         }
         .omset-panel-title { font-size: 1.15em; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; }
-        .omset-url-setup {
-            background: var(--warning-light); border: 1.5px solid var(--warning);
-            border-radius: var(--radius); padding: 16px 20px;
-            margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px;
-        }
-        .omset-url-setup input {
-            flex: 1; padding: 8px 12px; border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9em;
-            background: var(--surface); color: var(--text);
-        }
-        .omset-url-setup input:focus { outline: none; border-color: var(--primary); }
 
         /* Stat cards */
         .omset-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
@@ -351,10 +294,10 @@
             content: ''; position: absolute; top: 0; left: 0;
             width: 4px; height: 100%; border-radius: 4px 0 0 4px;
         }
-        .stat-card.green::before { background: var(--success); }
-        .stat-card.blue::before  { background: var(--primary); }
-        .stat-card.orange::before{ background: var(--accent); }
-        .stat-card.purple::before{ background: var(--purple); }
+        .stat-card.green::before  { background: var(--success); }
+        .stat-card.blue::before   { background: var(--primary); }
+        .stat-card.orange::before { background: var(--accent); }
+        .stat-card.purple::before { background: var(--purple); }
         .stat-label { font-size: 0.78em; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
         .stat-value { font-size: 1.8em; font-weight: 800; font-family: 'DM Mono', monospace; color: var(--text); }
         .stat-sub   { font-size: 0.78em; color: var(--text-muted); margin-top: 4px; }
@@ -366,7 +309,7 @@
         .progress-pct   { font-size: 0.9em; font-weight: 800; font-family: 'DM Mono', monospace; }
         .progress-pct.good { color: var(--success); }
         .progress-pct.warn { color: var(--warning); }
-        .progress-pct.bad  { color: var(--danger); }
+        .progress-pct.bad  { color: var(--danger);  }
         .progress-bar-bg { height: 14px; background: var(--border); border-radius: 99px; overflow: hidden; }
         .progress-bar-fill {
             height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
@@ -376,37 +319,16 @@
         .progress-bar-fill.bad  { background: linear-gradient(90deg, var(--danger),  #f87171); }
         .progress-detail { margin-top: 6px; font-size: 0.82em; color: var(--text-muted); }
 
-        /* Omset table */
-        .omset-table-wrap { overflow-x: auto; border: 1.5px solid var(--border); border-radius: var(--radius); }
-        .omset-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
-        .omset-table th {
-            background: var(--bg); padding: 10px 14px;
-            text-align: left; font-weight: 700; font-size: 0.8em;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;
-            border-bottom: 2px solid var(--border);
+        /* Omset loading skeleton */
+        .skel-stat {
+            background: linear-gradient(90deg, #e2e5f1 25%, #f0f2fa 50%, #e2e5f1 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 10px; height: 90px;
         }
-        .omset-table th.num { text-align: right; }
-        .omset-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-        .omset-table td.num { text-align: right; font-family: 'DM Mono', monospace; font-weight: 600; }
-        .omset-table tr:last-child td { border-bottom: none; }
-        .omset-table tr:hover td { background: var(--bg); }
-        .omset-table tr.today-row td { background: var(--primary-light); }
-        .omset-table tr.today-row td .day-tag { background: var(--primary); color: white; }
-        .day-tag {
-            display: inline-block; padding: 2px 8px; border-radius: 20px;
-            font-size: 0.78em; font-weight: 700; background: var(--bg);
-            color: var(--text-muted); margin-left: 6px;
-        }
-        .omset-bar {
-            height: 6px; background: var(--success-light); border-radius: 3px;
-            overflow: hidden; margin-top: 4px; max-width: 120px;
-        }
-        .omset-bar-fill { height: 100%; background: var(--success); border-radius: 3px; }
 
         /* Target editor */
-        .target-editor {
-            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-        }
+        .target-editor { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .target-input {
             width: 100px; padding: 6px 10px; border: 1.5px solid var(--border);
             border-radius: var(--radius-sm); font-family: 'DM Mono', monospace;
@@ -423,8 +345,7 @@
         .btn-save-target:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* Loading state */
-        .omset-loading { text-align: center; padding: 40px; color: var(--success); font-weight: 600; font-size: 0.95em; }
-        .omset-empty   { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.95em; }
+        .omset-empty { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.95em; }
 
         /* ── HOLIDAY SECTION ── */
         .holiday-section { background: var(--surface); padding: 24px; border-top: 2px solid var(--border); }
@@ -447,13 +368,39 @@
         .legend-label { font-size: 0.8em; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
         .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.83em; font-weight: 500; }
         .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-        .ld-libur { background: var(--danger); }
+        .ld-libur  { background: var(--danger);  }
         .ld-pulsor { background: var(--success); }
-        .ld-siang { background: var(--warning); }
+        .ld-siang  { background: var(--warning); }
         .ld-normal { background: var(--primary); }
-        .ld-omset { background: var(--success); }
+        .ld-omset  { background: var(--success); }
 
-        /* ── MODAL ── */
+        /* ── CONFIRM MODAL (replaces confirm()) ── */
+        .confirm-modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(26,29,46,0.55); backdrop-filter: blur(6px);
+            z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+        }
+        .confirm-modal.active { display: flex; }
+        .confirm-box {
+            background: var(--surface); border-radius: 18px;
+            max-width: 360px; width: 100%; box-shadow: var(--shadow-lg);
+            overflow: hidden; animation: popIn 0.2s ease;
+        }
+        @keyframes popIn {
+            from { opacity:0; transform: scale(0.92) translateY(10px); }
+            to   { opacity:1; transform: scale(1)    translateY(0);    }
+        }
+        .confirm-icon { text-align: center; font-size: 2.5em; padding: 28px 24px 12px; }
+        .confirm-title { text-align: center; font-size: 1.1em; font-weight: 800; color: var(--text); padding: 0 24px; }
+        .confirm-msg   { text-align: center; font-size: 0.88em; color: var(--text-muted); padding: 8px 24px 24px; line-height: 1.5; }
+        .confirm-btns  { display: flex; border-top: 1px solid var(--border); }
+        .confirm-btn   { flex: 1; padding: 14px; border: none; font-family: inherit; font-size: 0.95em; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+        .confirm-btn.cancel { background: var(--bg); color: var(--text-muted); border-right: 1px solid var(--border); }
+        .confirm-btn.cancel:hover  { background: var(--border); }
+        .confirm-btn.confirm { background: var(--danger); color: white; }
+        .confirm-btn.confirm:hover { background: #dc2626; }
+
+        /* ── SHIFT MODAL ── */
         .modal {
             display: none; position: fixed; inset: 0;
             background: rgba(26,29,46,0.6); backdrop-filter: blur(4px);
@@ -463,6 +410,7 @@
         .modal-box {
             background: var(--surface); border-radius: 20px;
             width: 100%; max-width: 520px; box-shadow: var(--shadow-lg); overflow: hidden;
+            animation: popIn 0.2s ease;
         }
         .modal-header {
             padding: 20px 24px 16px; border-bottom: 1px solid var(--border);
@@ -474,11 +422,11 @@
             cursor: pointer; font-size: 1.1em; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
         }
         .modal-close:hover { background: var(--danger-light); color: var(--danger); }
-        .modal-body { padding: 20px 24px; }
+        .modal-body   { padding: 20px 24px; }
         .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
 
-        .form-group { margin-bottom: 16px; }
-        .form-label { font-size: 0.85em; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
+        .form-group    { margin-bottom: 16px; }
+        .form-label    { font-size: 0.85em; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
         .form-input, .form-select, .form-textarea {
             width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
             border-radius: var(--radius-sm); font-family: inherit; font-size: 0.95em;
@@ -492,7 +440,6 @@
         }
 
         /* Task list in modal */
-        .task-existing { margin-bottom: 14px; }
         .task-existing-item {
             display: flex; align-items: center; justify-content: space-between;
             padding: 8px 10px; border-radius: 8px; background: var(--bg); margin-bottom: 6px; font-size: 0.88em;
@@ -511,18 +458,31 @@
         .btn-primary:hover { background: var(--primary-dark); }
         .btn-primary.task { background: var(--accent); }
         .btn-primary.task:hover { background: #ea6c0a; }
-        .btn-danger { background: var(--danger-light); color: var(--danger); }
+        .btn-danger   { background: var(--danger-light); color: var(--danger); }
         .btn-danger:hover { background: var(--danger); color: white; }
         .btn-secondary { background: var(--bg); color: var(--text); }
         .btn-secondary:hover { background: var(--border); }
 
-        /* Loading */
-        .loading { text-align: center; padding: 40px; color: var(--primary); font-size: 1em; font-weight: 600; }
+        /* Loading dots */
         .loading-dot { display: inline-block; animation: pulse 1.4s ease infinite; }
         .loading-dot:nth-child(2) { animation-delay: 0.2s; }
         .loading-dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
 
+        /* Filter empty state */
+        .filter-empty-banner {
+            display: none;
+            background: var(--warning-light); border: 1.5px solid var(--warning);
+            border-radius: var(--radius-sm); padding: 10px 16px;
+            font-size: 0.85em; font-weight: 600; color: #92400e;
+            margin-left: auto; align-items: center; gap: 8px;
+        }
+        .filter-empty-banner.visible { display: flex; }
+        .filter-clear-btn {
+            border: none; background: var(--warning); color: white;
+            border-radius: 6px; padding: 3px 10px; font-family: inherit;
+            font-size: 0.88em; font-weight: 700; cursor: pointer;
+        }
 
         /* ── APP NAVBAR ── */
         .app-navbar {
@@ -554,14 +514,9 @@
         }
         .pgicore-group-label {
             font-size: 0.75em; font-weight: 700; letter-spacing: 0.05em;
-            text-transform: uppercase; color: var(--text-muted);
-            margin-bottom: 14px;
+            text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px;
         }
-        .pgicore-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 12px;
-        }
+        .pgicore-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
         .pgicore-card {
             display: flex; flex-direction: column; align-items: center;
             gap: 8px; padding: 20px 12px;
@@ -570,46 +525,20 @@
             text-decoration: none; text-align: center;
             transition: all 0.2s; cursor: pointer;
         }
-        .pgicore-card:hover {
-            border-color: var(--primary); box-shadow: var(--shadow);
-            transform: translateY(-2px);
-        }
+        .pgicore-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
         .pgicore-icon {
             font-size: 1.8em; width: 48px; height: 48px;
             display: flex; align-items: center; justify-content: center;
             background: var(--surface); border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .pgicore-name {
-            font-size: 0.83em; font-weight: 700; color: var(--text); line-height: 1.3;
-        }
-        .pgicore-url {
-            font-size: 0.68em; color: var(--text-muted);
-            word-break: break-all; line-height: 1.3;
-        }
-
-        
-        .emoji-grid {
-            display: grid; grid-template-columns: repeat(8, 1fr);
-            gap: 6px; max-height: 160px; overflow-y: auto;
-        }
-        .emoji-btn {
-            padding: 6px; border: 1.5px solid var(--border); border-radius: 8px;
-            background: var(--bg); cursor: pointer; font-size: 1.2em;
-            text-align: center; transition: all 0.15s;
-        }
-        .emoji-btn:hover, .emoji-btn.selected { border-color: var(--primary); background: var(--primary-light); }
-
-        @media (max-width: 768px) {
-            .app-navbar { padding: 0 12px; }
-            .app-nav-tab { padding: 12px 14px 10px; font-size: 0.82em; }
-            .ql-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); padding: 16px; }
-        }
+        .pgicore-name { font-size: 0.83em; font-weight: 700; color: var(--text); line-height: 1.3; }
+        .pgicore-url  { font-size: 0.68em; color: var(--text-muted); word-break: break-all; line-height: 1.3; }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             body { padding: 0; }
-            .header { border-radius: 0; padding: 18px 16px; }
+            .kal-header-content { padding: 16px; }
             .calendar-wrap { padding: 12px; }
             .day-cell { min-height: 80px; padding: 6px; }
             .shift-item, .task-item { font-size: 0.72em; }
@@ -624,6 +553,9 @@
             .month-year { text-align: center; }
             .omset-stats { grid-template-columns: 1fr 1fr; }
             .omset-panel { padding: 16px; }
+            .app-navbar { padding: 0 12px; }
+            .app-nav-tab { padding: 12px 14px 10px; font-size: 0.82em; }
+            .cell-action-bar { display: flex !important; } /* always show on mobile */
         }
     </style>
 </head>
@@ -634,181 +566,171 @@
 
     <!-- App Navbar -->
     <div class="app-navbar">
-        <button class="app-nav-tab active" id="navLinks" onclick="switchPage('links')">🏢 PGI Core</button>
-        <button class="app-nav-tab" id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
-        <button class="app-nav-tab" id="navSenku" onclick="switchPage('senku')">🏢 SENKU</button>
+        <button class="app-nav-tab active" id="navLinks"    onclick="switchPage('links')">🏢 PGI Core</button>
+        <button class="app-nav-tab"        id="navKalender" onclick="switchPage('kalender')">📅 Kalender</button>
+        <button class="app-nav-tab"        id="navSenku"    onclick="switchPage('senku')">🏢 SENKU</button>
     </div>
 
     <!-- PAGE: Kalender -->
     <div class="page" id="pageKalender">
-    <div class="kal-header">
-        <div class="kal-header-bg"></div>
-        <div class="kal-header-content">
-            <div class="kal-header-left">
-                <div class="kal-header-icon">📅</div>
-                <div class="kal-header-text">
-                    <h1>Kalender PGI</h1>
-                    <p>BDG026 · Klik tanggal untuk edit jadwal</p>
+        <div class="kal-header">
+            <div class="kal-header-bg"></div>
+            <div class="kal-header-content">
+                <div class="kal-header-left">
+                    <div class="kal-header-icon">📅</div>
+                    <div class="kal-header-text">
+                        <h1>Kalender PGI</h1>
+                        <p>BDG026 · Hover tanggal untuk edit jadwal atau tugas</p>
+                    </div>
                 </div>
-            </div>
-            <div class="kal-header-right">
-                <div class="kal-clock-glass">
-                    <div class="kal-clock-time" id="kalClockTime">00:00:00</div>
-                    <div class="kal-clock-date" id="kalClockDate">—</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Calendar Mode Toggle -->
-    <div class="calendar-toggle">
-        <span class="toggle-label">Tampilkan:</span>
-        <div class="toggle-pills">
-            <button class="toggle-pill active" id="pillShift" onclick="toggleLayer('shift')">👥 Shift</button>
-            <button class="toggle-pill task-active" id="pillTask" onclick="toggleLayer('task')">📋 Tugas</button>
-            <button class="toggle-pill omset-active" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
-        </div>
-        <div id="shiftFilterWrap" style="display:flex;align-items:center;gap:8px;margin-left:8px;">
-            <span class="filter-label">🔍</span>
-            <select id="nameFilter" onchange="filterByName()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.88em;background:var(--bg);color:var(--text);">
-                <option value="">Semua Orang</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Nav -->
-    <div class="cal-nav">
-        <button class="nav-btn" onclick="changeMonth(-1)">← Sebelumnya</button>
-        <div class="month-year" id="monthYear"></div>
-        <button class="nav-btn" onclick="changeMonth(1)">Berikutnya →</button>
-    </div>
-
-    <!-- Calendar -->
-    <div class="calendar-wrap" id="calendarWrap">
-        <div id="loading" class="loading">
-            Memuat data <span class="loading-dot">●</span><span class="loading-dot">●</span><span class="loading-dot">●</span>
-        </div>
-        <div id="calendarContent" style="display:none;">
-            <div class="days-header">
-                <div class="day-name">Sen</div><div class="day-name">Sel</div>
-                <div class="day-name">Rab</div><div class="day-name">Kam</div>
-                <div class="day-name">Jum</div>
-                <div class="day-name weekend">Sab</div><div class="day-name weekend">Min</div>
-            </div>
-            <div class="days-grid" id="daysGrid"></div>
-        </div>
-    </div>
-
-    <!-- ── OMSET PANEL ── -->
-    <div class="omset-panel" id="omsetPanel" style="display:none;">
-
-        <!-- URL Setup -->
-        <div id="omsetSetupBox" class="omset-url-setup" style="display:none;">
-            <div style="flex:1;">
-                <div style="font-weight:700;margin-bottom:8px;">⚙️ Setup URL Google Apps Script Omset</div>
-                <div style="font-size:0.82em;color:var(--text-muted);margin-bottom:10px;">
-                    Tempel URL deploy Apps Script dari Google Sheets omset kamu.<br>
-                    Script tersedia di file <strong>omset_apps_script.gs</strong> yang sudah diunduh.
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                    <input type="text" id="omsetUrlInput" placeholder="https://script.google.com/macros/s/..." style="flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9em;background:white;" />
-                    <button class="btn btn-primary" onclick="saveOmsetUrl()" style="white-space:nowrap;">Simpan & Muat</button>
+                <div class="kal-header-right">
+                    <div class="kal-clock-glass">
+                        <div class="kal-clock-time" id="kalClockTime">00:00:00</div>
+                        <div class="kal-clock-date" id="kalClockDate">—</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="omset-panel-header">
-            <div class="omset-panel-title">📊 Monitoring Omset — <span id="omsetPanelMonth"></span></div>
-            <div class="target-editor">
-                <span style="font-size:0.82em;color:var(--text-muted);font-weight:600;">Target Bulanan:</span>
-                <input type="number" class="target-input" id="targetInput" placeholder="0" min="0">
-                <button class="btn-save-target" id="btnSaveTarget" onclick="saveTarget()">Simpan Target</button>
+        <!-- Calendar Mode Toggle -->
+        <div class="calendar-toggle">
+            <span class="toggle-label">Tampilkan:</span>
+            <div class="toggle-pills">
+                <button class="toggle-pill active"       id="pillShift" onclick="toggleLayer('shift')">👥 Shift</button>
+                <button class="toggle-pill task-active"  id="pillTask"  onclick="toggleLayer('task')">📋 Tugas</button>
+                <button class="toggle-pill omset-active" id="pillOmset" onclick="toggleLayer('omset')">📊 Omset</button>
+            </div>
+            <div id="shiftFilterWrap">
+                <span class="filter-label">🔍</span>
+                <select id="nameFilter" onchange="filterByName()">
+                    <option value="">Semua Orang</option>
+                </select>
+            </div>
+            <!-- Filter empty state notice -->
+            <div class="filter-empty-banner" id="filterEmptyBanner">
+                ⚠️ Tidak ada data untuk <span id="filterEmptyName" style="font-style:italic;margin:0 4px;"></span> bulan ini
+                <button class="filter-clear-btn" onclick="clearFilter()">Reset</button>
             </div>
         </div>
 
-        <!-- Loading -->
-        <div id="omsetLoading" class="omset-loading" style="display:none;">
-            Memuat data omset <span class="loading-dot">●</span><span class="loading-dot">●</span><span class="loading-dot">●</span>
+        <!-- Nav -->
+        <div class="cal-nav">
+            <button class="nav-btn" onclick="changeMonth(-1)">← Sebelumnya</button>
+            <div class="month-year" id="monthYear"></div>
+            <button class="nav-btn" onclick="changeMonth(1)">Berikutnya →</button>
         </div>
-        <div id="omsetError" class="omset-empty" style="display:none;"></div>
 
-        <!-- Stats -->
-        <div id="omsetContent" style="display:none;">
-            <div class="omset-stats">
-                <div class="stat-card green">
-                    <div class="stat-label">Total Realisasi</div>
-                    <div class="stat-value" id="statRealisasi">—</div>
-                    <div class="stat-sub">transaksi bulan ini</div>
+        <!-- Calendar -->
+        <div class="calendar-wrap" id="calendarWrap">
+            <div id="calendarContent">
+                <div class="days-header">
+                    <div class="day-name">Sen</div><div class="day-name">Sel</div>
+                    <div class="day-name">Rab</div><div class="day-name">Kam</div>
+                    <div class="day-name">Jum</div>
+                    <div class="day-name weekend">Sab</div><div class="day-name weekend">Min</div>
                 </div>
-                <div class="stat-card blue">
-                    <div class="stat-label">Target Bulanan</div>
-                    <div class="stat-value" id="statTarget">—</div>
-                    <div class="stat-sub">transaksi ditargetkan</div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-label">Rata-rata Harian</div>
-                    <div class="stat-value" id="statAvg">—</div>
-                    <div class="stat-sub" id="statAvgSub">per hari kerja</div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-label">Proyeksi Akhir Bulan</div>
-                    <div class="stat-value" id="statProyeksi">—</div>
-                    <div class="stat-sub">estimasi total</div>
+                <div class="days-grid" id="daysGrid"></div>
+            </div>
+        </div>
+
+        <!-- OMSET PANEL -->
+        <div class="omset-panel" id="omsetPanel" style="display:none;">
+            <div class="omset-panel-header">
+                <div class="omset-panel-title">📊 Monitoring Omset — <span id="omsetPanelMonth"></span></div>
+                <div class="target-editor">
+                    <span style="font-size:0.82em;color:var(--text-muted);font-weight:600;">Target Bulanan:</span>
+                    <input type="number" class="target-input" id="targetInput" placeholder="0" min="0">
+                    <button class="btn-save-target" id="btnSaveTarget" onclick="saveTarget()">Simpan Target</button>
                 </div>
             </div>
 
-            <!-- Progress bar -->
-            <div class="progress-wrap">
-                <div class="progress-header">
-                    <span class="progress-label">Progress Target</span>
-                    <span class="progress-pct" id="progressPct">0%</span>
+            <!-- Skeleton loading -->
+            <div id="omsetLoading" style="display:none;">
+                <div class="omset-stats">
+                    <div class="skel-stat"></div>
+                    <div class="skel-stat"></div>
+                    <div class="skel-stat"></div>
+                    <div class="skel-stat"></div>
                 </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill good" id="progressBar" style="width:0%"></div>
+                <div class="skel-stat" style="height:40px;margin-bottom:20px;"></div>
+            </div>
+            <div id="omsetError" class="omset-empty" style="display:none;"></div>
+
+            <!-- Stats -->
+            <div id="omsetContent" style="display:none;">
+                <div class="omset-stats">
+                    <div class="stat-card green">
+                        <div class="stat-label">Total Realisasi</div>
+                        <div class="stat-value" id="statRealisasi">—</div>
+                        <div class="stat-sub">transaksi bulan ini</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-label">Target Bulanan</div>
+                        <div class="stat-value" id="statTarget">—</div>
+                        <div class="stat-sub">transaksi ditargetkan</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-label">Rata-rata Harian</div>
+                        <div class="stat-value" id="statAvg">—</div>
+                        <div class="stat-sub" id="statAvgSub">per hari kerja</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-label">Proyeksi Akhir Bulan</div>
+                        <div class="stat-value" id="statProyeksi">—</div>
+                        <div class="stat-sub">estimasi total</div>
+                    </div>
                 </div>
-                <div class="progress-detail" id="progressDetail"></div>
+
+                <!-- Progress bar -->
+                <div class="progress-wrap">
+                    <div class="progress-header">
+                        <span class="progress-label">Progress Target</span>
+                        <span class="progress-pct" id="progressPct">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill good" id="progressBar" style="width:0%"></div>
+                    </div>
+                    <div class="progress-detail" id="progressDetail"></div>
+                </div>
+
+                <!-- Kebutuhan per hari -->
+                <div id="dailyNeedWrap" style="margin-top:16px;padding:16px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--bg);">
+                    <div style="font-size:0.8em;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;">Kebutuhan Harian untuk Capai Target</div>
+                    <div id="dailyNeedContent" style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;"></div>
+                </div>
             </div>
+        </div>
 
-            <!-- Kebutuhan per hari -->
-            <div id="dailyNeedWrap" style="margin-top:16px;padding:16px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--bg);">
-                <div style="font-size:0.8em;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;">Kebutuhan Harian untuk Capai Target</div>
-                <div id="dailyNeedContent" style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;"></div>
+        <!-- Holiday Section -->
+        <div class="holiday-section" id="holidaySection">
+            <div class="section-title">🗓️ Libur Nasional Bulan Ini</div>
+            <div class="holiday-grid" id="holidayGrid"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend" id="legendSection">
+            <span class="legend-label">Keterangan:</span>
+            <div id="shiftLegend" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                <div class="legend-item"><div class="legend-dot ld-libur"></div> Libur (L)</div>
+                <div class="legend-item"><div class="legend-dot ld-pulsor"></div> Pulsor (P)</div>
+                <div class="legend-item"><div class="legend-dot ld-siang"></div> Siang (S)</div>
+                <div class="legend-item"><div class="legend-dot ld-normal"></div> Normal</div>
             </div>
-
+            <div id="taskLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
+                <div class="legend-item"><div class="legend-dot ld-normal"></div> Tugas Sekali</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#0ea5e9"></div> Tugas Tetap</div>
+            </div>
+            <div id="omsetLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
+                <div class="legend-item"><div class="legend-dot ld-omset"></div> Ada data omset</div>
+                <div class="legend-item" style="font-size:0.82em;color:var(--text-muted);">Angka = total transaksi harian</div>
+            </div>
+            <div id="cellClickHint" style="margin-left:auto;font-size:0.78em;color:var(--text-muted);font-style:italic;"></div>
         </div>
-    </div>
-
-    <!-- Holiday Section -->
-    <div class="holiday-section" id="holidaySection">
-        <div class="section-title">🗓️ Libur Nasional Bulan Ini</div>
-        <div class="holiday-grid" id="holidayGrid"></div>
-    </div>
-
-    <!-- Legend -->
-    <div class="legend" id="legendSection">
-        <span class="legend-label">Keterangan:</span>
-        <div id="shiftLegend" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-            <div class="legend-item"><div class="legend-dot ld-libur"></div> Libur (L)</div>
-            <div class="legend-item"><div class="legend-dot ld-pulsor"></div> Pulsor (P)</div>
-            <div class="legend-item"><div class="legend-dot ld-siang"></div> Siang (S)</div>
-            <div class="legend-item"><div class="legend-dot ld-normal"></div> Normal</div>
-        </div>
-        <div id="taskLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
-            <div class="legend-item"><div class="legend-dot ld-normal"></div> Tugas Sekali</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#0ea5e9"></div> Tugas Tetap</div>
-        </div>
-        <div id="omsetLegend" style="display:none;gap:12px;flex-wrap:wrap;align-items:center;">
-            <div class="legend-item"><div class="legend-dot ld-omset"></div> Ada data omset</div>
-            <div class="legend-item" style="font-size:0.82em;color:var(--text-muted);">Angka = total transaksi harian</div>
-        </div>
-    </div>
     </div><!-- end pageKalender -->
 
     <!-- PAGE: PGI Core -->
     <div class="page active" id="pageLinks">
         <div class="pgicore-page">
-
-            <!-- Grup: Tools -->
             <div class="pgicore-group">
                 <div class="pgicore-group-label">🛠️ Tools</div>
                 <div class="pgicore-grid">
@@ -834,9 +756,8 @@
                     </a>
                 </div>
             </div>
-
         </div>
-    </div><!-- end pageLinks -->
+    </div>
 
     <!-- PAGE: SENKU -->
     <div class="page" id="pageSenku">
@@ -862,9 +783,22 @@
                 </div>
             </div>
         </div>
-    </div><!-- end pageSenku -->
+    </div>
 
 </div><!-- end mainContainer -->
+
+<!-- ── CONFIRM MODAL (replaces browser confirm()) ── -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-box">
+        <div class="confirm-icon" id="confirmIcon">⚠️</div>
+        <div class="confirm-title" id="confirmTitle">Konfirmasi</div>
+        <div class="confirm-msg"   id="confirmMsg">Apakah Anda yakin?</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn cancel"  id="confirmCancel">Batal</button>
+            <button class="confirm-btn confirm" id="confirmOk">Hapus</button>
+        </div>
+    </div>
+</div>
 
 <!-- ── SHIFT MODAL ── -->
 <div class="modal" id="shiftModal">
@@ -886,8 +820,8 @@
         </div>
         <div class="modal-footer">
             <button id="btnCancelShift" class="btn btn-secondary" onclick="closeShiftModal()">Batal</button>
-            <button id="btnDeleteShift" class="btn btn-danger" onclick="deleteShift()">🗑 Hapus</button>
-            <button id="btnSaveShift" class="btn btn-primary" onclick="saveShift()">Simpan</button>
+            <button id="btnDeleteShift" class="btn btn-danger"    onclick="deleteShift()">🗑 Hapus</button>
+            <button id="btnSaveShift"   class="btn btn-primary"   onclick="saveShift()">Simpan</button>
         </div>
     </div>
 </div>
@@ -944,29 +878,25 @@ let currentYear  = today.getFullYear();
 let shiftData        = {};
 let taskData         = { oneoff: {}, weekly: [], monthly: [] };
 let customHolidays   = {};
-let omsetData        = {};   // { 'YYYY-MM-DD': { total, elek, bpkb, emas } }
+let omsetData        = {};
 let omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
 let currentBranch    = 'bdg026';
-let layers = { shift: true, task: true, omset: true }; // layer on/off
+let layers           = { shift: true, task: true, omset: true };
 let selectedDay      = null;
 let selectedFilter   = '';
 let isSaving         = false;
+let _calenderInited  = false;
 
 // ─────────────────────────────────────────
-//  CONFIG — Script URLs per cabang (shift/task)
+//  CONFIG
 // ─────────────────────────────────────────
 const SCRIPT_URLS = {
     bdg016: 'https://script.google.com/macros/s/AKfycbzGXFycufPgLbXSNzxdxQBmE9VAXYxeGrKr6H81fIOOgUflIc2f9nOhQ6HohfPZYqw0Vw/exec',
     bdg026: 'https://script.google.com/macros/s/AKfycbwZwB9wS0XkopObAh0uTzSK41ZIi4vRQRBCl_HlvQiP12ln96vxcKFd_qC_lGcXwzzE/exec'
 };
 
-// Omset script URLs — disimpan di localStorage per cabang
-function getOmsetUrl(branch) {
-    return localStorage.getItem(`omset_url_${branch}`) || '';
-}
-function setOmsetUrlStorage(branch, url) {
-    localStorage.setItem(`omset_url_${branch}`, url);
-}
+// Hardcoded omset URL for bdg026
+const OMSET_URL = 'https://script.google.com/macros/s/AKfycbzXuFgBLpgbkIH9rsuuA40j5aFc07WU3Y4oHomrfhS_dBscCh034fcFUTN8fzVssXn9/exec';
 
 // ─────────────────────────────────────────
 //  CONFIG — National Holidays
@@ -1015,7 +945,6 @@ function isRedDate(y, m, d) {
     return new Date(Date.UTC(y, m, d)).getUTCDay() === 0 || !!nationalHolidays[dk] || !!customHolidays[dk];
 }
 function isWorkDay(y, m, d) {
-    // Pakai UTC untuk hindari timezone shift (sama dengan cara di Apps Script)
     const dow = new Date(Date.UTC(y, m, d)).getUTCDay();
     const dk  = dateKey(y, m+1, d);
     return dow !== 0 && !nationalHolidays[dk] && !customHolidays[dk];
@@ -1030,6 +959,26 @@ function normaliseShiftInput(raw) {
         line = line.replace(/\(([lps])\)/gi,(_,c)=>`(${c.toUpperCase()})`);
         return line;
     }).join('\n');
+}
+
+// ─────────────────────────────────────────
+//  CONFIRM MODAL (replaces browser confirm())
+// ─────────────────────────────────────────
+function showConfirm({ icon = '🗑️', title, msg, okLabel = 'Hapus', onConfirm }) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmIcon').textContent  = icon;
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').textContent   = msg;
+    document.getElementById('confirmOk').textContent    = okLabel;
+    modal.classList.add('active');
+
+    const ok     = document.getElementById('confirmOk');
+    const cancel = document.getElementById('confirmCancel');
+
+    const close = () => modal.classList.remove('active');
+    ok.onclick     = () => { close(); onConfirm(); };
+    cancel.onclick = close;
+    modal.onclick  = (e) => { if (e.target === modal) close(); };
 }
 
 // ─────────────────────────────────────────
@@ -1053,11 +1002,10 @@ function showToast(msg, type='success') {
 }
 
 // ─────────────────────────────────────────
-//  BRANCH / MODE
+//  CLOCK
 // ─────────────────────────────────────────
 function updateKalClock() {
     const now = new Date();
-    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
     const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
     const hh = String(now.getHours()).padStart(2,'0');
     const mm = String(now.getMinutes()).padStart(2,'0');
@@ -1065,21 +1013,32 @@ function updateKalClock() {
     const t = document.getElementById('kalClockTime');
     const d = document.getElementById('kalClockDate');
     if (t) t.textContent = hh+':'+mm+':'+ss;
-    if (d) d.textContent = days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    if (d) d.textContent = dayNames[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
 }
 
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
 async function initApp() {
-    currentBranch  = 'bdg026';
-    selectedFilter = '';
-    omsetData      = {};
+    currentBranch    = 'bdg026';
+    selectedFilter   = '';
+    omsetData        = {};
     omsetMonthlyInfo = { totalRealisasi: 0, totalTarget: 0, found: false };
     updateLayerUI();
     updateKalClock();
     setInterval(updateKalClock, 1000);
+
+    // Show skeleton while loading
+    renderSkeletonCalendar();
+
     await Promise.all([ loadData(), loadTasks() ]);
     renderCalendar();
+    renderHolidays();
 }
 
+// ─────────────────────────────────────────
+//  LAYER TOGGLE
+// ─────────────────────────────────────────
 function toggleLayer(layer) {
     layers[layer] = !layers[layer];
     updateLayerUI();
@@ -1091,19 +1050,54 @@ function toggleLayer(layer) {
 }
 
 function updateLayerUI() {
-    // Pills
     document.getElementById('pillShift').className  = 'toggle-pill' + (layers.shift  ? ' active'       : '');
     document.getElementById('pillTask').className   = 'toggle-pill' + (layers.task   ? ' task-active'  : '');
     document.getElementById('pillOmset').className  = 'toggle-pill' + (layers.omset  ? ' omset-active' : '');
-    // Filter nama hanya muncul kalau shift aktif
+
     document.getElementById('shiftFilterWrap').style.display = layers.shift ? 'flex' : 'none';
-    // Legend
+
     document.getElementById('shiftLegend').style.display  = layers.shift  ? 'flex' : 'none';
     document.getElementById('taskLegend').style.display   = layers.task   ? 'flex' : 'none';
     document.getElementById('omsetLegend').style.display  = layers.omset  ? 'flex' : 'none';
-    // Omset panel
-    document.getElementById('omsetPanel').style.display       = layers.omset ? 'block' : 'none';
-    document.getElementById('holidaySection').style.display   = 'block';
+
+    // Click hint in legend
+    const hint = document.getElementById('cellClickHint');
+    if (layers.shift && layers.task) {
+        hint.textContent = '💡 Klik cell = edit shift · Tombol 📋 = tambah tugas';
+    } else if (layers.shift) {
+        hint.textContent = '💡 Klik cell = edit shift';
+    } else if (layers.task) {
+        hint.textContent = '💡 Klik cell = kelola tugas';
+    } else {
+        hint.textContent = '';
+    }
+
+    document.getElementById('omsetPanel').style.display = layers.omset ? 'block' : 'none';
+}
+
+// ─────────────────────────────────────────
+//  SKELETON CALENDAR (while loading)
+// ─────────────────────────────────────────
+function renderSkeletonCalendar() {
+    document.getElementById('monthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    const grid = document.getElementById('daysGrid');
+    grid.innerHTML = '';
+
+    const jsDay    = new Date(currentYear, currentMonth, 1).getDay();
+    const firstDay = jsDay === 0 ? 6 : jsDay - 1;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < firstDay; i++) {
+        const e = document.createElement('div'); e.className = 'day-cell empty'; frag.appendChild(e);
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'day-cell skeleton';
+        cell.innerHTML = `<div class="skel-num"></div><div class="skel-line"></div><div class="skel-line short"></div>`;
+        frag.appendChild(cell);
+    }
+    grid.appendChild(frag);
 }
 
 // ─────────────────────────────────────────
@@ -1111,7 +1105,6 @@ function updateLayerUI() {
 // ─────────────────────────────────────────
 async function loadData() {
     try {
-        setLoadingState(true);
         const res  = await fetch(SCRIPT_URLS[currentBranch]);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -1119,39 +1112,79 @@ async function loadData() {
         data.forEach(row => {
             if (!row.date) return;
             let dk = row.date;
-            if (dk.includes('T')) { const d=new Date(dk); dk=dateKey(d.getFullYear(),d.getMonth()+1,d.getDate()); }
+            if (dk.includes('T')) { const d = new Date(dk); dk = dateKey(d.getFullYear(), d.getMonth()+1, d.getDate()); }
             shiftData[dk] = row.names || '';
         });
-        setLoadingState(false);
         updateNameFilter();
-        renderCalendar();
-        renderHolidays();
     } catch(e) {
-        console.error(e);
-        document.getElementById('loading').innerHTML = `Gagal memuat data. <button onclick="loadData()" style="margin-left:8px;padding:6px 14px;background:var(--primary);color:white;border:none;border-radius:6px;cursor:pointer;font-family:inherit;">Coba Lagi</button>`;
+        console.error('loadData error:', e);
+        showToast('❌ Gagal memuat jadwal shift', 'error');
     }
-}
-
-function setLoadingState(isLoading) {
-    document.getElementById('loading').style.display         = isLoading ? 'block' : 'none';
-    document.getElementById('calendarContent').style.display = isLoading ? 'none'  : 'block';
 }
 
 function updateNameFilter() {
     const names = new Set();
     Object.values(shiftData).forEach(s => {
-        if (s) s.split('\n').forEach(line => { const n=line.replace(/\s*\([LPS]\)/g,'').trim(); if(n) names.add(n); });
+        if (s) s.split('\n').forEach(line => {
+            const n = line.replace(/\s*\([LPS]\)/g,'').trim();
+            if (n) names.add(n);
+        });
     });
-    const sel = document.getElementById('nameFilter');
+    const sel  = document.getElementById('nameFilter');
     const prev = sel.value;
     sel.innerHTML = '<option value="">Semua Orang</option>';
-    [...names].sort().forEach(n => { const o=document.createElement('option'); o.value=o.textContent=n; sel.appendChild(o); });
-    if (prev && [...names].includes(prev)) sel.value = prev;
+    [...names].sort().forEach(n => {
+        const o = document.createElement('option');
+        o.value = o.textContent = n;
+        sel.appendChild(o);
+    });
+    // Restore previous selection if still valid
+    if (prev && [...names].includes(prev)) {
+        sel.value = prev;
+    } else if (prev) {
+        // Previously selected name no longer exists this month
+        sel.value = '';
+        selectedFilter = '';
+    }
 }
 
 function filterByName() {
     selectedFilter = document.getElementById('nameFilter').value;
     renderCalendar();
+    checkFilterEmpty();
+}
+
+function clearFilter() {
+    document.getElementById('nameFilter').value = '';
+    selectedFilter = '';
+    renderCalendar();
+    document.getElementById('filterEmptyBanner').classList.remove('visible');
+}
+
+function checkFilterEmpty() {
+    if (!selectedFilter) {
+        document.getElementById('filterEmptyBanner').classList.remove('visible');
+        return;
+    }
+    // Check if this name appears anywhere this month
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let found = false;
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dk = dateKey(currentYear, currentMonth + 1, d);
+        if (shiftData[dk]) {
+            const lines = shiftData[dk].split('\n');
+            if (lines.some(l => l.replace(/\s*\([LPS]\)/g,'').trim() === selectedFilter)) {
+                found = true; break;
+            }
+        }
+    }
+    const banner = document.getElementById('filterEmptyBanner');
+    if (!found) {
+        document.getElementById('filterEmptyName').textContent = selectedFilter;
+        banner.classList.add('visible');
+    } else {
+        banner.classList.remove('visible');
+    }
 }
 
 function getShiftClass(text) {
@@ -1162,28 +1195,19 @@ function getShiftClass(text) {
 }
 
 // ─────────────────────────────────────────
-//  OMSET DATA — Load from Google Sheets via Apps Script
+//  OMSET DATA
 // ─────────────────────────────────────────
 async function loadOmsetData() {
-    const url = getOmsetUrl(currentBranch);
-    document.getElementById('omsetSetupBox').style.display = url ? 'none' : 'flex';
-    if (url) document.getElementById('omsetUrlInput').value = url;
-
     document.getElementById('omsetContent').style.display = 'none';
     document.getElementById('omsetError').style.display   = 'none';
-
-    if (!url) return;
-
     document.getElementById('omsetLoading').style.display = 'block';
 
     try {
-        const res = await fetch(`${url}?action=omset&year=${currentYear}&month=${currentMonth + 1}`);
+        const res  = await fetch(`${OMSET_URL}?action=omset&year=${currentYear}&month=${currentMonth + 1}`);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
-
         if (json.error) throw new Error(json.error);
 
-        // Store in local state
         omsetData = {};
         (json.daily || []).forEach(d => { omsetData[d.date] = d; });
         omsetMonthlyInfo = {
@@ -1195,7 +1219,7 @@ async function loadOmsetData() {
         document.getElementById('omsetLoading').style.display = 'none';
 
         if (!json.found) {
-            document.getElementById('omsetError').style.display  = 'block';
+            document.getElementById('omsetError').style.display = 'block';
             document.getElementById('omsetError').innerHTML =
                 `<div style="font-size:2em;margin-bottom:12px;">📭</div>
                  Sheet untuk <strong>${monthNames[currentMonth]} ${currentYear}</strong> belum ditemukan.<br>
@@ -1206,8 +1230,6 @@ async function loadOmsetData() {
 
         renderOmsetPanel(json);
         renderCalendar();
-
-        // Set target input
         document.getElementById('targetInput').value = json.totalTarget || '';
 
     } catch(e) {
@@ -1222,24 +1244,10 @@ async function loadOmsetData() {
     }
 }
 
-function saveOmsetUrl() {
-    const url = document.getElementById('omsetUrlInput').value.trim();
-    if (!url.startsWith('https://script.google.com')) {
-        showToast('⚠️ URL tidak valid', 'warning'); return;
-    }
-    setOmsetUrlStorage(currentBranch, url);
-    document.getElementById('omsetSetupBox').style.display = 'none';
-    showToast('✅ URL disimpan');
-    loadOmsetData();
-}
-
 function renderOmsetPanel(json) {
-    const daily    = json.daily || [];
-    const realisasi= json.totalRealisasi || 0;
-    const target   = json.totalTarget    || 0;
-
-    // Count work days passed & remaining in month
-    const daysInMonth  = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const realisasi = json.totalRealisasi || 0;
+    const target    = json.totalTarget    || 0;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     let workDaysPassed = 0, workDaysTotal = 0;
     for (let d = 1; d <= daysInMonth; d++) {
         if (isWorkDay(currentYear, currentMonth, d)) {
@@ -1259,28 +1267,29 @@ function renderOmsetPanel(json) {
     document.getElementById('statAvgSub').textContent    = `dari ${workDaysPassed} hari kerja`;
     document.getElementById('statProyeksi').textContent  = workDaysTotal > 0 ? proyeksi : '—';
 
-    // Progress bar
-    const pctEl  = document.getElementById('progressPct');
-    const barEl  = document.getElementById('progressBar');
-    const detEl  = document.getElementById('progressDetail');
-    const cls    = pct >= 100 ? 'good' : pct >= 70 ? 'warn' : 'bad';
+    const pctEl = document.getElementById('progressPct');
+    const barEl = document.getElementById('progressBar');
+    const detEl = document.getElementById('progressDetail');
+    const cls   = pct >= 100 ? 'good' : pct >= 70 ? 'warn' : 'bad';
+
     pctEl.textContent = target > 0 ? `${pct}%` : 'Target belum diset';
     pctEl.className   = `progress-pct ${cls}`;
     barEl.style.width = target > 0 ? `${Math.min(pct, 100)}%` : '0%';
     barEl.className   = `progress-bar-fill ${cls}`;
+
     if (target > 0) {
         const sisa = target - realisasi;
         detEl.textContent = sisa > 0
-            ? `Butuh ${sisa} transaksi lagi untuk mencapai target. Sisa ${workDaysTotal - workDaysPassed} hari kerja.`
+            ? `Butuh ${sisa} transaksi lagi. Sisa ${workDaysTotal - workDaysPassed} hari kerja.`
             : `🎉 Target tercapai! Surplus ${Math.abs(sisa)} transaksi.`;
     } else {
         detEl.textContent = 'Set target bulanan untuk melihat progress.';
     }
 
-    // ── Kebutuhan harian untuk capai target ──
-    const needWrap = document.getElementById('dailyNeedContent');
+    // Daily need
+    const needWrap   = document.getElementById('dailyNeedContent');
+    const sisaHari   = workDaysTotal - workDaysPassed;
     needWrap.innerHTML = '';
-    const sisaHari = workDaysTotal - workDaysPassed;
 
     if (target <= 0) {
         needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--text-muted);font-style:italic;">Set target bulanan untuk melihat kebutuhan harian.</span>';
@@ -1290,13 +1299,12 @@ function renderOmsetPanel(json) {
         needWrap.innerHTML = '<span style="font-size:0.88em;color:var(--danger);font-weight:600;">Tidak ada hari kerja tersisa bulan ini.</span>';
     } else {
         const sisaTransaksi = target - realisasi;
-        const perHari       = (sisaTransaksi / sisaHari).toFixed(1);
         const perHariInt    = Math.ceil(sisaTransaksi / sisaHari);
-        const cls           = perHariInt <= 4 ? 'var(--success)' : perHariInt <= 6 ? 'var(--warning)' : 'var(--danger)';
-
+        const perHari       = (sisaTransaksi / sisaHari).toFixed(1);
+        const clr           = perHariInt <= 4 ? 'var(--success)' : perHariInt <= 6 ? 'var(--warning)' : 'var(--danger)';
         needWrap.innerHTML = `
             <div style="display:flex;align-items:baseline;gap:6px;">
-                <span style="font-size:2.2em;font-weight:800;font-family:'DM Mono',monospace;color:${cls};">${perHariInt}</span>
+                <span style="font-size:2.2em;font-weight:800;font-family:'DM Mono',monospace;color:${clr};">${perHariInt}</span>
                 <span style="font-size:0.9em;font-weight:600;color:var(--text-muted);">transaksi/hari</span>
             </div>
             <div style="width:1px;height:40px;background:var(--border);flex-shrink:0;"></div>
@@ -1305,24 +1313,18 @@ function renderOmsetPanel(json) {
                 <strong style="color:var(--text);">${sisaHari}</strong> hari kerja<br>
                 Rata-rata persis: <strong style="color:var(--text);">${perHari}/hari</strong>
                 &nbsp;·&nbsp; Sejauh ini: <strong style="color:var(--text);">${avg}/hari</strong>
-            </div>
-        `;
+            </div>`;
     }
-
     document.getElementById('omsetContent').style.display = 'block';
 }
 
 async function saveTarget() {
-    const url    = getOmsetUrl(currentBranch);
     const target = parseInt(document.getElementById('targetInput').value);
-    if (!url) { showToast('⚠️ URL omset belum diset', 'warning'); return; }
     if (isNaN(target) || target < 0) { showToast('⚠️ Target tidak valid', 'warning'); return; }
-
     const btn = document.getElementById('btnSaveTarget');
     btn.disabled = true; btn.textContent = '⏳ Menyimpan...';
-
     try {
-        await fetch(url, {
+        await fetch(OMSET_URL, {
             method: 'POST', mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'updateTarget', year: currentYear, month: currentMonth + 1, target })
@@ -1343,7 +1345,7 @@ async function saveTarget() {
 function openShiftModal(day) {
     selectedDay = day;
     const dk = dateKey(currentYear, currentMonth+1, day);
-    document.getElementById('shiftModalTitle').textContent = `Jadwal Shift ${currentBranch.toUpperCase()} — ${day} ${monthNames[currentMonth]} ${currentYear}`;
+    document.getElementById('shiftModalTitle').textContent = `Jadwal Shift — ${day} ${monthNames[currentMonth]} ${currentYear}`;
     document.getElementById('shiftInput').value = shiftData[dk] || '';
     document.getElementById('shiftModal').classList.add('active');
     setTimeout(() => document.getElementById('shiftInput').focus(), 80);
@@ -1355,15 +1357,13 @@ function closeShiftModal() {
 }
 function setSavingState(saving) {
     isSaving = saving;
-    const s=document.getElementById('btnSaveShift'), d=document.getElementById('btnDeleteShift'), c=document.getElementById('btnCancelShift');
-    s.disabled=d.disabled=c.disabled=saving;
-    s.textContent = saving ? '⏳ Menyimpan...' : 'Simpan';
+    ['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id => document.getElementById(id).disabled = saving);
+    document.getElementById('btnSaveShift').textContent = saving ? '⏳ Menyimpan...' : 'Simpan';
 }
 function setDeletingState(deleting) {
     isSaving = deleting;
-    const s=document.getElementById('btnSaveShift'), d=document.getElementById('btnDeleteShift'), c=document.getElementById('btnCancelShift');
-    s.disabled=d.disabled=c.disabled=deleting;
-    d.textContent = deleting ? '⏳ Menghapus...' : '🗑 Hapus';
+    ['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id => document.getElementById(id).disabled = deleting);
+    document.getElementById('btnDeleteShift').textContent = deleting ? '⏳ Menghapus...' : '🗑 Hapus';
 }
 
 async function saveShift() {
@@ -1379,24 +1379,32 @@ async function saveShift() {
         updateNameFilter(); renderCalendar(); setSavingState(false); closeShiftModal();
         showToast('✅ Jadwal berhasil disimpan');
     } catch(e) {
-        if (prev!==undefined) shiftData[dk]=prev; else delete shiftData[dk];
-        setSavingState(false); showToast('❌ Gagal menyimpan. Periksa koneksi internet.','error');
+        if (prev !== undefined) shiftData[dk] = prev; else delete shiftData[dk];
+        setSavingState(false); showToast('❌ Gagal menyimpan. Periksa koneksi.', 'error');
     }
 }
+
 async function deleteShift() {
     if (isSaving) return;
-    if (!confirm('Hapus semua jadwal di tanggal ini?')) return;
-    const dk=dateKey(currentYear,currentMonth+1,selectedDay), prev=shiftData[dk];
-    delete shiftData[dk];
-    setDeletingState(true);
-    try {
-        await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:dk,names:''})});
-        updateNameFilter(); renderCalendar(); setDeletingState(false); closeShiftModal();
-        showToast('🗑 Jadwal berhasil dihapus','info');
-    } catch(e) {
-        if (prev!==undefined) shiftData[dk]=prev;
-        setDeletingState(false); showToast('❌ Gagal menghapus.','error');
-    }
+    showConfirm({
+        icon: '🗑️',
+        title: 'Hapus Jadwal Shift',
+        msg: `Hapus semua jadwal pada ${selectedDay} ${monthNames[currentMonth]} ${currentYear}?`,
+        okLabel: 'Hapus',
+        onConfirm: async () => {
+            const dk = dateKey(currentYear, currentMonth+1, selectedDay), prev = shiftData[dk];
+            delete shiftData[dk];
+            setDeletingState(true);
+            try {
+                await fetch(SCRIPT_URLS[currentBranch], {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:dk,names:''})});
+                updateNameFilter(); renderCalendar(); setDeletingState(false); closeShiftModal();
+                showToast('🗑 Jadwal berhasil dihapus','info');
+            } catch(e) {
+                if (prev !== undefined) shiftData[dk] = prev;
+                setDeletingState(false); showToast('❌ Gagal menghapus.','error');
+            }
+        }
+    });
 }
 
 // ─────────────────────────────────────────
@@ -1414,44 +1422,44 @@ async function loadTasks() {
         rows.forEach(row => {
             if (!row.date) return;
             let dk = row.date;
-            if (dk.includes('T')) { const d=new Date(dk); dk=dateKey(d.getFullYear(),d.getMonth()+1,d.getDate()); }
-            if (row.type==='__holiday__') { customHolidays[dk] = row.name||'Libur Tambahan'; }
-            else { if (!taskData.oneoff[dk]) taskData.oneoff[dk]=[]; taskData.oneoff[dk].push({id:row.id,name:row.name,type:row.type||'tugas'}); }
+            if (dk.includes('T')) { const d = new Date(dk); dk = dateKey(d.getFullYear(),d.getMonth()+1,d.getDate()); }
+            if (row.type === '__holiday__') { customHolidays[dk] = row.name || 'Libur Tambahan'; }
+            else { if (!taskData.oneoff[dk]) taskData.oneoff[dk] = []; taskData.oneoff[dk].push({id:row.id,name:row.name,type:row.type||'tugas'}); }
         });
     } catch(e) {
         console.error('loadTasks error:', e);
-        taskData={oneoff:{},weekly:[],monthly:[]};
-        customHolidays={};
-        showToast('⚠️ Gagal memuat data tugas','warning');
+        taskData = { oneoff:{}, weekly:[], monthly:[] };
+        customHolidays = {};
+        showToast('⚠️ Gagal memuat data tugas — coba refresh halaman', 'warning');
     }
 }
 
 async function postTask(payload) {
-    await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    await fetch(SCRIPT_URLS[currentBranch], {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
 }
-async function saveTaskToSheets(dk,name,type,id)  { await postTask({action:'saveTask',date:dk,name,type,id}); }
+async function saveTaskToSheets(dk,name,type,id)  { await postTask({action:'saveTask',  date:dk,name,type,id}); }
 async function deleteTaskFromSheets(id)            { await postTask({action:'deleteTask',id}); }
 async function saveHolidayToSheets(dk,name)        { await postTask({action:'saveHoliday',date:dk,name}); }
 async function deleteHolidayFromSheets(dk)         { await postTask({action:'deleteHoliday',date:dk}); }
 
 function getPermanentTasksForDate(y, m, d) {
-    const dow = new Date(y, m, d).getDay();
+    const dow = new Date(Date.UTC(y, m, d)).getUTCDay(); // fixed: use UTC consistent with isRedDate
     return PERMANENT_TASKS.filter(t => {
         if (t.type==='weekly')      return t.days.includes(dow);
         if (t.type==='monthly')     return t.dates.includes(d);
-        if (t.type==='monthly-odd') return t.dates.includes(d) && (m%2===0);
+        if (t.type==='monthly-odd') return t.dates.includes(d) && (m % 2 === 0);
         return false;
-    }).map(t => ({ name:t.name, kind:'permanent-recurring' }));
+    }).map(t => ({ name: t.name, kind: 'permanent-recurring' }));
 }
 
 function getTasksForDate(y, m, d) {
     const dk  = dateKey(y, m+1, d);
-    const dow = new Date(y, m, d).getDay();
+    const dow = new Date(Date.UTC(y, m, d)).getUTCDay();
     return [
         ...getPermanentTasksForDate(y, m, d),
-        ...(taskData.oneoff[dk]||[]).map(t=>({...t,kind:t.type||'tugas'})),
-        ...taskData.weekly.filter(t=>t.days.includes(dow)).map(t=>({...t,kind:'recurring'})),
-        ...taskData.monthly.filter(t=>t.dates.includes(d)).map(t=>({...t,kind:'recurring'})),
+        ...(taskData.oneoff[dk]||[]).map(t=>({...t, kind: t.type||'tugas'})),
+        ...taskData.weekly.filter(t=>t.days.includes(dow)).map(t=>({...t, kind:'recurring'})),
+        ...taskData.monthly.filter(t=>t.dates.includes(d)).map(t=>({...t, kind:'recurring'})),
     ];
 }
 
@@ -1471,21 +1479,21 @@ function openTaskModal(day) {
     document.getElementById('btnAddTask').textContent        = '+ Tambah';
     renderExistingTasks(day);
     document.getElementById('taskModal').classList.add('active');
-    setTimeout(()=>document.getElementById('taskName').focus(),80);
+    setTimeout(()=>document.getElementById('taskName').focus(), 80);
 }
 function closeTaskModal() {
     document.getElementById('taskModal').classList.remove('active');
     selectedDay = null;
 }
 function toggleAddOptions() {
-    const v = document.getElementById('taskType').value;
-    const isH = v==='holiday';
-    document.getElementById('taskNameWrap').style.display    = isH?'none':'block';
-    document.getElementById('holidayNameWrap').style.display = isH?'block':'none';
-    const lm={tugas:'Nama Tugas',kunjungan_kc:'Keterangan Kunjungan KC',kunjungan_audit:'Keterangan Kunjungan AUDIT',lainnya:'Catatan'};
-    const pm={tugas:'Nama tugas...',kunjungan_kc:'Contoh: Kunjungan Supervisor KC...',kunjungan_audit:'Contoh: Audit Internal Q1...',lainnya:'Tulis catatan...'};
-    if (!isH) { document.getElementById('taskNameLabel').textContent=lm[v]||'Catatan'; document.getElementById('taskName').placeholder=pm[v]||'Tulis...'; }
-    document.getElementById('btnAddTask').textContent = isH?'+ Tambah Libur':'+ Tambah';
+    const v  = document.getElementById('taskType').value;
+    const isH = v === 'holiday';
+    document.getElementById('taskNameWrap').style.display    = isH ? 'none'  : 'block';
+    document.getElementById('holidayNameWrap').style.display = isH ? 'block' : 'none';
+    const lm = { tugas:'Nama Tugas', kunjungan_kc:'Keterangan Kunjungan KC', kunjungan_audit:'Keterangan Kunjungan AUDIT', lainnya:'Catatan' };
+    const pm = { tugas:'Nama tugas...', kunjungan_kc:'Contoh: Kunjungan Supervisor KC...', kunjungan_audit:'Contoh: Audit Internal Q1...', lainnya:'Tulis catatan...' };
+    if (!isH) { document.getElementById('taskNameLabel').textContent = lm[v]||'Catatan'; document.getElementById('taskName').placeholder = pm[v]||'Tulis...'; }
+    document.getElementById('btnAddTask').textContent = isH ? '+ Tambah Libur' : '+ Tambah';
 }
 
 function renderExistingTasks(day) {
@@ -1494,68 +1502,119 @@ function renderExistingTasks(day) {
     const dk = dateKey(currentYear, currentMonth+1, day);
 
     if (customHolidays[dk]) {
-        const div=document.createElement('div'); div.className='task-existing-item'; div.style.cssText='background:var(--danger-light);';
-        div.innerHTML=`<span>${customHolidays[dk]}<span class="task-badge" style="background:#fecaca;color:#991b1b;">Libur Tambahan</span></span>`;
-        const btn=document.createElement('button'); btn.className='task-del-btn'; btn.textContent='✕';
-        btn.onclick=async()=>{ if(confirm('Hapus libur tambahan di tanggal ini?')){const prev=customHolidays[dk];delete customHolidays[dk];renderExistingTasks(day);renderCalendar();renderHolidays();showToast('Libur tambahan dihapus','info');try{await deleteHolidayFromSheets(dk);}catch(e){customHolidays[dk]=prev;renderExistingTasks(day);renderCalendar();renderHolidays();showToast('❌ Gagal hapus libur','error');}} };
+        const div = document.createElement('div');
+        div.className = 'task-existing-item';
+        div.style.cssText = 'background:var(--danger-light);';
+        div.innerHTML = `<span>${customHolidays[dk]}<span class="task-badge" style="background:#fecaca;color:#991b1b;">Libur Tambahan</span></span>`;
+        const btn = document.createElement('button');
+        btn.className = 'task-del-btn'; btn.textContent = '✕';
+        btn.onclick = () => {
+            showConfirm({
+                icon: '🗓️',
+                title: 'Hapus Libur Tambahan',
+                msg: `Hapus libur tambahan pada ${day} ${monthNames[currentMonth]}?`,
+                okLabel: 'Hapus',
+                onConfirm: async () => {
+                    const prev = customHolidays[dk];
+                    delete customHolidays[dk];
+                    renderExistingTasks(day); renderCalendar(); renderHolidays();
+                    showToast('Libur tambahan dihapus', 'info');
+                    try { await deleteHolidayFromSheets(dk); }
+                    catch(e) { customHolidays[dk] = prev; renderExistingTasks(day); renderCalendar(); renderHolidays(); showToast('❌ Gagal hapus libur','error'); }
+                }
+            });
+        };
         div.appendChild(btn); wrap.appendChild(div);
     }
 
     getPermanentTasksForDate(currentYear, currentMonth, day).forEach(t => {
-        const div=document.createElement('div'); div.className='task-existing-item'; div.style.cssText='background:#e0f2fe;';
-        div.innerHTML=`<span>${t.name}<span class="task-badge" style="background:#bae6fd;color:#0369a1;">Tugas Tetap</span></span><span title="Tugas tetap tidak dapat dihapus" style="padding:2px 8px;color:#0369a1;font-size:0.9em;cursor:default;">🔒</span>`;
+        const div = document.createElement('div');
+        div.className = 'task-existing-item';
+        div.style.cssText = 'background:#e0f2fe;';
+        div.innerHTML = `<span>${t.name}<span class="task-badge" style="background:#bae6fd;color:#0369a1;">Tugas Tetap</span></span><span title="Tugas tetap tidak dapat dihapus" style="padding:2px 8px;color:#0369a1;font-size:0.9em;cursor:default;">🔒</span>`;
         wrap.appendChild(div);
     });
 
-    const NOTE_BADGE={tugas:{bg:'var(--primary-light)',color:'var(--primary-dark)',label:'Tugas Harian'},kunjungan_kc:{bg:'#fef3c7',color:'#92400e',label:'Kunjungan KC'},kunjungan_audit:{bg:'#ede9fe',color:'#5b21b6',label:'Kunjungan AUDIT'},lainnya:{bg:'#f0fdf4',color:'#166534',label:'Lainnya'},oneoff:{bg:'var(--primary-light)',color:'var(--primary-dark)',label:'Tugas'}};
+    const NOTE_BADGE = {
+        tugas:           { bg:'var(--primary-light)', color:'var(--primary-dark)', label:'Tugas Harian'   },
+        kunjungan_kc:    { bg:'#fef3c7',              color:'#92400e',             label:'Kunjungan KC'   },
+        kunjungan_audit: { bg:'#ede9fe',              color:'#5b21b6',             label:'Kunjungan AUDIT'},
+        lainnya:         { bg:'#f0fdf4',              color:'#166534',             label:'Lainnya'        },
+        oneoff:          { bg:'var(--primary-light)', color:'var(--primary-dark)', label:'Tugas'          },
+    };
 
-    (taskData.oneoff[dk]||[]).forEach((t,idx)=>{
-        const b=NOTE_BADGE[t.type||'tugas']||NOTE_BADGE['oneoff'];
-        const div=document.createElement('div'); div.className='task-existing-item';
-        div.innerHTML=`<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.color};">${b.label}</span></span>`;
-        const btn=document.createElement('button'); btn.className='task-del-btn'; btn.textContent='✕';
-        btn.onclick=async()=>{
-            const removed=taskData.oneoff[dk].splice(idx,1)[0];
-            if(!taskData.oneoff[dk].length) delete taskData.oneoff[dk];
-            renderExistingTasks(day); renderCalendar(); showToast('Catatan dihapus','info');
-            try{await deleteTaskFromSheets(removed.id);}
-            catch(e){if(!taskData.oneoff[dk])taskData.oneoff[dk]=[];taskData.oneoff[dk].splice(idx,0,removed);renderExistingTasks(day);renderCalendar();showToast('❌ Gagal hapus catatan','error');}
+    (taskData.oneoff[dk]||[]).forEach((t, idx) => {
+        const b   = NOTE_BADGE[t.type||'tugas'] || NOTE_BADGE['oneoff'];
+        const div = document.createElement('div');
+        div.className = 'task-existing-item';
+        div.innerHTML = `<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.color};">${b.label}</span></span>`;
+        const btn = document.createElement('button');
+        btn.className = 'task-del-btn'; btn.textContent = '✕';
+        btn.onclick = () => {
+            showConfirm({
+                icon: '📋',
+                title: 'Hapus Catatan',
+                msg: `Hapus "${t.name}"?`,
+                okLabel: 'Hapus',
+                onConfirm: async () => {
+                    const removed = taskData.oneoff[dk].splice(idx, 1)[0];
+                    if (!taskData.oneoff[dk].length) delete taskData.oneoff[dk];
+                    renderExistingTasks(day); renderCalendar();
+                    showToast('Catatan dihapus', 'info');
+                    try { await deleteTaskFromSheets(removed.id); }
+                    catch(e) {
+                        if (!taskData.oneoff[dk]) taskData.oneoff[dk] = [];
+                        taskData.oneoff[dk].splice(idx, 0, removed);
+                        renderExistingTasks(day); renderCalendar();
+                        showToast('❌ Gagal hapus catatan','error');
+                    }
+                }
+            });
         };
         div.appendChild(btn); wrap.appendChild(div);
     });
 
-    if (!wrap.children.length) wrap.innerHTML='<div style="font-size:0.85em;color:var(--text-muted);font-style:italic;padding:4px 0;">Belum ada tugas pada tanggal ini.</div>';
+    if (!wrap.children.length) {
+        wrap.innerHTML = '<div style="font-size:0.85em;color:var(--text-muted);font-style:italic;padding:4px 0;">Belum ada tugas pada tanggal ini.</div>';
+    }
 }
 
 async function addTask() {
-    const type=document.getElementById('taskType').value;
-    const dk=dateKey(currentYear,currentMonth+1,selectedDay);
-    const btn=document.getElementById('btnAddTask');
-    btn.disabled=true;
+    const type = document.getElementById('taskType').value;
+    const dk   = dateKey(currentYear, currentMonth+1, selectedDay);
+    const btn  = document.getElementById('btnAddTask');
+    btn.disabled = true;
 
-    if (type==='holiday') {
-        const label=document.getElementById('holidayName').value.trim()||'Libur Tambahan';
-        if (customHolidays[dk]){showToast('⚠️ Tanggal ini sudah memiliki libur tambahan','warning');btn.disabled=false;return;}
-        customHolidays[dk]=label;
-        document.getElementById('holidayName').value='';
-        renderExistingTasks(selectedDay);renderCalendar();renderHolidays();
-        showToast('✅ Libur tambahan ditambahkan'); btn.disabled=false;
-        try{await saveHolidayToSheets(dk,label);}
-        catch(e){delete customHolidays[dk];renderExistingTasks(selectedDay);renderCalendar();renderHolidays();showToast('❌ Gagal simpan libur','error');}
+    if (type === 'holiday') {
+        const label = document.getElementById('holidayName').value.trim() || 'Libur Tambahan';
+        if (customHolidays[dk]) { showToast('⚠️ Tanggal ini sudah memiliki libur tambahan','warning'); btn.disabled=false; return; }
+        customHolidays[dk] = label;
+        document.getElementById('holidayName').value = '';
+        renderExistingTasks(selectedDay); renderCalendar(); renderHolidays();
+        showToast('✅ Libur tambahan ditambahkan'); btn.disabled = false;
+        try { await saveHolidayToSheets(dk, label); }
+        catch(e) { delete customHolidays[dk]; renderExistingTasks(selectedDay); renderCalendar(); renderHolidays(); showToast('❌ Gagal simpan libur','error'); }
         return;
     }
 
-    const name=document.getElementById('taskName').value.trim();
-    if (!name){showToast('⚠️ Kolom tidak boleh kosong','warning');document.getElementById('taskName').focus();btn.disabled=false;return;}
-    const id=genId();
-    if (!taskData.oneoff[dk]) taskData.oneoff[dk]=[];
-    taskData.oneoff[dk].push({id,name,type});
-    document.getElementById('taskName').value='';
+    const name = document.getElementById('taskName').value.trim();
+    if (!name) { showToast('⚠️ Kolom tidak boleh kosong','warning'); document.getElementById('taskName').focus(); btn.disabled=false; return; }
+    const id = genId();
+    if (!taskData.oneoff[dk]) taskData.oneoff[dk] = [];
+    taskData.oneoff[dk].push({ id, name, type });
+    document.getElementById('taskName').value = '';
     renderExistingTasks(selectedDay); renderCalendar();
-    const tl={tugas:'Tugas Harian',kunjungan_kc:'Kunjungan KC',kunjungan_audit:'Kunjungan AUDIT',lainnya:'Catatan'};
-    showToast(`✅ ${tl[type]||'Catatan'} ditambahkan`); btn.disabled=false;
-    try{await saveTaskToSheets(dk,name,type,id);}
-    catch(e){const arr=taskData.oneoff[dk];const i=arr.findIndex(t=>t.id===id);if(i>-1)arr.splice(i,1);if(!arr.length)delete taskData.oneoff[dk];renderExistingTasks(selectedDay);renderCalendar();showToast('❌ Gagal simpan catatan','error');}
+    const tl = { tugas:'Tugas Harian', kunjungan_kc:'Kunjungan KC', kunjungan_audit:'Kunjungan AUDIT', lainnya:'Catatan' };
+    showToast(`✅ ${tl[type]||'Catatan'} ditambahkan`); btn.disabled = false;
+    try { await saveTaskToSheets(dk, name, type, id); }
+    catch(e) {
+        const arr = taskData.oneoff[dk];
+        const i   = arr.findIndex(t => t.id === id);
+        if (i > -1) arr.splice(i, 1);
+        if (!arr.length) delete taskData.oneoff[dk];
+        renderExistingTasks(selectedDay); renderCalendar();
+        showToast('❌ Gagal simpan catatan','error');
+    }
 }
 
 // ─────────────────────────────────────────
@@ -1564,39 +1623,50 @@ async function addTask() {
 function renderCalendar() {
     document.getElementById('monthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
     const grid = document.getElementById('daysGrid');
-    grid.innerHTML = '';
+    const frag = document.createDocumentFragment(); // Use fragment for perf
 
     const jsDay       = new Date(currentYear, currentMonth, 1).getDay();
-    const firstDay    = jsDay===0 ? 6 : jsDay-1;
-    const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+    const firstDay    = jsDay === 0 ? 6 : jsDay - 1;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    for (let i=0;i<firstDay;i++) { const e=document.createElement('div');e.className='day-cell empty';grid.appendChild(e); }
+    for (let i = 0; i < firstDay; i++) {
+        const e = document.createElement('div'); e.className = 'day-cell empty'; frag.appendChild(e);
+    }
 
-    for (let day=1; day<=daysInMonth; day++) {
-        const dk      = dateKey(currentYear,currentMonth+1,day);
-        const red     = isRedDate(currentYear,currentMonth,day);
-        const hname   = getHolidayName(currentYear,currentMonth,day);
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dk      = dateKey(currentYear, currentMonth+1, day);
+        const red     = isRedDate(currentYear, currentMonth, day);
+        const hname   = getHolidayName(currentYear, currentMonth, day);
         const isToday = day===today.getDate() && currentMonth===today.getMonth() && currentYear===today.getFullYear();
         const hasOmset= layers.omset && !!omsetData[dk];
 
-        const cell=document.createElement('div');
-        cell.className='day-cell'+(red?' red-day':'')+(isToday?' today':'')+(hasOmset?' has-omset':'');
+        const cell = document.createElement('div');
+        cell.className = 'day-cell' + (red?' red-day':'') + (isToday?' today':'') + (hasOmset?' has-omset':'');
 
-        const numDiv=document.createElement('div');
-        numDiv.className='day-number'+(red?' red':'')+(isToday?' today-num':'');
-        numDiv.textContent=day;
+        const numDiv = document.createElement('div');
+        numDiv.className = 'day-number' + (red?' red':'') + (isToday?' today-num':'');
+        numDiv.textContent = day;
         cell.appendChild(numDiv);
 
-        if (hname) { const hl=document.createElement('span');hl.className='holiday-label';hl.textContent=hname;cell.appendChild(hl); }
+        if (hname) {
+            const hl = document.createElement('span');
+            hl.className = 'holiday-label';
+            hl.textContent = hname;
+            cell.appendChild(hl);
+        }
 
         // Layer Shift
         if (layers.shift) {
-            const list=document.createElement('div');list.className='shift-list';
+            const list = document.createElement('div');
+            list.className = 'shift-list';
             if (shiftData[dk]) {
-                shiftData[dk].split('\n').filter(s=>s.trim()).forEach(shift=>{
-                    const name=shift.replace(/\s*\([LPS]\)/g,'').trim();
-                    if (selectedFilter && name!==selectedFilter) return;
-                    const item=document.createElement('div');item.className=`shift-item ${getShiftClass(shift)}`;item.textContent=shift.trim();list.appendChild(item);
+                shiftData[dk].split('\n').filter(s=>s.trim()).forEach(shift => {
+                    const name = shift.replace(/\s*\([LPS]\)/g,'').trim();
+                    if (selectedFilter && name !== selectedFilter) return;
+                    const item = document.createElement('div');
+                    item.className = `shift-item ${getShiftClass(shift)}`;
+                    item.textContent = shift.trim();
+                    list.appendChild(item);
                 });
             }
             cell.appendChild(list);
@@ -1604,10 +1674,12 @@ function renderCalendar() {
 
         // Layer Tugas
         if (layers.task) {
-            const list=document.createElement('div');list.className='task-list';
-            getTasksForDate(currentYear,currentMonth,day).forEach(t=>{
-                const item=document.createElement('div');item.className=`task-item ${t.kind}`;
-                item.textContent=t.name;
+            const list = document.createElement('div');
+            list.className = 'task-list';
+            getTasksForDate(currentYear, currentMonth, day).forEach(t => {
+                const item = document.createElement('div');
+                item.className = `task-item ${t.kind}`;
+                item.textContent = t.name;
                 list.appendChild(item);
             });
             cell.appendChild(list);
@@ -1615,77 +1687,116 @@ function renderCalendar() {
 
         // Layer Omset
         if (layers.omset) {
-            const d=omsetData[dk];
-            const wrap=document.createElement('div');wrap.className='omset-cell-data';
+            const d    = omsetData[dk];
+            const wrap = document.createElement('div');
+            wrap.className = 'omset-cell-data';
             if (d && d.total > 0) {
-                wrap.innerHTML=`<div class="omset-total-chip"><span class="dot"></span>${d.total}</div>`;
-            } else if (isWorkDay(currentYear,currentMonth,day)) {
-                wrap.innerHTML=`<span class="omset-no-data">—</span>`;
+                wrap.innerHTML = `<div class="omset-total-chip"><span class="dot"></span>${d.total}</div>`;
+            } else if (isWorkDay(currentYear, currentMonth, day)) {
+                wrap.innerHTML = `<span class="omset-no-data">—</span>`;
             }
             cell.appendChild(wrap);
         }
 
-        // Click handler: shift > task > none
-        if (layers.shift) cell.onclick=()=>openShiftModal(day);
-        else if (layers.task) cell.onclick=()=>openTaskModal(day);
-        else cell.style.cursor='default';
+        // ── Action buttons (hover) ──
+        // Both shift & task active: primary click = shift, action button = task
+        // Only one active: primary click = that layer
+        // Both inactive: no click
+        const actionBar = document.createElement('div');
+        actionBar.className = 'cell-action-bar';
 
-        grid.appendChild(cell);
+        if (layers.shift && layers.task) {
+            cell.onclick = (e) => { if (!e.target.classList.contains('cell-action-btn')) openShiftModal(day); };
+            const taskBtn = document.createElement('button');
+            taskBtn.className = 'cell-action-btn task-btn';
+            taskBtn.title = 'Kelola Tugas';
+            taskBtn.textContent = '📋';
+            taskBtn.onclick = (e) => { e.stopPropagation(); openTaskModal(day); };
+            actionBar.appendChild(taskBtn);
+        } else if (layers.shift) {
+            cell.onclick = () => openShiftModal(day);
+        } else if (layers.task) {
+            cell.onclick = () => openTaskModal(day);
+        } else {
+            cell.style.cursor = 'default';
+        }
+
+        if (actionBar.children.length) cell.appendChild(actionBar);
+        frag.appendChild(cell);
     }
 
+    grid.innerHTML = '';
+    grid.appendChild(frag);
     renderHolidays();
+    checkFilterEmpty();
 }
 
 // ─────────────────────────────────────────
 //  RENDER HOLIDAY PANEL
 // ─────────────────────────────────────────
 function renderHolidays() {
-    const grid=document.getElementById('holidayGrid');
-    const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
-    const holidays=[];
-    grid.innerHTML='';
-    for (let d=1;d<=daysInMonth;d++) {
-        const dk=dateKey(currentYear,currentMonth+1,d);
-        const hn=nationalHolidays[dk]||customHolidays[dk];
-        const isCustom=!nationalHolidays[dk]&&!!customHolidays[dk];
-        if (hn) holidays.push({day:d,dayName:dayNames[new Date(currentYear,currentMonth,d).getDay()],name:hn,custom:isCustom});
+    const grid = document.getElementById('holidayGrid');
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const holidays = [];
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dk = dateKey(currentYear, currentMonth+1, d);
+        const hn = nationalHolidays[dk] || customHolidays[dk];
+        if (hn) holidays.push({ day:d, dayName:dayNames[new Date(currentYear,currentMonth,d).getDay()], name:hn, custom:!nationalHolidays[dk] });
     }
-    if (!holidays.length){grid.innerHTML='<span class="no-holiday">Tidak ada libur bulan ini.</span>';return;}
-    holidays.forEach(h=>{
-        const chip=document.createElement('div');chip.className='holiday-chip';
-        if(h.custom)chip.style.borderLeftColor='#f97316';
-        chip.innerHTML=`<span class="hdate">${String(h.day).padStart(2,'0')} ${monthNames[currentMonth].slice(0,3)}<br>${h.dayName}</span><span class="hname">${h.name}${h.custom?' <span style="font-size:0.78em;color:#f97316;">(Tambahan)</span>':''}</span>`;
-        grid.appendChild(chip);
+    if (!holidays.length) { grid.innerHTML = '<span class="no-holiday">Tidak ada libur bulan ini.</span>'; return; }
+    const frag = document.createDocumentFragment();
+    holidays.forEach(h => {
+        const chip = document.createElement('div');
+        chip.className = 'holiday-chip';
+        if (h.custom) chip.style.borderLeftColor = '#f97316';
+        chip.innerHTML = `<span class="hdate">${String(h.day).padStart(2,'0')} ${monthNames[currentMonth].slice(0,3)}<br>${h.dayName}</span><span class="hname">${h.name}${h.custom?' <span style="font-size:0.78em;color:#f97316;">(Tambahan)</span>':''}</span>`;
+        frag.appendChild(chip);
     });
+    grid.innerHTML = '';
+    grid.appendChild(frag);
 }
 
 // ─────────────────────────────────────────
 //  MONTH NAV
 // ─────────────────────────────────────────
 function changeMonth(dir) {
-    currentMonth+=dir;
-    if (currentMonth>11){currentMonth=0;currentYear++;}
-    else if (currentMonth<0){currentMonth=11;currentYear--;}
-    omsetData={};
-    omsetMonthlyInfo={totalRealisasi:0,totalTarget:0,found:false};
-    renderCalendar();
+    currentMonth += dir;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    else if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+
+    omsetData        = {};
+    omsetMonthlyInfo = { totalRealisasi:0, totalTarget:0, found:false };
+
+    // Show skeleton immediately on month change
+    renderSkeletonCalendar();
+
+    // Reset filter if name no longer available — will be rechecked after loadData
+    // (don't reset selectedFilter value yet, let updateNameFilter handle it)
+
+    // Reset target input
+    document.getElementById('targetInput').value = '';
+
     if (layers.omset) {
-        document.getElementById('omsetContent').style.display='none';
-        document.getElementById('omsetError').style.display='none';
-        document.getElementById('omsetPanelMonth').textContent=`${monthNames[currentMonth]} ${currentYear}`;
+        document.getElementById('omsetContent').style.display = 'none';
+        document.getElementById('omsetError').style.display   = 'none';
+        document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
         loadOmsetData();
     }
+
+    // Load new month data
+    Promise.all([loadData(), loadTasks()]).then(() => {
+        renderCalendar();
+    });
 }
 
 // ─────────────────────────────────────────
-//  CLOSE ON BACKDROP / ESC
+//  KEYBOARD / BACKDROP
 // ─────────────────────────────────────────
-// Auto-init: kalender diinit saat tab Kalender pertama kali dibuka
-window._kalenderInited = false;
-
-document.getElementById('shiftModal').addEventListener('click',function(e){if(e.target===this)closeShiftModal();});
-document.getElementById('taskModal').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeShiftModal();closeTaskModal();}});
+document.getElementById('shiftModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeShiftModal(); });
+document.getElementById('taskModal').addEventListener('click',  e => { if (e.target === e.currentTarget) closeTaskModal();  });
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeShiftModal(); closeTaskModal(); document.getElementById('confirmModal').classList.remove('active'); }
+});
 
 // ─────────────────────────────────────────
 //  PAGE SWITCHING
@@ -1696,13 +1807,16 @@ function switchPage(page) {
     const cap = page.charAt(0).toUpperCase() + page.slice(1);
     document.getElementById('page' + cap).classList.add('active');
     document.getElementById('nav'  + cap).classList.add('active');
-    if (page === 'kalender' && typeof initApp === 'function' && !window._kalenderInited) {
-        window._kalenderInited = true;
-        initApp();
+    if (page === 'kalender' && !_calenderInited) {
+        _calenderInited = true;
+        initApp().then(() => {
+            if (layers.omset) {
+                document.getElementById('omsetPanelMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                loadOmsetData();
+            }
+        });
     }
 }
-
-
 </script>
 </body>
 </html>
