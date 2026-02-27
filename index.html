@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PGI BDG026</title>
+    <title>KNIT CORE</title>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -585,16 +585,27 @@
 
         /* ━━━ RESPONSIVE ━━━ */
         @media (max-width:700px) {
-            .identity-row { padding:0 16px; }
-            .nav-bar { padding:0 16px; }
-            .brand-logo-img { height:36px; }
-            .clock-time { font-size:1em; }
-            .clock-date { display:none; }
-            .page-inner { padding:16px 14px 40px; }
-            .cal-cell { min-height:74px; padding:6px; }
+            .identity-row { padding:0 12px; height:54px; }
+            .nav-bar { padding:0 12px; }
+            .brand-logo-img { height:28px; }
+            .clock-time { font-size:0.88em; }
+            .clock-date { display:block; font-size:0.55em; }
+            .brand-subtitle { display:none; }
+            .brand-separator { display:none; }
+            .page-inner { padding:12px 10px 40px; }
+            .cal-cell { min-height:56px; padding:4px 4px 3px; }
+            .cell-num { width:18px; height:18px; font-size:0.68em; margin-bottom:2px; }
+            .chip { font-size:0.60em; padding:2px 4px; line-height:1.2; }
+            .chip-stack { gap:2px; }
+            .holiday-tag { font-size:0.52em; }
             .cell-actions { display:flex !important; }
-            .nav-pill { padding:6px 11px; font-size:0.76em; }
+            .cell-act-btn { width:16px; height:16px; font-size:0.6em; }
+            .nav-pill { padding:5px 10px; font-size:0.73em; }
             .page-header { flex-direction:column; }
+            .kal-controls { gap:6px; }
+            .layer-btn { padding:5px 10px; font-size:0.72em; }
+            .month-label { font-size:1em; }
+            .month-nav-btn { width:28px; height:28px; font-size:0.88em; }
         }
     </style>
 </head>
@@ -605,9 +616,9 @@
     <!-- Logo left, Clock right -->
     <div class="identity-row">
         <div style="display:flex;align-items:center;gap:14px;">
-            <img class="brand-logo-img" src="tittlelight.png" alt="PGI BDG026">
-            <div style="width:1px;height:36px;background:rgba(255,255,255,0.45);flex-shrink:0;"></div>
-            <div style="line-height:1.6;">
+            <img class="brand-logo-img" src="tittlelight.png" alt="KNIT CORE">
+            <div class="brand-separator" style="width:1px;height:36px;background:rgba(147,180,247,0.45);flex-shrink:0;"></div>
+            <div class="brand-subtitle" style="line-height:1.6;">
                 <div style="font-size:0.58em;font-weight:600;color:var(--sky-4);letter-spacing:0.18em;text-transform:uppercase;">Pusat Gadai Indonesia</div>
                 <div style="font-size:0.52em;font-weight:600;color:var(--sky-3);letter-spacing:0.22em;text-transform:uppercase;">N . S . W &nbsp;—&nbsp; PGI CORE V.3</div>
             </div>
