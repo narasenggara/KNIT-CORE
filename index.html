@@ -245,10 +245,20 @@
             font-family: 'Sora', sans-serif; font-size: 0.85em; font-weight: 700; cursor: pointer;
         }
 
+        /* Month nav + day names wrapper box */
+        .cal-header-box {
+            background: rgba(255,255,255,0.82);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-lg);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
+            padding: 10px 16px 8px;
+            margin-bottom: 8px;
+        }
+
         /* Month nav */
         .month-nav {
             display: flex; align-items: center; justify-content: space-between;
-            margin: 20px 0 14px;
+            margin: 0 0 8px;
         }
         .month-nav-btn {
             width: 34px; height: 34px;
@@ -679,19 +689,21 @@
             </div>
         </div>
 
-        <div class="month-nav">
-            <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
-            <span class="month-label" id="monthLabel">—</span>
-            <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
-        </div>
-
-        <div class="cal-grid-wrap">
-            <div class="cal-day-names">
+        <div class="cal-header-box">
+            <div class="month-nav">
+                <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
+                <span class="month-label" id="monthLabel">—</span>
+                <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
+            </div>
+            <div class="cal-day-names" style="min-width:unset;">
                 <div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div>
                 <div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div>
                 <div class="cal-day-name">Jum</div>
                 <div class="cal-day-name wknd">Sab</div><div class="cal-day-name wknd">Min</div>
             </div>
+        </div>
+
+        <div class="cal-grid-wrap">
             <div class="cal-grid" id="calGrid"></div>
         </div>
 
@@ -976,7 +988,7 @@ function checkFilterEmpty(){
 }
 
 function renderSkeleton(){
-    document.getElementById('monthLabel').textContent=`${MN[currentMonth]} ${currentYear}`;
+    document.getElementById('monthLabel').textContent=MN[currentMonth];
     const grid=document.getElementById('calGrid'),frag=document.createDocumentFragment();
     const first=new Date(currentYear,currentMonth,1).getDay(),fd=first===0?6:first-1;
     const dim=new Date(currentYear,currentMonth+1,0).getDate();
@@ -1002,7 +1014,7 @@ function getTasksForDay(y,m,d){
 }
 
 function renderCalendar(){
-    document.getElementById('monthLabel').textContent=`${MN[currentMonth]} ${currentYear}`;
+    document.getElementById('monthLabel').textContent=MN[currentMonth];
     const grid=document.getElementById('calGrid'),frag=document.createDocumentFragment();
     const first=new Date(currentYear,currentMonth,1).getDay(),fd=first===0?6:first-1;
     const dim=new Date(currentYear,currentMonth+1,0).getDate();
@@ -1052,7 +1064,19 @@ async function saveShift(){if(isSaving)return;const raw=document.getElementById(
 async function deleteShift(){if(isSaving)return;showConfirm({icon:'🗑️',title:'Hapus Jadwal Shift',msg:`Hapus semua jadwal pada ${selectedDay} ${MN[currentMonth]} ${currentYear}?`,okLabel:'Hapus',onConfirm:async()=>{const key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];delete shiftData[key];setShiftBtns(false,true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:''})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal dihapus','info');}catch(e){if(prev!==undefined)shiftData[key]=prev;setShiftBtns(false);toast('Gagal menghapus','error');}}});}
 
 function openTaskModal(day){selectedDay=day;document.getElementById('taskModalTitle').textContent=`Tugas — ${day} ${MN[currentMonth]} ${currentYear}`;document.getElementById('taskName').value='';document.getElementById('holidayName').value='';document.getElementById('taskType').value='tugas';document.getElementById('taskNameWrap').style.display='block';document.getElementById('holidayWrap').style.display='none';document.getElementById('taskNameLbl').textContent='Nama Tugas';document.getElementById('taskName').placeholder='Nama tugas...';document.getElementById('btnAddTask').textContent='Tambah';renderExistingTasks(day);openModal('taskModal');setTimeout(()=>document.getElementById('taskName').focus(),80);}
-function toggleTaskType(){const v=document.getElementById('taskType').value,isH=v==='holiday';document.getElementById('taskNameWrap').style.display=isH?'none':'block';document.getElementById('holidayWrap').style.display=isH?'block':'none';const lm={tugas:'Nama Tugas',kunjungan_kc:'Keterangan KC',kunjungan_audit:'Keterangan AUDIT',lainnya:'Catatan'};const pm={tugas:'Nama tugas...',kunjungan_kc:'Contoh: Kunjungan Supervisor...',kunjungan_audit:'Contoh: Audit Internal Q1...',lainnya:'Tulis catatan...'};if(!isH){document.getElementById('taskNameLbl').textContent=lm[v]||'Catatan';document.getElementById('taskName').placeholder=pm[v]||'Tulis...';}document.getElementById('btnAddTask').textContent=isH?'Tambah Libur':'Tambah';}
+function toggleTaskType(){
+    const v=document.getElementById('taskType').value,isH=v==='holiday';
+    const isAutoName = v==='kunjungan_kc'||v==='kunjungan_audit';
+    document.getElementById('taskNameWrap').style.display=(isH||isAutoName)?'none':'block';
+    document.getElementById('holidayWrap').style.display=isH?'block':'none';
+    if(v==='kunjungan_kc') document.getElementById('taskName').value='Kunjungan KC';
+    else if(v==='kunjungan_audit') document.getElementById('taskName').value='Kunjungan AUDIT';
+    else if(!isH){ document.getElementById('taskName').value=''; }
+    const lm={tugas:'Nama Tugas',lainnya:'Catatan'};
+    const pm={tugas:'Nama tugas...',lainnya:'Tulis catatan...'};
+    if(!isH&&!isAutoName){document.getElementById('taskNameLbl').textContent=lm[v]||'Catatan';document.getElementById('taskName').placeholder=pm[v]||'Tulis...';}
+    document.getElementById('btnAddTask').textContent=isH?'Tambah Libur':'Tambah';
+}
 function renderExistingTasks(day){
     const wrap=document.getElementById('existingTasksList');wrap.innerHTML='';
     const key=dk(currentYear,currentMonth+1,day);
