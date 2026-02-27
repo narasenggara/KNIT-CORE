@@ -60,47 +60,18 @@
             font-family: 'Sora', sans-serif;
             min-height: 100vh;
             color: var(--ink);
-            /* Layered blue-milky gradient background */
-            background:
-                radial-gradient(ellipse 80% 60% at 15% 10%,  rgba(147,180,247,0.45) 0%, transparent 55%),
-                radial-gradient(ellipse 60% 80% at 85% 80%,  rgba(193,219,255,0.50) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 50% at 50% 50%,  rgba(224,236,255,0.30) 0%, transparent 70%),
-                linear-gradient(160deg, #deeaff 0%, #f0f6ff 40%, #e8f2ff 70%, #dde8fb 100%);
-            background-attachment: fixed;
+            background: linear-gradient(160deg, #deeaff 0%, #f0f6ff 40%, #e8f2ff 70%, #dde8fb 100%);
+            background-attachment: scroll;
         }
-
-        /* Subtle animated orbs in background */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
-            pointer-events: none;
-            z-index: 0;
-        }
-        body::before {
-            width: 500px; height: 500px;
-            top: -100px; left: -100px;
-            background: radial-gradient(circle, rgba(147,180,247,0.35) 0%, transparent 70%);
-            animation: drift1 20s ease-in-out infinite alternate;
-        }
-        body::after {
-            width: 600px; height: 400px;
-            bottom: -80px; right: -120px;
-            background: radial-gradient(circle, rgba(193,219,255,0.40) 0%, transparent 70%);
-            animation: drift2 25s ease-in-out infinite alternate;
-        }
-        @keyframes drift1 { from{transform:translate(0,0) scale(1)} to{transform:translate(60px,40px) scale(1.1)} }
-        @keyframes drift2 { from{transform:translate(0,0) scale(1)} to{transform:translate(-50px,-30px) scale(1.08)} }
 
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            TOP CHROME — GLASSMORPHISM
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
         .top-chrome {
             position: sticky; top: 0; z-index: 200;
-            background: rgba(240,246,255,0.72);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            background: rgba(240,246,255,0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
             box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 4px 20px rgba(37,99,235,0.08);
         }
@@ -136,10 +107,9 @@
         }
         .nav-pills {
             display: inline-flex; gap: 2px;
-            background: rgba(255,255,255,0.55);
+            background: rgba(255,255,255,0.85);
             border: 1px solid var(--glass-border);
             border-radius: 99px; padding: 4px;
-            backdrop-filter: blur(16px) saturate(160%);
             box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
         }
         .nav-pill {
@@ -203,9 +173,7 @@
         .tool-card {
             display: flex; flex-direction: column; gap: 10px;
             padding: 20px 16px 18px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px) saturate(160%);
-            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            background: rgba(255,255,255,0.85);
             border: 1px solid var(--glass-border);
             border-radius: var(--r-lg);
             box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
@@ -318,10 +286,8 @@
 
         .cal-cell {
             min-height: 106px;
-            background: rgba(255,255,255,0.52);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.80);
+            background: rgba(255,255,255,0.80);
+            border: 1px solid rgba(255,255,255,0.90);
             border-radius: var(--r);
             padding: 9px;
             cursor: pointer;
@@ -330,7 +296,7 @@
             box-shadow: 0 1px 4px rgba(37,99,235,0.05);
         }
         .cal-cell:hover:not(.empty):not(.skeleton) {
-            background: rgba(255,255,255,0.80);
+            background: rgba(255,255,255,0.96);
             border-color: rgba(147,180,247,0.60);
             box-shadow: 0 6px 20px rgba(37,99,235,0.12), 0 2px 6px rgba(37,99,235,0.06);
             transform: translateY(-2px);
