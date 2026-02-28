@@ -651,35 +651,40 @@
         <div class="section-label">Tools</div>
         <div class="tool-grid">
             <a class="tool-card" href="https://gadai.pugindo.com/dashboard" target="_blank" rel="noopener">
-                <div class="tool-icon">💰</div>
+                <div class="tool-icon">🦊</div>
                 <div class="tool-name">PUGINDO</div>
                 <div class="tool-url">gadai.pugindo.com</div>
             </a>
             <a class="tool-card" href="https://gadai.pugindo.com/gadai/bukti-gadai" target="_blank" rel="noopener">
-                <div class="tool-icon">🧾</div>
+                <div class="tool-icon">🦦</div>
                 <div class="tool-name">Bukti Gadai & PL</div>
                 <div class="tool-url">gadai.pugindo.com</div>
             </a>
             <a class="tool-card" href="https://survey.pusatgadai.id/?cabang=BDG026#step-1" target="_blank" rel="noopener">
-                <div class="tool-icon">📋</div>
+                <div class="tool-icon">🐧</div>
                 <div class="tool-name">Survey</div>
                 <div class="tool-url">survey.pusatgadai.id</div>
             </a>
             <a class="tool-card" href="https://www.imei.info/" target="_blank" rel="noopener">
-                <div class="tool-icon">📱</div>
+                <div class="tool-icon">🦎</div>
                 <div class="tool-name">IMEI Info</div>
                 <div class="tool-url">imei.info</div>
             </a>
             <a class="tool-card" href="https://notebooklm.google.com/notebook/d40f54cc-474b-4d0a-955c-d48ba41d9489" target="_blank" rel="noopener">
-                <div class="tool-icon">📖</div>
+                <div class="tool-icon">🦉</div>
                 <div class="tool-name">Panduan SE</div>
                 <div class="tool-url">notebooklm.google.com</div>
             </a>
             <a class="tool-card" href="https://linktr.ee/outletpgi" target="_blank" rel="noopener">
-                <div class="tool-icon">🔗</div>
+                <div class="tool-icon">🦋</div>
                 <div class="tool-name">Linktree Outlet</div>
                 <div class="tool-url">linktr.ee/outletpgi</div>
             </a>
+            <div class="tool-card" onclick="showQR()" style="cursor:pointer;">
+                <div class="tool-icon">🐊</div>
+                <div class="tool-name">Device Info App</div>
+                <div class="tool-url">Scan QR untuk download</div>
+            </div>
         </div>
     </div>
 </div>
@@ -805,17 +810,17 @@
         <div class="section-label">Sistem Internal</div>
         <div class="tool-grid">
             <a class="tool-card" href="https://approval.pgindonesia.com/" target="_blank" rel="noopener">
-                <div class="tool-icon">👤</div>
+                <div class="tool-icon">🦬</div>
                 <div class="tool-name">HRIS PGI</div>
                 <div class="tool-url">approval.pgindonesia.com</div>
             </a>
             <a class="tool-card" href="https://ga.pgindonesia.com/" target="_blank" rel="noopener">
-                <div class="tool-icon">📦</div>
+                <div class="tool-icon">🦏</div>
                 <div class="tool-name">GA (Inventory)</div>
                 <div class="tool-url">ga.pgindonesia.com</div>
             </a>
             <a class="tool-card" href="https://portal.pusatgadai.id/login" target="_blank" rel="noopener">
-                <div class="tool-icon">🔐</div>
+                <div class="tool-icon">🐢</div>
                 <div class="tool-name">FPP (Portal PGI)</div>
                 <div class="tool-url">portal.pusatgadai.id</div>
             </a>
@@ -826,7 +831,7 @@
 <!-- CONFIRM MODAL -->
 <div class="modal-backdrop" id="confirmModal">
     <div class="confirm-box">
-        <div class="confirm-icon"  id="cIcon">⚠️</div>
+        <div class="confirm-icon"  id="cIcon">️</div>
         <div class="confirm-title" id="cTitle">Konfirmasi</div>
         <div class="confirm-msg"   id="cMsg"></div>
         <div class="confirm-btns">
@@ -841,7 +846,7 @@
     <div class="modal-box">
         <div class="modal-head">
             <h3 id="shiftModalTitle">Edit Jadwal Shift</h3>
-            <button class="modal-close" onclick="closeModal('shiftModal')">✕</button>
+            <button class="modal-close" onclick="closeModal('shiftModal')"></button>
         </div>
         <div class="modal-body">
             <div class="hint-box">
@@ -866,7 +871,7 @@
     <div class="modal-box">
         <div class="modal-head">
             <h3 id="taskModalTitle">Kelola Tugas</h3>
-            <button class="modal-close" onclick="closeModal('taskModal')">✕</button>
+            <button class="modal-close" onclick="closeModal('taskModal')"></button>
         </div>
         <div class="modal-body">
             <label class="form-lbl">Tugas pada tanggal ini</label>
@@ -956,7 +961,7 @@ function toast(msg,type='success'){
 }
 
 // Confirm
-function showConfirm({icon='⚠️',title,msg,okLabel='Hapus',onConfirm}){
+function showConfirm({icon='️',title,msg,okLabel='Hapus',onConfirm}){
     const m=document.getElementById('confirmModal');
     document.getElementById('cIcon').textContent=icon;
     document.getElementById('cTitle').textContent=title;
@@ -1082,7 +1087,7 @@ function changeMonth(dir){
 function openShiftModal(day){selectedDay=day;document.getElementById('shiftModalTitle').textContent=`Shift — ${day} ${MN[currentMonth]} ${currentYear}`;document.getElementById('shiftInput').value=shiftData[dk(currentYear,currentMonth+1,day)]||'';openModal('shiftModal');setTimeout(()=>document.getElementById('shiftInput').focus(),80);}
 function setShiftBtns(s,del=false){isSaving=s||del;['btnSaveShift','btnDeleteShift','btnCancelShift'].forEach(id=>document.getElementById(id).disabled=s||del);document.getElementById('btnSaveShift').textContent=s?'Menyimpan...':'Simpan';document.getElementById('btnDeleteShift').textContent=del?'Menghapus...':'Hapus';}
 async function saveShift(){if(isSaving)return;const raw=document.getElementById('shiftInput').value,shifts=normShift(raw),key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];if(shifts)shiftData[key]=shifts;else delete shiftData[key];setShiftBtns(true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:shifts})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal disimpan');}catch(e){if(prev!==undefined)shiftData[key]=prev;else delete shiftData[key];setShiftBtns(false);toast('Gagal menyimpan','error');}}
-async function deleteShift(){if(isSaving)return;showConfirm({icon:'🗑️',title:'Hapus Jadwal Shift',msg:`Hapus semua jadwal pada ${selectedDay} ${MN[currentMonth]} ${currentYear}?`,okLabel:'Hapus',onConfirm:async()=>{const key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];delete shiftData[key];setShiftBtns(false,true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:''})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal dihapus','info');}catch(e){if(prev!==undefined)shiftData[key]=prev;setShiftBtns(false);toast('Gagal menghapus','error');}}});}
+async function deleteShift(){if(isSaving)return;showConfirm({icon:'️',title:'Hapus Jadwal Shift',msg:`Hapus semua jadwal pada ${selectedDay} ${MN[currentMonth]} ${currentYear}?`,okLabel:'Hapus',onConfirm:async()=>{const key=dk(currentYear,currentMonth+1,selectedDay),prev=shiftData[key];delete shiftData[key];setShiftBtns(false,true);try{await fetch(SCRIPT_URLS[currentBranch],{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:key,names:''})});updateNameFilter();renderCalendar();setShiftBtns(false);closeModal('shiftModal');toast('Jadwal dihapus','info');}catch(e){if(prev!==undefined)shiftData[key]=prev;setShiftBtns(false);toast('Gagal menghapus','error');}}});}
 
 function openTaskModal(day){selectedDay=day;document.getElementById('taskModalTitle').textContent=`Tugas — ${day} ${MN[currentMonth]} ${currentYear}`;document.getElementById('taskName').value='';document.getElementById('holidayName').value='';document.getElementById('taskType').value='tugas';document.getElementById('taskNameWrap').style.display='block';document.getElementById('holidayWrap').style.display='none';document.getElementById('taskNameLbl').textContent='Nama Tugas';document.getElementById('taskName').placeholder='Nama tugas...';document.getElementById('btnAddTask').textContent='Tambah';renderExistingTasks(day);openModal('taskModal');setTimeout(()=>document.getElementById('taskName').focus(),80);}
 function toggleTaskType(){
@@ -1102,9 +1107,9 @@ function renderExistingTasks(day){
     const wrap=document.getElementById('existingTasksList');wrap.innerHTML='';
     const key=dk(currentYear,currentMonth+1,day);
     const BADGE={tugas:{bg:'rgba(219,234,254,0.70)',c:'#1e40af',l:'Tugas Harian'},kunjungan_kc:{bg:'rgba(254,243,199,0.70)',c:'#92400e',l:'KC'},kunjungan_audit:{bg:'rgba(245,243,255,0.70)',c:'#4c1d95',l:'AUDIT'},lainnya:{bg:'rgba(240,253,244,0.70)',c:'#14532d',l:'Lainnya'},oneoff:{bg:'rgba(219,234,254,0.70)',c:'#1e40af',l:'Tugas'}};
-    if(customHolidays[key]){const row=document.createElement('div');row.className='task-row';row.style.background='rgba(254,226,226,0.70)';row.innerHTML=`<span>${customHolidays[key]}<span class="task-badge" style="background:rgba(254,202,202,0.90);color:#991b1b;">Libur Tambahan</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='✕';btn.onclick=()=>showConfirm({icon:'🗓️',title:'Hapus Libur Tambahan',msg:`Hapus libur tambahan pada ${day} ${MN[currentMonth]}?`,okLabel:'Hapus',onConfirm:async()=>{const prev=customHolidays[key];delete customHolidays[key];renderExistingTasks(day);renderCalendar();renderHolidays();toast('Libur dihapus','info');try{await postTask({action:'deleteHoliday',date:key});}catch(e){customHolidays[key]=prev;renderExistingTasks(day);renderCalendar();renderHolidays();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);}
+    if(customHolidays[key]){const row=document.createElement('div');row.className='task-row';row.style.background='rgba(254,226,226,0.70)';row.innerHTML=`<span>${customHolidays[key]}<span class="task-badge" style="background:rgba(254,202,202,0.90);color:#991b1b;">Libur Tambahan</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='';btn.onclick=()=>showConfirm({icon:'️',title:'Hapus Libur Tambahan',msg:`Hapus libur tambahan pada ${day} ${MN[currentMonth]}?`,okLabel:'Hapus',onConfirm:async()=>{const prev=customHolidays[key];delete customHolidays[key];renderExistingTasks(day);renderCalendar();renderHolidays();toast('Libur dihapus','info');try{await postTask({action:'deleteHoliday',date:key});}catch(e){customHolidays[key]=prev;renderExistingTasks(day);renderCalendar();renderHolidays();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);}
     getTasksForDay(currentYear,currentMonth,day).filter(t=>t.kind==='permanent-recurring').forEach(t=>{const row=document.createElement('div');row.className='task-row';row.style.background='rgba(224,242,254,0.70)';row.innerHTML=`<span>${t.name}<span class="task-badge" style="background:rgba(186,230,253,0.90);color:#075985;">Tetap</span></span><span style="color:#075985;font-size:0.88em;padding:0 5px;cursor:default;">Terkunci</span>`;wrap.appendChild(row);});
-    (taskData.oneoff[key]||[]).forEach((t,idx)=>{const b=BADGE[t.type||'tugas']||BADGE.oneoff;const row=document.createElement('div');row.className='task-row';row.innerHTML=`<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.c};">${b.l}</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='✕';btn.onclick=()=>showConfirm({icon:'📋',title:'Hapus Catatan',msg:`Hapus "${t.name}"?`,okLabel:'Hapus',onConfirm:async()=>{const removed=taskData.oneoff[key].splice(idx,1)[0];if(!taskData.oneoff[key].length)delete taskData.oneoff[key];renderExistingTasks(day);renderCalendar();toast('Catatan dihapus','info');try{await postTask({action:'deleteTask',id:removed.id});}catch(e){if(!taskData.oneoff[key])taskData.oneoff[key]=[];taskData.oneoff[key].splice(idx,0,removed);renderExistingTasks(day);renderCalendar();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);});
+    (taskData.oneoff[key]||[]).forEach((t,idx)=>{const b=BADGE[t.type||'tugas']||BADGE.oneoff;const row=document.createElement('div');row.className='task-row';row.innerHTML=`<span>${t.name}<span class="task-badge" style="background:${b.bg};color:${b.c};">${b.l}</span></span>`;const btn=document.createElement('button');btn.className='task-del';btn.textContent='';btn.onclick=()=>showConfirm({icon:'',title:'Hapus Catatan',msg:`Hapus "${t.name}"?`,okLabel:'Hapus',onConfirm:async()=>{const removed=taskData.oneoff[key].splice(idx,1)[0];if(!taskData.oneoff[key].length)delete taskData.oneoff[key];renderExistingTasks(day);renderCalendar();toast('Catatan dihapus','info');try{await postTask({action:'deleteTask',id:removed.id});}catch(e){if(!taskData.oneoff[key])taskData.oneoff[key]=[];taskData.oneoff[key].splice(idx,0,removed);renderExistingTasks(day);renderCalendar();toast('Gagal','error');}}});row.appendChild(btn);wrap.appendChild(row);});
     if(!wrap.children.length)wrap.innerHTML='<div style="font-size:0.78em;color:var(--ink-4);font-style:italic;padding:3px 0;">Belum ada tugas pada tanggal ini.</div>';
 }
 async function addTask(){
@@ -1119,9 +1124,9 @@ async function postTask(p){await fetch(SCRIPT_URLS[currentBranch],{method:'POST'
 async function loadOmsetData(){
     document.getElementById('omsetContent').style.display='none';document.getElementById('omsetErr').style.display='none';document.getElementById('omsetSkelWrap').style.display='block';
     try{const res=await fetch(`${OMSET_URL}?action=omset&year=${currentYear}&month=${currentMonth+1}`);if(!res.ok)throw new Error('HTTP '+res.status);const json=await res.json();if(json.error)throw new Error(json.error);omsetData={};(json.daily||[]).forEach(d=>{omsetData[d.date]=d;});document.getElementById('omsetSkelWrap').style.display='none';
-    if(!json.found){document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;">📭</div>Sheet <strong>${MN[currentMonth]} ${currentYear}</strong> belum ditemukan.<br><span style="font-size:0.8em;color:var(--ink-4);">Pastikan nama tab sesuai.</span>`;renderCalendar();return;}
+    if(!json.found){document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;"></div>Sheet <strong>${MN[currentMonth]} ${currentYear}</strong> belum ditemukan.<br><span style="font-size:0.8em;color:var(--ink-4);">Pastikan nama tab sesuai.</span>`;renderCalendar();return;}
     renderOmsetPanel(json);renderCalendar();document.getElementById('targetInput').value=json.totalTarget||'';}
-    catch(e){document.getElementById('omsetSkelWrap').style.display='none';document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;">❌</div>Gagal memuat data omset.<br><span style="font-size:0.8em;color:var(--ink-4);">${e.message}</span><br><button onclick="loadOmsetData()" style="margin-top:10px;padding:7px 16px;background:var(--sky-5);color:white;border:none;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:600;">Coba Lagi</button>`;}
+    catch(e){document.getElementById('omsetSkelWrap').style.display='none';document.getElementById('omsetErr').style.display='block';document.getElementById('omsetErr').innerHTML=`<div style="font-size:1.8em;margin-bottom:8px;"></div>Gagal memuat data omset.<br><span style="font-size:0.8em;color:var(--ink-4);">${e.message}</span><br><button onclick="loadOmsetData()" style="margin-top:10px;padding:7px 16px;background:var(--sky-5);color:white;border:none;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:600;">Coba Lagi</button>`;}
 }
 function renderOmsetPanel(json){
     const real=json.totalRealisasi||0,tgt=json.totalTarget||0,dim=new Date(currentYear,currentMonth+1,0).getDate();
@@ -1152,6 +1157,40 @@ document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('clic
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop.open').forEach(m=>{if(!isSaving)m.classList.remove('open');});});
 
 tickClock(); setInterval(tickClock,1000);
+</script>
+<!-- QR MODAL -->
+<div class="modal-backdrop" id="qrModal">
+    <div class="modal-box" style="max-width:320px;">
+        <div class="modal-head">
+            <h3>Download Device Info</h3>
+            <button class="modal-close" onclick="document.getElementById('qrModal').classList.remove('open')"></button>
+        </div>
+        <div class="modal-body" style="text-align:center;padding:20px 22px 24px;">
+            <div style="font-size:0.78em;color:var(--ink-3);margin-bottom:16px;">Scan QR code ini untuk download aplikasi Device Info</div>
+            <div id="qrCanvas" style="display:inline-block;padding:12px;background:white;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--glass-shadow);"></div>
+            <div style="margin-top:14px;font-size:0.68em;color:var(--ink-4);word-break:break-all;line-height:1.5;">apkpure.com/id/device-info-system-cpu-info</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+let _qrGenerated = false;
+function showQR() {
+    document.getElementById('qrModal').classList.add('open');
+    if (!_qrGenerated) {
+        _qrGenerated = true;
+        new QRCode(document.getElementById('qrCanvas'), {
+            text: 'https://apkpure.com/id/device-info-system-cpu-info/com.ytheekshana.deviceinfo',
+            width: 200, height: 200,
+            colorDark: '#0c1a3a', colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+}
+document.getElementById('qrModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+});
 </script>
 </body>
 </html>
